@@ -1,5 +1,6 @@
 import React from 'react';
-import React from '/amjad.jsx'
+import axios from 'axios';
+// import React from '/amjad.jsx'
 import $ from 'jquery';
 class Workers extends React.Component {
     constructor() {
@@ -9,15 +10,18 @@ class Workers extends React.Component {
         };
     }
 
-    logoClick() {
-        //please make a get request and fill the workers array with data from get
+    componentDidMount() {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(function (res) {
+                console.log(res);
+            })
 
     }
     render() {
         return (
             <div>
-                <button onClick={this.logoClick.bind(this)}> Workers</button>
-                <amjad workers={this.state.workers} />
+                <button onClick={this.componentDidMount.bind(this)}> Workers</button>
+                {/* <amjad workers={this.state.workers} /> */}
             </div>
         )
     }
