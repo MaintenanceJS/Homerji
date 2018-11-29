@@ -1,27 +1,26 @@
 import React from 'react';
 import axios from 'axios';
-// import React from '/amjad.jsx'
-import $ from 'jquery';
+
+
 class Workers extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             workers: []
         };
     }
-
+    //get the data from the workers page
     componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('/workers')
             .then(function (res) {
                 console.log(res);
+                // res.redirect('/endpoint')
             })
-
     }
     render() {
         return (
             <div>
                 <button onClick={this.componentDidMount.bind(this)}> Workers</button>
-                {/* <amjad workers={this.state.workers} /> */}
             </div>
         )
     }
