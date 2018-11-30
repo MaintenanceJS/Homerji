@@ -1,5 +1,5 @@
 import React from 'react';
-import React from '/amjad.jsx'
+//import React from '/amjad.jsx' //what is this?
 import $ from 'jquery';
 class Workers extends React.Component {
     constructor() {
