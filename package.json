@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "server-dev": "nodemon server/index.js"
+    "server-dev": "nodemon server/index.js",
+    "test": "mocha",
+    "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./"
   },
   "author": "Beth Johnson",
   "license": "ISC",
@@ -18,12 +20,17 @@
   },
   "dependencies": {
     "angular": "^1.6.3",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.15.0",
+    "express-partial": "^0.1.0",
+    "express-session": "^1.15.6",
     "jquery": "^3.1.1",
     "mongoose": "^4.8.6",
     "mysql": "^2.13.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "request": "^2.88.0"
   }
 }
