@@ -12,7 +12,7 @@ var worker = db.worker;
 //use express
 var app = express();
 
-app.use(partial());
+//app.use(partial());
 
 //body parser
 app.use(bodyParser.urlencoded({
@@ -20,16 +20,20 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json());
 
-//connect to react
-app.use(express.static(__dirname + '/../react-client/dist'));
-
-//cookies and sessions
+//cookies and session
 app.use(cookieParser('shhhh, very secret'));
 app.use(session({
+  // secret: 'shhh, it\'s a secret',
+  // resave: true,
+  // saveUninitialized: true,
+  // cookie: { path: '/', httpOnly: true, secure: false, maxAge: 60000 }
   secret: 'shhh, it\'s a secret',
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: true
 }));
+
+//connect to react
+app.use(express.static(__dirname + '/../react-client/dist'));
 
 //request functions
 app.get('/workers', function (req, res) {
@@ -89,7 +93,7 @@ var signupWorker = function(req, res) {
   var hash = bcrypt.hashSync(password);
 
   db.selectAllUsernames(username, function(err, found) {
-    if (err) {res.sendStatus(404)}; //only for unpredictable errors
+    if (err) {res.sendStatus(500)}; //only for unpredictable errors
 
     if (found) {
       if (found.length > 0) {
@@ -110,8 +114,8 @@ var signupWorker = function(req, res) {
         newWorker.save()
         .then(function() {
           console.log('saved')
-          createSession(req, res, newWorker)
-          res.send()
+          //createSession(req, res, newWorker)
+          res.status(200).send()
         })
       }
     }
@@ -123,21 +127,22 @@ var loginUser = function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
   db.selectAllUsernames(username, function(err, found) {
-    if (err) {res.sendStatus(404)}; //only for unpredictable errors
+    if (err) {res.sendStatus(500)}; //only for unpredictable errors
 
     if (found) {
       if (found.length === 0) {
         console.log("Username doesn't exist");
-        res.send('Account already exists, please try another username');
+        res.status(404).send();
       } else {
         var item = found[0].password 
         comparePassword(password, item,function(match) {
           if (match) {
             res.setHeader('Content-Type', 'application/json');
             createSession(req, res, found[0]);
-            res.send()
+            res.status(200).send()
           } else {
-            res.send('wrong password', item);
+            console.log('wrong password or username')
+            res.status(404).send();
           }
         })
       }
@@ -162,8 +167,10 @@ var createSession = function(req, res, newUser) {
 var logoutUser = function(req, res) {
   console.log("before", req.session)
   req.session.destroy(function() {
-    res.redirect('/');
+    //res.redirect('/');
+    
   });
+  console.log("after", req.session)
 };
 
 //password functions
@@ -180,16 +187,31 @@ var hashPassword = function() {
     });
 }
 
+//edit rating
+var rating = function (req, res) {
+  var newRating = req.body.rating;
+  var username = req.body.username;
+  db.updateRating(username, newRating, function () {
+    return
+  })
+  res.send('')
+}
+
 //signup 
 //app.get('/signup', signupUserForm);
 app.post('/signup', signupWorker);
 app.post('/login', loginUser);
+app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB);
-app.get('/logout', logoutUser);
 app.get('/test', function (req, res) {
   console.log(req.session)
-  res.end()
+  if(!req.session.userID) {
+    res.status(401).send()
+  } else {
+    res.status(200).send()
+  }
 });
+app.post('/rating', rating);
 
 
 //listen to local host

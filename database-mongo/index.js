@@ -56,7 +56,19 @@ var selectAllUsernames = function(username, callback) {
   });
 };
 
+var updateRating = function(username, newRating, callback) {
+  worker.updateOne({ username: username }, { rating: newRating }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
 module.exports.worker = worker;
 module.exports.selectAll = selectAll;
 module.exports.selectAllNames = selectAllNames;
 module.exports.selectAllUsernames = selectAllUsernames;
+module.exports.updateRating = updateRating;
+
