@@ -43,12 +43,14 @@ app.get('/workers', function (req, res) {
 });
 
 app.post('/name', function (req, res) {
-	var name = req.body.name
-  db.find(name, function(err, data) {
+	var name = req.body.name;
+  console.log(name);
+  db.selectAllNames(name, function(err, data) {
     if (err) {
-      res.sendStatus(500)
+      res.sendStatus(500);
     } else {
-      res.send(data)
+      console.log(data);
+      res.json(data);
     }
   });
 });

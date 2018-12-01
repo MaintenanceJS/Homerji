@@ -11,7 +11,7 @@ class Workers extends React.Component {
         };
     }
     // get All the workers information from the database
-    component1() {
+    getAllWorkers() {
         $('button, input, h1').hide();
         var that = this;
         console.log(this.state.workers, 'sdsdfgeg')
@@ -25,7 +25,7 @@ class Workers extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.component1.bind(this)}> Workers</button>
+                <button onClick={this.getAllWorkers.bind(this)}> Workers</button>
                 <Worker workersList={this.state.workers}/>
             </div>
         )

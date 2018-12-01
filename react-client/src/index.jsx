@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
 import Workers from './components/workersLogo.jsx';
+import WorkerName from './components/searchBarWorkers.jsx';
 // uncomment this when using the frontend routers
 // import { Router, Route, Switch } from 'react-router'
 // import { BrowserRouter, Route, Link } from 'react-router-dom'
@@ -64,6 +65,7 @@ class App extends React.Component {
   render() {
     return (<div>
       <Workers />
+      <WorkerName />
       <h1 className='head1'>Item List</h1>
       <input id="name" onChange={this.inputHandle.bind(this)} />
       <h4 id='head2'> {this.state.input} </h4>
