@@ -1,26 +1,36 @@
 import React from 'react';
-//import React from '/amjad.jsx' //what is this?
+import axios from 'axios';
+import Worker from './workers.jsx';
 import $ from 'jquery';
+
 class Workers extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             workers: []
         };
     }
-
-    logoClick() {
-        //please make a get request and fill the workers array with data from get
-
+    // get All the workers information from the database
+    component1() {
+        $('button, input, h1').hide();
+        var that = this;
+        console.log(this.state.workers, 'sdsdfgeg')
+        axios.get('/workers')
+        .then(function(res){
+            that.setState({
+              workers: res.data
+            })
+        })
     }
     render() {
         return (
             <div>
-                <button onClick={this.logoClick.bind(this)}> Workers</button>
-                <amjad workers={this.state.workers} />
+                <button onClick={this.component1.bind(this)}> Workers</button>
+                <Worker workersList={this.state.workers}/>
             </div>
         )
     }
 }
 
 export default Workers;
+

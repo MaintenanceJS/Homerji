@@ -19,19 +19,20 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    $.ajax({
-      url: '/workers',
-      success: (data) => {
-        this.setState({
-          getItems: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
-  }
+
+  // componentDidMount() {
+  //   $.ajax({
+  //     url: '/workers',
+  //     success: (data) => {
+  //       this.setState({
+  //         getItems: data
+  //       })
+  //     },
+  //     error: (err) => {
+  //       console.log('err', err);
+  //     }
+  //   });
+  // }
 
   sendData(data) {
     $.ajax({

@@ -20,7 +20,7 @@ var itemSchema = mongoose.Schema({
   password: String,
   description: String,
   availability: String,
-  phonenumber: Number
+  phonenumber: Number,
   //image: { data: Buffer, contentType: String }
 });
 
