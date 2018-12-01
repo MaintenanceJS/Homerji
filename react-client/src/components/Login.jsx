@@ -7,7 +7,9 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shown: false
+      shown: false,
+      username: '',
+      password: ''
     };
   }
 
@@ -27,7 +29,35 @@ class Login extends React.Component {
     } else {
       $('.login').hide()
     }
-  }  
+  }
+
+  handleSubmit() {
+    $.ajax({
+      type: 'POST',
+      url: '/login',
+      data: {username: this.state.username, password: this.state.password},
+      success: (data) => {
+        this.setState({
+          getItems: data
+        })
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
+
+  handleUsername(e) {
+    this.setState({
+      username: e.target.value
+    }) 
+  }
+  
+  handlePassword(e) {
+    this.setState({
+      password: e.target.value
+    })
+  }   
 
   render() {
     return (
@@ -36,13 +66,13 @@ class Login extends React.Component {
         <form className='login'> 
           <label>
             Username:
-            <br /><input type="text" />
+            <br /><input type="text" onChange={this.handleUsername.bind(this)}/>
           </label> <br />
           <label>
             Password:
-            <br /><input type="text" />
+            <br /><input type="text" onChange={this.handlePassword.bind(this)}/>
           </label> <br />
-          <button> Submit </button>
+          <button onClick={this.handleSubmit.bind(this)}> Submit </button>
         </form>
       </div>
     )

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
 import Workers from './components/workersLogo.jsx';
-import Sign from './components/SignupAndLogin.jsx';
+import Sign from './components/Signup.jsx';
 import Login from './components/Login.jsx';
 import Painting from './components/painting.jsx';
 import Plump from './components/plump.jsx';

@@ -57,15 +57,15 @@ app.post('/name', function (req, res) {
 //add an item to dataBase
 var manualAddingToDB = function() {
   var x = new worker({
-    name: 'dandoon', 
-    major: 'Plumber', 
-    rating: '5', 
-    email: 'hi@karak.com', 
-    username:'firasK', 
-    password: 'abc',
-    description: '7arreef',
-    availability: "true",
-    phonenumber: 91827465
+    name: 'testName', 
+    major: 'testMajor', 
+    rating: 0, 
+    email: 'test@tester.com', 
+    username:'tester', 
+    password: '123',
+    description: 'testing',
+    availability: "yes",
+    phonenumber: 1111111
   })
   x.save()
   .then(function() {
@@ -88,7 +88,7 @@ var signupWorker = function(req, res) {
   var phonenumber = req.body.phonenumber;
   var hash = bcrypt.hashSync(password);
 
-  db.selectAllUsernames(res, username, function(err, found) {
+  db.selectAllUsernames(username, function(err, found) {
     if (err) {res.send('404')}; //only for unpredictable errors
 
     if (found) {
@@ -157,8 +157,8 @@ var loginUser = function(req, res) {
         comparePassword(password, item,function(match) {
           console.log('match====', match)
           if (match) {
-            createSession(req, res, user);
-            res.send('')
+            res.setHeader('Content-Type', 'application/json');
+            createSession(req, res, found[0]);
           } else {
             res.send('wrong password', item);
           }
@@ -167,7 +167,6 @@ var loginUser = function(req, res) {
     }
   })
 };
-
 
 
 var isLoggedIn = function(req, res) {
@@ -187,13 +186,14 @@ var createSession = function(req, res, newUser) {
   console.log("in createSession function")
   return req.session.regenerate(function() {
       req.session.user = newUser;
+      console.log("in generator of session",req.sessionID)
       res.redirect('/'); ////////////TODO
     });
 };
 //destroy a session function
 var logoutUser = function(req, res) {
   req.session.destroy(function() {
-    res.redirect('/login');
+    res.redirect('/');
   });
 };
 
@@ -215,7 +215,9 @@ var hashPassword = function() {
 //app.get('/signup', signupUserForm);
 app.post('/signup', signupWorker);
 app.post('/login', loginUser);
-app.post('/add', manualAddingToDB);
+app.get('/add', manualAddingToDB);
+app.get('/logout', logoutUser);
+
 
 //listen to local host
 var port = process.env.PORT || 3000;
