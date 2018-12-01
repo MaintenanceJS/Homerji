@@ -14,7 +14,6 @@ class Worker extends React.Component {
     return (
       <div>
         <div>
-          <h1>The Workers</h1>
           {this.props.workersList.map(item =>
             <WorkerList key={item._id} item={item}/>
           )}
