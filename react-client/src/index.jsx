@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import Workers from './components/workersLogo.jsx';
+import WorkersLogo from './components/workersLogo.jsx';
 import WorkerName from './components/searchBarWorkers.jsx';
 import Painting from './components/painting.jsx';
 import Plump from './components/plump.jsx';
@@ -51,11 +51,9 @@ class App extends React.Component {
   render() {
     return (<div>
       <NavBar />
-      <Sign />
-      <Login />
-      <Logout />
+     
       <div><WorkersLogo /></div>
-      <div><Furniture /></div>
+      <div><Forniture /></div>
       <div><Electric /></div>
       <div> <Painting /></div>
       <div> <Plump /></div>
