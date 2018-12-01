@@ -1,21 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import List from './components/List.jsx';
-import Workers from './components/workersLogo.jsx';
+import WorkersLogo from './components/workersLogo.jsx';
 import Sign from './components/Signup.jsx';
-import WorkerName from './components/searchBarWorkers.jsx';
+import SearchBar from './components/searchBarWorkers.jsx';
 import Login from './components/Login.jsx';
+import Logout from './components/logout.jsx';
 import Painting from './components/painting.jsx';
 import Plump from './components/plump.jsx';
 import Electric from './components/electric.jsx';
-import Forniture from './components/forniture.jsx';
+import Furniture from './components/forniture.jsx';
 import Others from './components/others.jsx';
 // uncomment this when using the frontend routers
 // import { Router, Route, Switch } from 'react-router'
 // import { BrowserRouter, Route, Link } from 'react-router-dom'
-
-
 
 class App extends React.Component {
   constructor(props) {
@@ -26,20 +24,6 @@ class App extends React.Component {
       name: ''
     }
   }
-
-  // componentDidMount() {
-  //   $.ajax({
-  //     url: '/workers',
-  //     success: (data) => {
-  //       this.setState({
-  //         getItems: data
-  //       })
-  //     },
-  //     error: (err) => {
-  //       console.log('err', err);
-  //     }
-  //   });
-  // }
 
   sendData(data) {
     $.ajax({
@@ -70,21 +54,16 @@ class App extends React.Component {
 
   render() {
     return (<div>
-      <Workers />
-      <WorkerName />
+      <SearchBar />
       <Sign />
       <Login />
-      <div><Workers /></div>
-      <div><Forniture /></div>
+      <Logout />
+      <div><WorkersLogo /></div>
+      <div><Furniture /></div>
       <div><Electric /></div>
       <div> <Painting /></div>
       <div> <Plump /></div>
       <div> <Others /></div>
-      <h1 className='head1'>Item List</h1>
-      <input id="name" onChange={this.inputHandle.bind(this)} />
-      <h4 id='head2'> {this.state.input} </h4>
-      <button onClick={this.clickHandle.bind(this)}> sendName </button>
-      <List passInputDataOrFunction={this.inputHandle.bind(this)} />
     </div>)
   }
 }
