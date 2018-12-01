@@ -4,6 +4,7 @@ import $ from 'jquery';
 import List from './components/List.jsx';
 import Workers from './components/workersLogo.jsx';
 import Sign from './components/Signup.jsx';
+import WorkerName from './components/searchBarWorkers.jsx';
 import Login from './components/Login.jsx';
 import Painting from './components/painting.jsx';
 import Plump from './components/plump.jsx';
@@ -69,6 +70,8 @@ class App extends React.Component {
 
   render() {
     return (<div>
+      <Workers />
+      <WorkerName />
       <Sign />
       <Login />
       <div><Workers /></div>
