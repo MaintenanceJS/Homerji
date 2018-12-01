@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import WorkersLogo from './components/workersLogo.jsx';
 import Sign from './components/Signup.jsx';
+import WorkerName from './components/searchBarWorkers.jsx';
 import SearchBar from './components/searchBarWorkers.jsx';
 import Login from './components/Login.jsx';
 import Logout from './components/logout.jsx';
@@ -55,11 +56,12 @@ class App extends React.Component {
 
   render() {
     return (<div>
-      <SearchBar />
+      <NavBar />
       <Logout />
       <div><WorkersLogo /></div>
       <div><Furniture /></div>
-      <NavBar />
+      
+      {/* <Workers /> */}
       <Sign />
       <Login />
       <div><Electric /></div>
