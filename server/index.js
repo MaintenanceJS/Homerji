@@ -16,7 +16,7 @@ app.use(partial());
 
 //body parser
 app.use(bodyParser.urlencoded({
-    extended: false
+  extended: false
 }))
 app.use(bodyParser.json());
 
@@ -33,49 +33,61 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 //request functions
 app.get('/workers', function (req, res) {
-  db.selectAll(function(err, data) {
-    if(err) {
+  db.selectAll(function (err, data) {
+    if (err) {
       res.sendStatus(500);
     } else {
       res.json(data);
     }
   });
 });
-
-app.post('/name', function (req, res) {
-	var name = req.body.name
-  db.find(name, function(err, data) {
+//majors
+app.post('/majors', function (req, res) {
+  // console.log(req.body.major, 'majorssss')
+  db.selectAllMajors(req.body.major, function (err, data) {
     if (err) {
-      res.sendStatus(500)
+      res.sendStatus(500);
     } else {
-      res.send(data)
+      res.json(data);
+    }
+  });
+});
+app.post('/name', function (req, res) {
+  var name = req.body.name;
+  console.log(name);
+  db.selectAllNames(name, function (err, data) {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      console.log(data);
+      res.json(data);
     }
   });
 });
 
 
 //add an item to dataBase
-var manualAddingToDB = function() {
+var manualAddingToDB = function () {
   var x = new worker({
-    name: 'dandoon', 
-    major: 'Plumber', 
-    rating: '5', 
-    email: 'hi@karak.com', 
-    username:'firasK', 
-    password: 'abc',
-    description: '7arreef',
-    availability: "true",
-    phonenumber: 91827465
+    name: 'testName',
+    major: 'testMajor',
+    rating: 0,
+    email: 'test@tester.com',
+    username: 'tester',
+    password: '123',
+    description: 'testing',
+    availability: "yes",
+    phonenumber: 1111111
   })
   x.save()
-  .then(function() {
-    console.log('worker is saved in database, in signupWorker')
-  })
+    .then(function () {
+      console.log('worker is saved in database, in signupWorker')
+    })
 }
 
 
 //signup functions
-var signupWorker = function(req, res) {
+var signupWorker = function (req, res) {
   // console.log('you are at signupWorker in server index.js')
   var name = req.body.name;
   var major = req.body.major;
@@ -88,8 +100,8 @@ var signupWorker = function(req, res) {
   var phonenumber = req.body.phonenumber;
   var hash = bcrypt.hashSync(password);
 
-  db.selectAllUsernames(res, username, function(err, found) {
-    if (err) {res.send('404')}; //only for unpredictable errors
+  db.selectAllUsernames(username, function (err, found) {
+    if (err) { res.send('404') }; //only for unpredictable errors
 
     if (found) {
       if (found.length > 0) {
@@ -97,41 +109,41 @@ var signupWorker = function(req, res) {
       } else {
         console.log("empty found array")
         var newWorker = new worker({
-          name: name, 
-          major: major, 
-          rating: rating, 
-          email: email, 
-          username: username, 
+          name: name,
+          major: major,
+          rating: rating,
+          email: email,
+          username: username,
           password: hash,
           description: description,
           availability: availability,
           phonenumber: phonenumber
         })
         newWorker.save()
-        .then(function() {
-          console.log('saved')
-          createSession(req, res, newWorker)
-          res.send('Saved!')
-        })
+          .then(function () {
+            console.log('saved')
+            createSession(req, res, newWorker)
+            res.send('Saved!')
+          })
       }
     }
   })
-    // .then(function(user) {
-    //   if (!user) {
-    //     var newUser = new worker({
-    //       username: username,
-    //       password: password
-    //     });
-    //     newUser.save()
-    //       .then(function(newUser) {
-    //         Users.add(newUser);
-    //         createSession(req, res, newUser);
-    //       });
-    //   } else {
-    //     console.log('Account already exists');
-    //     res.redirect('/signup'); //is to send to this endpoint to find an other username //TODO
-    //   }
-    // });
+  // .then(function(user) {
+  //   if (!user) {
+  //     var newUser = new worker({
+  //       username: username,
+  //       password: password
+  //     });
+  //     newUser.save()
+  //       .then(function(newUser) {
+  //         Users.add(newUser);
+  //         createSession(req, res, newUser);
+  //       });
+  //   } else {
+  //     console.log('Account already exists');
+  //     res.redirect('/signup'); //is to send to this endpoint to find an other username //TODO
+  //   }
+  // });
 };
 
 // var signupUserForm = function(req, res) {
@@ -139,12 +151,12 @@ var signupWorker = function(req, res) {
 // };
 
 //login functions
-var loginUser = function(req, res) {
+var loginUser = function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
   console.log("in loginUser======", username, password)
-  db.selectAllUsernames(username, function(err, found) {
-    if (err) {res.send('404')}; //only for unpredictable errors
+  db.selectAllUsernames(username, function (err, found) {
+    if (err) { res.send('404') }; //only for unpredictable errors
 
     if (found) {
       console.log("found==========", found[0].password, password)
@@ -153,12 +165,12 @@ var loginUser = function(req, res) {
         res.send('Account already exists, please try another username');
       } else {
         console.log(found, "before error")
-        var item = found[0].password 
-        comparePassword(password, item,function(match) {
+        var item = found[0].password
+        comparePassword(password, item, function (match) {
           console.log('match====', match)
           if (match) {
-            createSession(req, res, user);
-            res.send('')
+            res.setHeader('Content-Type', 'application/json');
+            createSession(req, res, found[0]);
           } else {
             res.send('wrong password', item);
           }
@@ -169,12 +181,11 @@ var loginUser = function(req, res) {
 };
 
 
-
-var isLoggedIn = function(req, res) {
+var isLoggedIn = function (req, res) {
   return req.session ? !!req.session.user : false;
 };
 
-var checkUser = function(req, res, next) {
+var checkUser = function (req, res, next) {
   if (!exports.isLoggedIn(req)) {
     res.redirect('/login');
   } else {
@@ -183,30 +194,31 @@ var checkUser = function(req, res, next) {
 };
 
 //create a session function
-var createSession = function(req, res, newUser) {
+var createSession = function (req, res, newUser) {
   console.log("in createSession function")
-  return req.session.regenerate(function() {
-      req.session.user = newUser;
-      res.redirect('/'); ////////////TODO
-    });
+  return req.session.regenerate(function () {
+    req.session.user = newUser;
+    console.log("in generator of session", req.sessionID)
+    res.redirect('/'); ////////////TODO
+  });
 };
 //destroy a session function
-var logoutUser = function(req, res) {
-  req.session.destroy(function() {
-    res.redirect('/login');
+var logoutUser = function (req, res) {
+  req.session.destroy(function () {
+    res.redirect('/');
   });
 };
 
 //password functions
-var comparePassword = function(attemptedPassword, hashed,callback) {
-  bcrypt.compare(attemptedPassword, hashed, function(err, isMatch) {
+var comparePassword = function (attemptedPassword, hashed, callback) {
+  bcrypt.compare(attemptedPassword, hashed, function (err, isMatch) {
     callback(isMatch);
   });
 }
-var hashPassword = function() {
+var hashPassword = function () {
   var cipher = Promise.promisify(bcrypt.hash);
   return cipher(this.get('password'), null, null).bind(this)
-    .then(function(hash) {
+    .then(function (hash) {
       this.set('password', hash);
     });
 }
@@ -215,11 +227,26 @@ var hashPassword = function() {
 //app.get('/signup', signupUserForm);
 app.post('/signup', signupWorker);
 app.post('/login', loginUser);
-app.post('/add', manualAddingToDB);
+app.get('/add', manualAddingToDB);
+app.get('/logout', logoutUser);
+
 
 //listen to local host
-app.listen(3000, function() {
+var port = process.env.PORT || 3000;
+app.listen(port, function () {
   console.log('listening on port 3000!');
 });
 
 //bcrypt.compareSync("bacon", hash); // true
+
+
+
+
+
+
+
+
+
+
+
+

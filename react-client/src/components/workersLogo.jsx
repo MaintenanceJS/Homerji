@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import Worker from './workers.jsx';
 import $ from 'jquery';
+import Login from './Login.jsx';
+import Sign from './Signup.jsx';
+
 
 class Workers extends React.Component {
     constructor(props) {
@@ -11,8 +13,8 @@ class Workers extends React.Component {
         };
     }
     // get All the workers information from the database
-    component1() {
-        $('button, input, h1').hide();
+    getAllWorkers() {
+        $('button').hide();
         var that = this;
         console.log(this.state.workers, 'sdsdfgeg')
         axios.get('/workers')
@@ -25,11 +27,13 @@ class Workers extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.component1.bind(this)}> Workers</button>
-                <Worker workersList={this.state.workers} />
+                <button onClick={this.getAllWorkers.bind(this)}> Register & Login</button>
+                <Login />
+                <Sign />
             </div>
         )
     }
+
 }
 
 export default Workers;
