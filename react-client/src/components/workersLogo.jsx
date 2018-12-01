@@ -14,7 +14,6 @@ class Workers extends React.Component {
     component1() {
         $('button, input, h1').hide();
         var that = this;
-        console.log(this.state.workers, 'sdsdfgeg')
         axios.get('/workers')
         .then(function(res){
             that.setState({
