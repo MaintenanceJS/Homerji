@@ -10,12 +10,12 @@ class Sign extends React.Component {
       shown: false,
       name: '',
       major: '',
-      rating: '',
+      rating: 0,
       email: '',
       username: '',
       password: '',
       description: '',
-      availability: '',
+      availability: 'yes',
       phonenumber: 0
     };
   }
