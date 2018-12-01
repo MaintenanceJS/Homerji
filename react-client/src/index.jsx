@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
 import Workers from './components/workersLogo.jsx';
-
 // uncomment this when using the frontend routers
 // import { Router, Route, Switch } from 'react-router'
 // import { BrowserRouter, Route, Link } from 'react-router-dom'
@@ -19,6 +18,7 @@ class App extends React.Component {
       name: ''
     }
   }
+
 
   // componentDidMount() {
   //   $.ajax({
