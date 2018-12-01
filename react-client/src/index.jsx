@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
 import Workers from './components/workersLogo.jsx';
+import Sign from './components/SignupAndLogin.jsx';
+import Login from './components/Login.jsx';
 // uncomment this when using the frontend routers
 // import { Router, Route, Switch } from 'react-router'
 // import { BrowserRouter, Route, Link } from 'react-router-dom'
@@ -62,6 +64,8 @@ class App extends React.Component {
 
   render() {
     return (<div>
+      <Sign />
+      <Login />
       <Workers />
       <h1 className='head1'>Item List</h1>
       <input id="name" onChange={this.inputHandle.bind(this)} />
