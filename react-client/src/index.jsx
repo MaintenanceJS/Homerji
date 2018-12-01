@@ -11,6 +11,7 @@ import Plump from './components/plump.jsx';
 import Electric from './components/electric.jsx';
 import Furniture from './components/forniture.jsx';
 import Others from './components/others.jsx';
+import NavBar from "./components/NavBar.jsx";
 // uncomment this when using the frontend routers
 // import { Router, Route, Switch } from 'react-router'
 // import { BrowserRouter, Route, Link } from 'react-router-dom'
@@ -55,11 +56,12 @@ class App extends React.Component {
   render() {
     return (<div>
       <SearchBar />
-      <Sign id='sign' />
-      <Login id='login'/>
-      <Logout id='logout' />
+      <Logout />
       <div><WorkersLogo /></div>
       <div><Furniture /></div>
+      <NavBar />
+      <Sign />
+      <Login />
       <div><Electric /></div>
       <div> <Painting /></div>
       <div> <Plump /></div>
