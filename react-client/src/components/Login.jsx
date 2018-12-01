@@ -1,4 +1,5 @@
 import React from 'react';
+import WorkerList from './workersList.jsx';
 import $ from 'jquery';
 
 
@@ -61,7 +62,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleOnClick.bind(this)}> Login </button>
+        <h4 onClick={this.handleOnClick.bind(this)}> login </h4>
         <form className='login'>
           <label>
             Username:

@@ -20,16 +20,16 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json());
 
+//connect to react
+app.use(express.static(__dirname + '/../react-client/dist'));
+
 //cookies and sessions
 app.use(cookieParser('shhhh, very secret'));
 app.use(session({
   secret: 'shhh, it\'s a secret',
-  resave: false,
-  saveUninitialized: true
+  resave: true,
+  saveUninitialized: true,
 }));
-
-//connect to react
-app.use(express.static(__dirname + '/../react-client/dist'));
 
 //request functions
 app.get('/workers', function (req, res) {
@@ -54,12 +54,10 @@ app.post('/majors', function (req, res) {
 });
 app.post('/name', function (req, res) {
   var name = req.body.name;
-  console.log(name);
   db.selectAllNames(name, function (err, data) {
     if (err) {
       res.sendStatus(500);
     } else {
-      console.log(data);
       res.json(data);
     }
   });
@@ -101,7 +99,7 @@ var signupWorker = function (req, res) {
   var hash = bcrypt.hashSync(password);
 
   db.selectAllUsernames(username, function (err, found) {
-    if (err) { res.send('404') }; //only for unpredictable errors
+    if (err) { res.sendStatus(404) }; //only for unpredictable errors
 
     if (found) {
       if (found.length > 0) {
@@ -123,54 +121,31 @@ var signupWorker = function (req, res) {
           .then(function () {
             console.log('saved')
             createSession(req, res, newWorker)
-            res.send('Saved!')
+            res.send()
           })
       }
     }
   })
-  // .then(function(user) {
-  //   if (!user) {
-  //     var newUser = new worker({
-  //       username: username,
-  //       password: password
-  //     });
-  //     newUser.save()
-  //       .then(function(newUser) {
-  //         Users.add(newUser);
-  //         createSession(req, res, newUser);
-  //       });
-  //   } else {
-  //     console.log('Account already exists');
-  //     res.redirect('/signup'); //is to send to this endpoint to find an other username //TODO
-  //   }
-  // });
 };
-
-// var signupUserForm = function(req, res) {
-//   res.render('signup'); //////////////TODO
-// };
 
 //login functions
 var loginUser = function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
-  console.log("in loginUser======", username, password)
   db.selectAllUsernames(username, function (err, found) {
-    if (err) { res.send('404') }; //only for unpredictable errors
+    if (err) { res.sendStatus(404) }; //only for unpredictable errors
 
     if (found) {
-      console.log("found==========", found[0].password, password)
       if (found.length === 0) {
         console.log("Username doesn't exist");
         res.send('Account already exists, please try another username');
       } else {
-        console.log(found, "before error")
         var item = found[0].password
         comparePassword(password, item, function (match) {
-          console.log('match====', match)
           if (match) {
             res.setHeader('Content-Type', 'application/json');
             createSession(req, res, found[0]);
+            res.send()
           } else {
             res.send('wrong password', item);
           }
@@ -181,29 +156,21 @@ var loginUser = function (req, res) {
 };
 
 
-var isLoggedIn = function (req, res) {
-  return req.session ? !!req.session.user : false;
-};
-
-var checkUser = function (req, res, next) {
-  if (!exports.isLoggedIn(req)) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
-};
-
 //create a session function
 var createSession = function (req, res, newUser) {
-  console.log("in createSession function")
-  return req.session.regenerate(function () {
-    req.session.user = newUser;
-    console.log("in generator of session", req.sessionID)
-    res.redirect('/'); ////////////TODO
+  console.log("before regenerate", 'req.session', req.session)
+  return req.session.regenerate(function (err) {
+    if (err) { return err }
+    req.session.userID = newUser._id;
+    console.log("in generator of session", "req.cookies", req.cookies)
+    console.log("in generator of session", 'req.session', req.session)
+    //res.redirect('/'); ////////////TODO
   });
 };
+
 //destroy a session function
 var logoutUser = function (req, res) {
+  console.log("before", req.session)
   req.session.destroy(function () {
     res.redirect('/');
   });
@@ -229,6 +196,10 @@ app.post('/signup', signupWorker);
 app.post('/login', loginUser);
 app.get('/add', manualAddingToDB);
 app.get('/logout', logoutUser);
+app.get('/test', function (req, res) {
+  console.log(req.session)
+  res.end()
+});
 
 
 //listen to local host
@@ -236,9 +207,6 @@ var port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log('listening on port 3000!');
 });
-
-//bcrypt.compareSync("bacon", hash); // true
-
 
 
 

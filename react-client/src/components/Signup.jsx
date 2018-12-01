@@ -1,4 +1,5 @@
 import React from 'react';
+import WorkerList from './workersList.jsx';
 import $ from 'jquery';
 
 
@@ -9,12 +10,12 @@ class Sign extends React.Component {
       shown: false,
       name: '',
       major: '',
-      rating: '',
+      rating: 0,
       email: '',
       username: '',
       password: '',
       description: '',
-      availability: '',
+      availability: 'yes',
       phonenumber: 0
     };
   }
@@ -120,7 +121,7 @@ class Sign extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleOnClick.bind(this)}> Signup </button>
+        <h4 onClick={this.handleOnClick.bind(this)}> signup </h4>
         <form className='form'>
           <label>
             Name:

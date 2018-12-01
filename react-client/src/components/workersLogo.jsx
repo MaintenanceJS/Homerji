@@ -5,6 +5,7 @@ import Login from './Login.jsx';
 import Sign from './Signup.jsx';
 
 
+
 class Workers extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +15,7 @@ class Workers extends React.Component {
     }
     // get All the workers information from the database
     getAllWorkers() {
-        $('button').hide();
+        $('button, input, h1, h4').hide();
         var that = this;
         console.log(this.state.workers, 'sdsdfgeg')
         axios.get('/workers')
