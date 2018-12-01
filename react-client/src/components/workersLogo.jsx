@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-
+import Worker from './workers.jsx';
+import $ from 'jquery';
 
 class Workers extends React.Component {
     constructor(props) {
@@ -9,21 +10,27 @@ class Workers extends React.Component {
             workers: []
         };
     }
-    //get the data from the workers page
-    componentDidMount() {
+    // get All the workers information from the database
+    component1() {
+        $('button, input, h1').hide();
+        var that = this;
+        console.log(this.state.workers, 'sdsdfgeg')
         axios.get('/workers')
             .then(function (res) {
-                console.log(res);
-                // res.redirect('/endpoint')
+                that.setState({
+                    workers: res.data
+                })
             })
     }
     render() {
         return (
             <div>
-                <button onClick={this.componentDidMount.bind(this)}> Workers</button>
+                <button onClick={this.component1.bind(this)}> Workers</button>
+                <Worker workersList={this.state.workers} />
             </div>
         )
     }
 }
 
 export default Workers;
+

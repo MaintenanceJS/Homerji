@@ -16,11 +16,12 @@ var itemSchema = mongoose.Schema({
   major: String,
   rating: Number,
   email: String,
+  username: String,
   password: String,
   description: String,
-  availability: Boolean,
+  availability: String,
   phonenumber: Number,
-  image: { data: Buffer, contentType: String }
+  //image: { data: Buffer, contentType: String }
 });
 
 var worker = mongoose.model('worker', itemSchema);
@@ -45,5 +46,17 @@ var selectAllNames = function(name, callback) {
   });
 };
 
+var selectAllUsernames = function(res, username, callback) {
+  worker.find({username: username}, function(err, items) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, items);
+    }
+  });
+};
+
+module.exports.worker = worker;
 module.exports.selectAll = selectAll;
 module.exports.selectAllNames = selectAllNames;
+module.exports.selectAllUsernames = selectAllUsernames;
