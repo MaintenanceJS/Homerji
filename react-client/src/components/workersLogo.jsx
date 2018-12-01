@@ -16,17 +16,17 @@ class Workers extends React.Component {
         var that = this;
         console.log(this.state.workers, 'sdsdfgeg')
         axios.get('/workers')
-        .then(function(res){
-            that.setState({
-              workers: res.data
+            .then(function (res) {
+                that.setState({
+                    workers: res.data
+                })
             })
-        })
     }
     render() {
         return (
             <div>
                 <button onClick={this.component1.bind(this)}> Workers</button>
-                <Worker workersList={this.state.workers}/>
+                <Worker workersList={this.state.workers} />
             </div>
         )
     }
