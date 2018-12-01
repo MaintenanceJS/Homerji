@@ -35,7 +35,7 @@ class Login extends React.Component {
     $.ajax({
       type: 'POST',
       url: '/login',
-      data: {username: this.state.username, password: this.state.password},
+      data: { username: this.state.username, password: this.state.password },
       success: (data) => {
         this.setState({
           getItems: data
@@ -50,27 +50,27 @@ class Login extends React.Component {
   handleUsername(e) {
     this.setState({
       username: e.target.value
-    }) 
+    })
   }
-  
+
   handlePassword(e) {
     this.setState({
       password: e.target.value
     })
-  }   
+  }
 
   render() {
     return (
       <div>
         <h4 onClick={this.handleOnClick.bind(this)}> login </h4>
-        <form className='login'> 
+        <form className='login'>
           <label>
             Username:
-            <br /><input type="text" onChange={this.handleUsername.bind(this)}/>
+            <br /><input type="text" onChange={this.handleUsername.bind(this)} />
           </label> <br />
           <label>
             Password:
-            <br /><input type="text" onChange={this.handlePassword.bind(this)}/>
+            <br /><input type="text" onChange={this.handlePassword.bind(this)} />
           </label> <br />
           <button onClick={this.handleSubmit.bind(this)}> Submit </button>
         </form>

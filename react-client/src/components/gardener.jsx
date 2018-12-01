@@ -4,7 +4,7 @@ import Worker from './workers.jsx';
 import $ from 'jquery';
 
 
-class Forniture extends React.Component {
+class Gardener extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +15,7 @@ class Forniture extends React.Component {
     getAllWorkers() {
         $('button, input, h1').hide();
         var that = this;
-        axios.post('/majors', { major: 'furniture' })
+        axios.post('/majors', { major: 'Gardener' })
             .then(function (res) {
                 console.log(res.data)
 
@@ -27,11 +27,11 @@ class Forniture extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.getAllWorkers.bind(this)}> Furniture</button>
+                <button onClick={this.getAllWorkers.bind(this)}> Gardener</button>
                 <Worker workersList={this.state.workers} />
             </div>
         )
     }
 
 }
-export default Forniture;
+export default Gardener;
