@@ -13,7 +13,7 @@ class Workers extends React.Component {
     }
     // get All the workers information from the database
     getAllWorkers() {
-        $('button, input, h1').hide();
+        $('button, input, h1, h4').hide();
         var that = this;
         console.log(this.state.workers, 'sdsdfgeg')
         axios.get('/workers')

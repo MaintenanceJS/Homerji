@@ -55,9 +55,9 @@ class App extends React.Component {
   render() {
     return (<div>
       <SearchBar />
-      <Sign />
-      <Login />
-      <Logout />
+      <Sign id='sign' />
+      <Login id='login'/>
+      <Logout id='logout' />
       <div><WorkersLogo /></div>
       <div><Furniture /></div>
       <div><Electric /></div>
