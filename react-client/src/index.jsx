@@ -55,11 +55,11 @@ class App extends React.Component {
 
   render() {
     return (<div>
+      <NavBar />
       <SearchBar />
       <Logout />
       <div><WorkersLogo /></div>
       <div><Furniture /></div>
-      <NavBar />
       <Sign />
       <Login />
       <div><Electric /></div>
