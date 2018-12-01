@@ -18,7 +18,7 @@ var itemSchema = mongoose.Schema({
   email: String,
   password: String,
   description: String,
-  availability: Boolean,
+  availability: String,
   phonenumber: Number,
   image: { data: Buffer, contentType: String }
 });

@@ -2,7 +2,7 @@ import React from 'react';
 
 const ListItem = (props) => (
   <div>
-    { props.dana.description }
+    gbyunhinimj
   </div>
 )
 

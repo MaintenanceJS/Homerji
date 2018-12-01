@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
+import Workers from './components/workersLogo.jsx';
+
 // uncomment this when using the frontend routers
 // import { Router, Route, Switch } from 'react-router'
 // import { BrowserRouter, Route, Link } from 'react-router-dom'
@@ -11,32 +13,32 @@ import List from './components/List.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       getItems: [],
       postItems: [],
       name: ''
     }
   }
 
-  componentDidMount() {
-    $.ajax({
-      url: '/workers', 
-      success: (data) => {
-        this.setState ({
-          getItems: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
-  }
+  // componentDidMount() {
+  //   $.ajax({
+  //     url: '/workers',
+  //     success: (data) => {
+  //       this.setState({
+  //         getItems: data
+  //       })
+  //     },
+  //     error: (err) => {
+  //       console.log('err', err);
+  //     }
+  //   });
+  // }
 
   sendData(data) {
     $.ajax({
       type: 'POST',
       url: '/name',
-      data: {name: data},
+      data: { name: data },
       success: (data) => {
         this.setState({
           postItems: data
@@ -59,8 +61,9 @@ class App extends React.Component {
     })
   }
 
-  render () {
+  render() {
     return (<div>
+      <Workers />
       <h1 className='head1'>Item List</h1>
       <input id="name" onChange={this.inputHandle.bind(this)} />
       <h4 id='head2'> {this.state.input} </h4>

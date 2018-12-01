@@ -65,5 +65,3 @@ View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
-
-[![Waffle.io - Issues in progress](https://badge.waffle.io/MaintenanceJS/Homerji.png?label=in%20progress&title=In%20Progress)](http://waffle.io/MaintenanceJS/Homerji)
