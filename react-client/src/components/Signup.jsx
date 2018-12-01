@@ -1,20 +1,20 @@
 import React from 'react';
 import WorkerList from './workersList.jsx';
 import $ from 'jquery';
-
+import Dropdown from 'react-drop-down'
 
 class Sign extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       shown: false,
-      name: '',
-      major: '',
-      rating: 0,
-      email: '',
-      username: '',
-      password: '',
-      description: '',
+      name: 'Unknown',
+      major: 'Plumber',
+      rating: 3,
+      email: 'Unkown@unkown.com',
+      username: 'Unkown',
+      password: 'Unkown',
+      description: 'Unkown',
       availability: 'yes',
       phonenumber: 0
     };
@@ -46,7 +46,7 @@ class Sign extends React.Component {
 
   handleMajor(e) {
     this.setState({
-      major: e.target.value
+      major: e
     })
   }
 
@@ -77,12 +77,6 @@ class Sign extends React.Component {
   handleDescription(e) {
     this.setState({
       description: e.target.value
-    })
-  }
-
-  handleAvailability(e) {
-    this.setState({
-      availability: e.target.value
     })
   }
 
@@ -128,12 +122,10 @@ class Sign extends React.Component {
             <br /><input type="text" onChange={this.handleName.bind(this)} />
           </label> <br />
           <label>
-            Major:
-            <br /><input type="text" onChange={this.handleMajor.bind(this)} />
-          </label> <br />
-          <label>
-            Rating:
-            <br /><input type="text" onChange={this.handleRating.bind(this)} />
+            Major: <br />
+            <Dropdown value={this.state.major}
+              onChange={this.handleMajor.bind(this)}
+              options={['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener']} />
           </label> <br />
           <label>
             Email:
@@ -152,10 +144,6 @@ class Sign extends React.Component {
             <br /><input type="text" onChange={this.handleDescription.bind(this)} />
           </label> <br />
           <label>
-            Availability:
-            <br /><input type="text" onChange={this.handleAvailability.bind(this)} />
-          </label> <br />
-          <label>
             Phonenumber:
             <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
@@ -167,3 +155,7 @@ class Sign extends React.Component {
 }
 
 export default Sign;
+
+
+
+//<br /><input type="text" onChange={this.handleMajor.bind(this)}/>

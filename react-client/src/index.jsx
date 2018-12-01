@@ -51,8 +51,11 @@ class App extends React.Component {
   render() {
     return (<div>
       <NavBar />
-      <WorkerName />
-      <div><Forniture /></div>
+      <Sign />
+      <Login />
+      <Logout />
+      <div><WorkersLogo /></div>
+      <div><Furniture /></div>
       <div><Electric /></div>
       <div> <Painting /></div>
       <div> <Plump /></div>
@@ -63,3 +66,5 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+//      <SearchBar />
