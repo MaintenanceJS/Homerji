@@ -11,6 +11,7 @@ import Plump from './components/plump.jsx';
 import Electric from './components/electric.jsx';
 import Forniture from './components/forniture.jsx';
 import Others from './components/others.jsx';
+import NavBar from "./components/NavBar.jsx";
 // uncomment this when using the frontend routers
 // import { Router, Route, Switch } from 'react-router'
 // import { BrowserRouter, Route, Link } from 'react-router-dom'
@@ -70,11 +71,12 @@ class App extends React.Component {
 
   render() {
     return (<div>
-      <Workers />
+      <NavBar />
+      {/* <Workers /> */}
       <WorkerName />
       <Sign />
       <Login />
-      <div><Workers /></div>
+      {/* <div><Workers /></div> */}
       <div><Forniture /></div>
       <div><Electric /></div>
       <div> <Painting /></div>
