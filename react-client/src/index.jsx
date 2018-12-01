@@ -57,7 +57,6 @@ class App extends React.Component {
   render() {
     return (<div>
       <NavBar />
-      <SearchBar />
       <Sign />
       <Login />
       <Logout />
@@ -72,3 +71,5 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+//      <SearchBar />
