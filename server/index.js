@@ -220,8 +220,21 @@ app.post('/login', loginUser);
 app.post('/add', manualAddingToDB);
 
 //listen to local host
-app.listen(3000, function() {
+var port = process.env.PORT || 3000;
+app.listen(port, function() {
   console.log('listening on port 3000!');
 });
 
 //bcrypt.compareSync("bacon", hash); // true
+
+
+
+
+
+
+
+
+
+
+
+

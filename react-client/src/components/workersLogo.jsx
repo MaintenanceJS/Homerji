@@ -3,6 +3,7 @@ import axios from 'axios';
 import Worker from './workers.jsx';
 import $ from 'jquery';
 
+
 class Workers extends React.Component {
     constructor(props) {
         super(props);
@@ -30,6 +31,7 @@ class Workers extends React.Component {
             </div>
         )
     }
+
 }
 
 export default Workers;
