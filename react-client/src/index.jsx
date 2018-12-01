@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
 import Workers from './components/workersLogo.jsx';
+import WorkerName from './components/searchBarWorkers.jsx';
 import Sign from './components/SignupAndLogin.jsx';
 import Login from './components/Login.jsx';
 import Painting from './components/painting.jsx';
@@ -69,6 +70,8 @@ class App extends React.Component {
 
   render() {
     return (<div>
+      <Workers />
+      <WorkerName />
       <Sign />
       <Login />
       <div><Workers /></div>

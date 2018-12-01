@@ -46,7 +46,7 @@ var selectAllNames = function(name, callback) {
   });
 };
 
-var selectAllUsernames = function(res, username, callback) {
+var selectAllUsernames = function(username, callback) {
   worker.find({username: username}, function(err, items) {
     if(err) {
       callback(err, null);
