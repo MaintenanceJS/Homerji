@@ -3,7 +3,6 @@ import axios from 'axios';
 import Worker from './workers.jsx';
 import $ from 'jquery';
 
-
 class Painting extends React.Component {
     constructor(props) {
         super(props);
@@ -12,7 +11,7 @@ class Painting extends React.Component {
         };
     }
     // get All the workers information from the database
-    getAllWorkers() {
+    componentDidMount() {
         $('button, input, h1').hide();
         var that = this;
         axios.post('/majors', { major: 'Painter' })
@@ -27,7 +26,6 @@ class Painting extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.getAllWorkers.bind(this)}> Painting</button>
                 <Worker workersList={this.state.workers} />
             </div>
         )

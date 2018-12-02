@@ -73,6 +73,7 @@ class ListWrkersName extends React.Component {
   render() {
     return (
       <div style={{border: '2px solid red', margin: '10px', textAlign:'center'}}>
+<<<<<<< HEAD
         <p>Name: {this.props.item.name}</p> 
         <p>Major:{this.props.item.major}</p>
         <p>Rating:{this.props.item.rating}</p>
