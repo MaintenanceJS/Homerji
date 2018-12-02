@@ -11,8 +11,10 @@ import {
     FormControl,
     Button
 } from "react-bootstrap";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-export default class NavBar extends React.Component {
+
+class NavBar extends React.Component {
     constructor(props) {
         super(props);
 
@@ -30,7 +32,7 @@ export default class NavBar extends React.Component {
     }
 
     getWorkersByName() {
-        $('button, input, h1, h4').hide();
+        $('button, h1, h4').hide();
         var that = this;
         axios.post('/name', { name: this.state.name })
             .then(function (res) {
@@ -49,8 +51,10 @@ export default class NavBar extends React.Component {
 
 
     render() {
-        return <div>
-            <Navbar inverse collapseOnSelect>
+        return (
+        <Router>
+        <div>
+            <Navbar collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <a href="/">HomerJi</a>
@@ -59,17 +63,22 @@ export default class NavBar extends React.Component {
                 <Navbar.Collapse>
                     <Navbar.Form pullLeft>
                         <FormGroup>
-                            <FormControl type="text" placeholder="Search" onChange={this.getUserName.bind(this)} />
-                        </FormGroup> <Button onClick={this.getWorkersByName.bind(this)}>Search</Button>
+                            <FormControl type="text" placeholder="Username" onChange={this.getUserName.bind(this)} />
+                        </FormGroup> <Link to="/search"><Button onClick={this.getWorkersByName.bind(this)}>Search</Button></Link>
                     </Navbar.Form>
                     <Nav pullRight>
                         <NavItem href="#">
-                        <Workers />
+                        <div> <Workers /> </div>
                         </NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <SearchByName workersList={this.state.workers} />
+            <Route path='/search' component={() => <SearchByName workersList={this.state.workers} />}/>
         </div>
+        </Router>
+        )
     }
 }
+
+export default NavBar;
+//            <SearchByName workersList={this.state.workers}> </SearchByName>

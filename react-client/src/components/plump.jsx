@@ -12,14 +12,11 @@ class Plump extends React.Component {
 
         }
     }
-    getAllPlumbers() {
+    componentDidMount() {
         $('button, input, h1').hide();
         var that = this;
-        console.log(this.state.workers, 'sdsdfgeg')
         axios.post('/majors', { major: 'Plumber' })
             .then(function (res) {
-                console.log(res.data)
-
                 that.setState({
                     workers: res.data
                 })
@@ -28,7 +25,6 @@ class Plump extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.getAllPlumbers.bind(this)}>Plumping</button>
                 <Worker workersList={this.state.workers} />
             </div>
         )

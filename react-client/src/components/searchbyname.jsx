@@ -14,6 +14,7 @@ class SearchByName extends React.Component {
     return (
       <div>
         <div>
+        {console.log('a')}
           {this.props.workersList.map(item =>
             <SearchedNames key={item._id} item={item}/>
           )}
