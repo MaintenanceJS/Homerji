@@ -28,9 +28,9 @@ class Workers extends React.Component {
         return (
             <div>
                 <button onClick={this.getAllWorkers.bind(this)}> Register & Login</button>
-                <Sign />
+                {/* <Sign />
                 <Login />
-                <Logout />
+                <Logout /> */}
             </div>
         )
     }

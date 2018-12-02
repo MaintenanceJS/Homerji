@@ -138,23 +138,30 @@ var signupWorker = function (req, res) {
 var loginUser = function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
-  db.selectAllUsernames(username, function(err, found) {
-    if (err) {res.sendStatus(500)}; //only for unpredictable errors
-
-    if (found) {
+   db.selectAllUsernames(username, req, res, function(err, found) {
+    if (err) { //only for unpredictable errors
+      res.sendStatus(500)
+      return err
+    } else {
       if (found.length === 0) {
         console.log("Username doesn't exist");
-        res.status(404).send();
+        res.status(404).json('');
       } else {
         var item = found[0].password
-        comparePassword(password, item, function (match) {
+         comparePassword(password, item, function (match) {
           if (match) {
             res.setHeader('Content-Type', 'application/json');
-            createSession(req, res, found[0]);
-            res.status(200).send()
+             createSession(req, res, found[0], function(done) {
+              if (done) {
+                 res.json('')
+              } else {
+                console.log('should not seen')
+                res.status(401).json('')
+              }
+            });
           } else {
             console.log('wrong password or username')
-            res.status(404).send();
+            res.status(404).json();
           }
         })
       }
@@ -164,13 +171,14 @@ var loginUser = function (req, res) {
 
 
 //create a session function
-var createSession = function (req, res, newUser) {
+var createSession = function (req, res, newUser, callback) {
   console.log("before regenerate", 'req.session', req.session)
-  return req.session.regenerate(function (err) {
+  req.session.regenerate(function (err) {
     if (err) { return err }
     req.session.userID = newUser._id;
     console.log("in generator of session", "req.cookies", req.cookies)
     console.log("in generator of session", 'req.session', req.session)
+    callback(true)
     //res.redirect('/'); ////////////TODO
   });
 };
@@ -180,6 +188,7 @@ var logoutUser = function (req, res) {
   console.log("before", req.session)
   req.session.destroy(function() {
     //res.redirect('/');
+    res.status(200).send()
   });
   console.log("after", req.session)
 };
@@ -202,7 +211,7 @@ var hashPassword = function () {
 var rating = function (req, res) {
   var newRating = Number(req.body.rating);
   var username = req.body.username;
-  db.selectAllUsernames(username, function(err, found) {
+  db.selectAllUsernames(username, req, res, function(err, found) {
     if (!found) {res.status(500).send()}
     if (found.length === 0) {res.status(401).send()}
     if (found.length !== 0) {
@@ -222,6 +231,40 @@ var rating = function (req, res) {
   })
 }
 
+var edting = function (req, res) {
+  var username = req.body.username
+  var name = req.body.name
+  var major = req.body.major
+  var email = req.body.email
+  var password = req.body.password
+  var description = req.body.description
+  var phonenumber = Number(req.body.phonenumber)
+  var hash = bcrypt.hashSync(password);
+
+  db.selectAllUsernames(username, req, res, function(err, found) {
+    console.log(found)
+    db.updateName(username, name, function () {
+      return
+    })
+    db.updateMajor(username, major, function () {
+      return
+    })
+    db.updateEmail(username, email, function () {
+      return
+    })
+    db.updatePassword(username, hash, function () {
+      return
+    })
+    db.updateDescription(username, description, function () {
+      return
+    })
+    db.updatePhonenumber(username, phonenumber, function () {
+      return
+    })
+  })
+  res.status(200).send('')
+}
+
 //signup 
 //app.get('/signup', signupUserForm);
 app.post('/signup', signupWorker);
@@ -237,6 +280,7 @@ app.get('/test', function (req, res) {
   }
 });
 app.post('/rating', rating);
+app.post('/edit', edting);
 
 
 //listen to local host

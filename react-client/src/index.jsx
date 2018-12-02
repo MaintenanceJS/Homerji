@@ -10,6 +10,8 @@ import Furniture from './components/forniture.jsx';
 import Carpenter from './components/Carpenter.jsx';
 import NavBar from "./components/NavBar.jsx";
 import Gardener from "./components/Gardener.jsx";
+import Login from "./components/Login.jsx";
+import { BrowserRouter,Route } from "react-router-dom";
 
 
 class App extends React.Component {
@@ -50,16 +52,38 @@ class App extends React.Component {
   }
 
   render() {
-    return (<div>
-      <NavBar />
-      <div><WorkersLogo /></div>
-      <div><Furniture /></div>
-      <div><Electric /></div>
-      <div> <Painting /></div>
-      <div> <Plump /></div>
-      <div> <Carpenter /></div>
-      <div><Gardener /></div>
-    </div>)
+    return (
+    <BrowserRouter>
+        <div>
+          <NavBar />
+          <Route path='/Register' component={Login}/>
+          <div>
+            <WorkersLogo />
+          </div>
+          <div>
+            <Furniture />
+          </div>
+          <div>
+            <Electric />
+          </div>
+          <div>
+            {" "}
+            <Painting />
+          </div>
+          <div>
+            {" "}
+            <Plump />
+          </div>
+          <div>
+            {" "}
+            <Carpenter />
+          </div>
+          <div>
+            <Gardener />
+          </div>
+        </div>
+      </BrowserRouter>
+      );
   }
 }
 
