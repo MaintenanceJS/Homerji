@@ -1,48 +1,44 @@
-import React from "react";
-import axios from "axios";
-import $ from "jquery";
-import Sign from "./Signup.jsx";
-import Login from "./Login.jsx";
-import Logout from "./logout.jsx";
+import React from 'react';
+import axios from 'axios';
+import $ from 'jquery';
+import Sign from './Signup.jsx';
+import Login from './Login.jsx';
+import Logout from './logout.jsx';
+
 
 class Workers extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: false,
+        };
+    }
 
-  componentDidMount() {}
+    componentDidMount() {
+    }
 
-  handleButton() {
-    this.setState({
-      show: !this.state.show
-    });
-  }
+    handleButton() {
+        // console.log("in handle workers logo", this.props.handleWorkersButton)
+        // this.props.handleWorkersButton
+    }
 
-  render() {
-    if (this.state.show) {
-      return (
-        <div>
-          <button onClick={this.getAllWorkers.bind(this)}>
-            {" "}
-            Register & Login
-          </button>
-          <button onClick={this.handleButton.bind(this)}> Workers </button>
-          <Sign className="show" />
-          <Login className="show" />
-          <Logout className="show" />
-        </div>
-      );
+    render() {
+      if (this.state.show) {
+        return (
+            <div>
+                <button onClick={this.props.handleWorkersButton}> Workers </button>
+            </div>
+        )
     } else {
       return (
-        <div>
-          <button onClick={this.handleButton.bind(this)}> Workers </button>
-        </div>
-      );
+            <div>
+              <button onClick={this.props.handleWorkersButton}> Workers </button>
+            </div>
+        )
     }
   }
+
 }
 
 export default Workers;
+
