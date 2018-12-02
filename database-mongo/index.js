@@ -47,7 +47,7 @@ var selectAllNames = function (name, callback) {
   });
 };
 
-var selectAllUsernames = function (username, callback) {
+var selectAllUsernames = function (username, req, res, callback) {
   worker.find({ username: username }, function (err, items) {
     if (err) {
       callback(err, null);
@@ -76,6 +76,66 @@ var updateRating = function(username, newRating, callback) {
   })
 }
 
+var updateName = function(username, newName, callback) {
+  worker.updateOne({ username: username }, { name: newName }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
+var updateMajor = function(username, newMajor, callback) {
+  worker.updateOne({ username: username }, { major: newMajor }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
+var updateEmail = function(username, newEmail, callback) {
+  worker.updateOne({ username: username }, { email: newEmail }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
+var updatePassword = function(username, newPassword, callback) {
+  worker.updateOne({ username: username }, { password: newPassword }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
+var updateDescription = function(username, newDescription, callback) {
+  worker.updateOne({ username: username }, { description: newDescription }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
+var updatePhonenumber = function(username, newPhonenumber, callback) {
+  worker.updateOne({ username: username }, { phonenumber: newPhonenumber }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
 var updateRatingCount = function(username, newCount, callback) {
   worker.updateOne({ username: username }, { ratingCount: newCount }, function(err, res) {
     if(err) {
@@ -93,7 +153,12 @@ module.exports.selectAllUsernames = selectAllUsernames;
 module.exports.selectAllMajors = selectAllMajors;
 module.exports.updateRatingCount = updateRatingCount;
 module.exports.updateRating = updateRating;
-
+module.exports.updateName = updateName;
+module.exports.updateMajor = updateMajor;
+module.exports.updateEmail = updateEmail;
+module.exports.updatePassword = updatePassword;
+module.exports.updateDescription = updateDescription;
+module.exports.updatePhonenumber = updatePhonenumber;
 
 
 
