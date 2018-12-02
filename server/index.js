@@ -8,6 +8,8 @@ var session = require('express-session'); //requires npm install
 var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
 var worker = db.worker;
+var client = db.client;
+
 
 //use express
 var app = express();
@@ -65,6 +67,22 @@ app.post('/name', function (req, res) {
       res.json(data);
     }
   });
+});
+
+app.post('/userissue', function (req, res) {
+  console.log(req.body)
+  var newClient = new client({
+          name: req.body.name,
+          phonenumber: req.body.phonenumber,
+          issue: req.body.issue,
+          latitude: req.body.latitude,
+          longtitude: req.body.latitude
+        })
+        newClient.save()
+        .then(function() {
+          console.log('saved')
+          res.status(200).send()
+        })
 });
 
 

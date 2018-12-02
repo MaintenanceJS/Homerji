@@ -10,7 +10,7 @@ import Furniture from './components/forniture.jsx';
 import Carpenter from './components/Carpenter.jsx';
 import NavBar from "./components/NavBar.jsx";
 import Gardener from "./components/Gardener.jsx";
-
+import map from "./components/maps.jsx";
 
 class App extends React.Component {
   constructor(props) {
@@ -55,10 +55,12 @@ class App extends React.Component {
       <div><WorkersLogo /></div>
       <div><Furniture /></div>
       <div><Electric /></div>
+      <map />
       <div> <Painting /></div>
       <div> <Plump /></div>
       <div> <Carpenter /></div>
       <div><Gardener /></div>
+
     </div>)
   }
 }
