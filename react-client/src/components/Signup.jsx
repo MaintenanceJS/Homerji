@@ -1,21 +1,21 @@
 import React from 'react';
 import WorkerList from './workersList.jsx';
 import $ from 'jquery';
-
+import Dropdown from 'react-drop-down'
 
 class Sign extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       shown: false,
-      name: '',
-      major: '',
-      rating: '',
-      email: '',
-      username: '',
-      password: '',
-      description: '',
-      availability: '',
+      name: 'Unknown',
+      major: 'Plumber',
+      rating: 3,
+      email: 'Unkown@unkown.com',
+      username: 'Unkown',
+      password: 'Unkown',
+      description: 'Unkown',
+      availability: 'yes',
       phonenumber: 0
     };
   }
@@ -46,7 +46,7 @@ class Sign extends React.Component {
 
   handleMajor(e) {
     this.setState({
-      major: e.target.value
+      major: e
     })
   }
 
@@ -80,12 +80,6 @@ class Sign extends React.Component {
     })
   }
 
-  handleAvailability(e) {
-    this.setState({
-      availability: e.target.value
-    })
-  } 
-
   handlePhonenumber(e) {
     this.setState({
       phonenumber: e.target.value
@@ -98,10 +92,10 @@ class Sign extends React.Component {
       url: '/signup',
       data: {
         name: this.state.name,
-        major: this.state.major, 
-        rating: this.state.rating, 
-        email: this.state.email, 
-        username: this.state.username, 
+        major: this.state.major,
+        rating: this.state.rating,
+        email: this.state.email,
+        username: this.state.username,
         password: this.state.password,
         description: this.state.description,
         availability: this.state.availability,
@@ -116,48 +110,42 @@ class Sign extends React.Component {
         console.log('err', err);
       }
     });
-  }   
+  }
 
   render() {
     return (
       <div>
         <h4 onClick={this.handleOnClick.bind(this)}> signup </h4>
-        <form className='form'> 
+        <form className='form'>
           <label>
             Name:
-            <br /><input type="text" onChange={this.handleName.bind(this)}/>
+            <br /><input type="text" onChange={this.handleName.bind(this)} />
           </label> <br />
           <label>
-            Major:
-            <br /><input type="text" onChange={this.handleMajor.bind(this)}/>
-          </label> <br />
-          <label>
-            Rating:
-            <br /><input type="text" onChange={this.handleRating.bind(this)}/>
+            Major: <br />
+            <Dropdown value={this.state.major}
+              onChange={this.handleMajor.bind(this)}
+              options={['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener']} />
           </label> <br />
           <label>
             Email:
-            <br /><input type="text" onChange={this.handleEmail.bind(this)}/>
+            <br /><input type="text" onChange={this.handleEmail.bind(this)} />
           </label> <br />
           <label>
             Username:
-            <br /><input type="text" onChange={this.handleUsername.bind(this)}/>
+            <br /><input type="text" onChange={this.handleUsername.bind(this)} />
           </label> <br />
           <label>
             Password:
-            <br /><input type="text" onChange={this.handlePassword.bind(this)}/>
+            <br /><input type="text" onChange={this.handlePassword.bind(this)} />
           </label> <br />
           <label>
             Description:
-            <br /><input type="text" onChange={this.handleDescription.bind(this)}/>
-          </label> <br />
-          <label>
-            Availability:
-            <br /><input type="text" onChange={this.handleAvailability.bind(this)}/>
+            <br /><input type="text" onChange={this.handleDescription.bind(this)} />
           </label> <br />
           <label>
             Phonenumber:
-            <br /><input type="text" onChange={this.handlePhonenumber.bind(this)}/>
+            <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
           <button onClick={this.handleSubmit.bind(this)}> Submit </button>
         </form>
@@ -167,3 +155,7 @@ class Sign extends React.Component {
 }
 
 export default Sign;
+
+
+
+//<br /><input type="text" onChange={this.handleMajor.bind(this)}/>

@@ -12,17 +12,21 @@ var worker = db.worker;
 //use express
 var app = express();
 
-app.use(partial());
+//app.use(partial());
 
 //body parser
 app.use(bodyParser.urlencoded({
-    extended: false
+  extended: false
 }))
 app.use(bodyParser.json());
 
-//cookies and sessions
+//cookies and session
 app.use(cookieParser('shhhh, very secret'));
 app.use(session({
+  // secret: 'shhh, it\'s a secret',
+  // resave: true,
+  // saveUninitialized: true,
+  // cookie: { path: '/', httpOnly: true, secure: false, maxAge: 60000 }
   secret: 'shhh, it\'s a secret',
   resave: false,
   saveUninitialized: true
@@ -33,23 +37,31 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 //request functions
 app.get('/workers', function (req, res) {
-  db.selectAll(function(err, data) {
-    if(err) {
+  db.selectAll(function (err, data) {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.send(data);
+    }
+  });
+});
+//majors
+app.post('/majors', function (req, res) {
+  // console.log(req.body.major, 'majorssss')
+  db.selectAllMajors(req.body.major, function (err, data) {
+    if (err) {
       res.sendStatus(500);
     } else {
       res.json(data);
     }
   });
 });
-
 app.post('/name', function (req, res) {
-	var name = req.body.name;
-  console.log(name);
-  db.selectAllNames(name, function(err, data) {
+  var name = req.body.name;
+  db.selectAllNames(name, function (err, data) {
     if (err) {
       res.sendStatus(500);
     } else {
-      console.log(data);
       res.json(data);
     }
   });
@@ -57,27 +69,28 @@ app.post('/name', function (req, res) {
 
 
 //add an item to dataBase
-var manualAddingToDB = function() {
+var manualAddingToDB = function () {
   var x = new worker({
-    name: 'testName', 
-    major: 'testMajor', 
-    rating: 0, 
-    email: 'test@tester.com', 
-    username:'tester', 
+    name: 'testName',
+    major: 'testMajor',
+    rating: 0,
+    email: 'test@tester.com',
+    username: 'tester',
     password: '123',
     description: 'testing',
     availability: "yes",
-    phonenumber: 1111111
+    phonenumber: 1111111,
+    ratingCount: 0
   })
   x.save()
-  .then(function() {
-    console.log('worker is saved in database, in signupWorker')
-  })
+    .then(function () {
+      console.log('worker is saved in database, in signupWorker')
+    })
 }
 
 
 //signup functions
-var signupWorker = function(req, res) {
+var signupWorker = function (req, res) {
   // console.log('you are at signupWorker in server index.js')
   var name = req.body.name;
   var major = req.body.major;
@@ -91,7 +104,7 @@ var signupWorker = function(req, res) {
   var hash = bcrypt.hashSync(password);
 
   db.selectAllUsernames(username, function(err, found) {
-    if (err) {res.send('404')}; //only for unpredictable errors
+    if (err) {res.sendStatus(500)}; //only for unpredictable errors
 
     if (found) {
       if (found.length > 0) {
@@ -99,70 +112,49 @@ var signupWorker = function(req, res) {
       } else {
         console.log("empty found array")
         var newWorker = new worker({
-          name: name, 
-          major: major, 
-          rating: rating, 
-          email: email, 
-          username: username, 
+          name: name,
+          major: major,
+          rating: rating,
+          email: email,
+          username: username,
           password: hash,
           description: description,
           availability: availability,
-          phonenumber: phonenumber
+          phonenumber: phonenumber,
+          ratingCount: 1
         })
         newWorker.save()
         .then(function() {
           console.log('saved')
           createSession(req, res, newWorker)
-          res.send('Saved!')
+          res.status(200).send()
         })
       }
     }
   })
-    // .then(function(user) {
-    //   if (!user) {
-    //     var newUser = new worker({
-    //       username: username,
-    //       password: password
-    //     });
-    //     newUser.save()
-    //       .then(function(newUser) {
-    //         Users.add(newUser);
-    //         createSession(req, res, newUser);
-    //       });
-    //   } else {
-    //     console.log('Account already exists');
-    //     res.redirect('/signup'); //is to send to this endpoint to find an other username //TODO
-    //   }
-    // });
 };
 
-// var signupUserForm = function(req, res) {
-//   res.render('signup'); //////////////TODO
-// };
-
 //login functions
-var loginUser = function(req, res) {
+var loginUser = function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
-  console.log("in loginUser======", username, password)
   db.selectAllUsernames(username, function(err, found) {
-    if (err) {res.send('404')}; //only for unpredictable errors
+    if (err) {res.sendStatus(500)}; //only for unpredictable errors
 
     if (found) {
-      console.log("found==========", found[0].password, password)
       if (found.length === 0) {
         console.log("Username doesn't exist");
-        res.send('Account already exists, please try another username');
+        res.status(404).send();
       } else {
-        console.log(found, "before error")
-        var item = found[0].password 
-        comparePassword(password, item,function(match) {
-          console.log('match====', match)
+        var item = found[0].password
+        comparePassword(password, item, function (match) {
           if (match) {
             res.setHeader('Content-Type', 'application/json');
             createSession(req, res, found[0]);
+            res.status(200).send()
           } else {
-            res.send('wrong password', item);
+            console.log('wrong password or username')
+            res.status(404).send();
           }
         })
       }
@@ -171,64 +163,87 @@ var loginUser = function(req, res) {
 };
 
 
-var isLoggedIn = function(req, res) {
-  return req.session ? !!req.session.user : false;
-};
-
-var checkUser = function(req, res, next) {
-  if (!exports.isLoggedIn(req)) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
-};
-
 //create a session function
-var createSession = function(req, res, newUser) {
-  console.log("in createSession function")
-  return req.session.regenerate(function() {
-      req.session.user = newUser;
-      console.log("in generator of session",req.sessionID)
-      res.redirect('/'); ////////////TODO
-    });
-};
-//destroy a session function
-var logoutUser = function(req, res) {
-  req.session.destroy(function() {
-    res.redirect('/');
+var createSession = function (req, res, newUser) {
+  console.log("before regenerate", 'req.session', req.session)
+  return req.session.regenerate(function (err) {
+    if (err) { return err }
+    req.session.userID = newUser._id;
+    console.log("in generator of session", "req.cookies", req.cookies)
+    console.log("in generator of session", 'req.session', req.session)
+    //res.redirect('/'); ////////////TODO
   });
+};
+
+//destroy a session function
+var logoutUser = function (req, res) {
+  console.log("before", req.session)
+  req.session.destroy(function() {
+    //res.redirect('/');
+  });
+  console.log("after", req.session)
 };
 
 //password functions
-var comparePassword = function(attemptedPassword, hashed,callback) {
-  bcrypt.compare(attemptedPassword, hashed, function(err, isMatch) {
+var comparePassword = function (attemptedPassword, hashed, callback) {
+  bcrypt.compare(attemptedPassword, hashed, function (err, isMatch) {
     callback(isMatch);
   });
 }
-var hashPassword = function() {
+var hashPassword = function () {
   var cipher = Promise.promisify(bcrypt.hash);
   return cipher(this.get('password'), null, null).bind(this)
-    .then(function(hash) {
+    .then(function (hash) {
       this.set('password', hash);
     });
+}
+
+//edit rating
+var rating = function (req, res) {
+  var newRating = Number(req.body.rating);
+  var username = req.body.username;
+  db.selectAllUsernames(username, function(err, found) {
+    if (!found) {res.status(500).send()}
+    if (found.length === 0) {res.status(401).send()}
+    if (found.length !== 0) {
+      var count = found[0].ratingCount;
+      var rate = found[0].rating;
+      var ratio = count * rate;
+      var newCount = count+1;
+      var result = (newRating+ratio) / newCount
+      db.updateRating(username, result, function () {
+        return
+      })
+      db.updateRatingCount(username, newCount, function () {
+        return
+      })
+      res.status(200).send('')
+    } 
+  })
 }
 
 //signup 
 //app.get('/signup', signupUserForm);
 app.post('/signup', signupWorker);
 app.post('/login', loginUser);
+app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB);
-app.get('/logout', logoutUser);
+app.get('/test', function (req, res) {
+  console.log(req.session)
+  if(!req.session.userID) {
+    res.status(401).send()
+  } else {
+    res.status(200).send()
+  }
+});
+app.post('/rating', rating);
 
 
 //listen to local host
 var port = process.env.PORT || 3000;
-app.listen(port, function() {
+app.listen(port, function () {
   console.log('listening on port 3000!');
 });
-
-//bcrypt.compareSync("bacon", hash); // true
-
 
 
 

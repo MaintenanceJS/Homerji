@@ -8,36 +8,35 @@ class WorkersNames extends React.Component {
         super(props);
         this.state = {
             workers: [],
-            name:''
+            name: ''
         };
     }
     // get a worker information from the database
     getWorkersByName() {
         $('button, input, h1').hide();
         var that = this;
-        console.log(this.state.workers, 'sad')
-        axios.post('/name', {name: this.state.name})
-        .then(function(res){
-            console.log(res.data)
-            that.setState({
-              workers: res.data
+        axios.post('/name', { name: this.state.name })
+            .then(function (res) {
+                that.setState({
+                    workers: res.data
+                })
             })
-        })
     }
 
     getUserName(e) {
-      this.setState({
-        name: e.target.value
-      })
+        this.setState({
+            name: e.target.value
+
+        })
     }
 
 
     render() {
         return (
             <div>
-                <input type='text' onChange={this.getUserName.bind(this)}/>
+                <input type='text' onChange={this.getUserName.bind(this)} />
                 <button onClick={this.getWorkersByName.bind(this)}>search</button>
-                <Worker workersList={this.state.workers}/>
+                <Worker workersList={this.state.workers} />
             </div>
         )
     }

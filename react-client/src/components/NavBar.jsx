@@ -1,5 +1,8 @@
 import React from "react";
 import Workers from "./workersLogo.jsx"
+import SearchByName from './searchbyname.jsx';
+import axios from 'axios';
+import $ from 'jquery';
 import {
     Navbar,
     Nav,
@@ -15,7 +18,9 @@ export default class NavBar extends React.Component {
 
         this.toggle = this.toggle.bind(this);
         this.state = {
-            isOpen: false
+            isOpen: false,
+            name: '',
+            workers: []
         };
     }
     toggle() {
@@ -23,30 +28,48 @@ export default class NavBar extends React.Component {
             isOpen: !this.state.isOpen
         });
     }
+
+    getWorkersByName() {
+        $('button, input, h1, h4').hide();
+        var that = this;
+        axios.post('/name', { name: this.state.name })
+            .then(function (res) {
+                that.setState({
+                    workers: res.data
+                })
+            })
+    }
+
+
+    getUserName(e) {
+        this.setState({
+            name: e.target.value
+        })
+    }
+
+
     render() {
         return <div>
             <Navbar inverse collapseOnSelect>
-              <Navbar.Header>
-                <Navbar.Brand>
-                  <a href="/">Homerji</a>
-                </Navbar.Brand>
-                <Navbar.Toggle />
-              </Navbar.Header>
-              <Navbar.Collapse>
-                <Navbar.Form pullLeft>
-                  <FormGroup>
-                    <FormControl type="text" placeholder="Search" />
-                  </FormGroup> <Button type="submit">
-                    Submit
-                  </Button>
-                </Navbar.Form>
-                <Nav pullRight>
-                  <NavItem href="#">
-                    <Workers />
-                  </NavItem>
-                </Nav>
-              </Navbar.Collapse>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <a href="/">HomerJi</a>
+                    </Navbar.Brand>
+                </Navbar.Header>
+                <Navbar.Collapse>
+                    <Navbar.Form pullLeft>
+                        <FormGroup>
+                            <FormControl type="text" placeholder="Search" onChange={this.getUserName.bind(this)} />
+                        </FormGroup> <Button onClick={this.getWorkersByName.bind(this)}>Search</Button>
+                    </Navbar.Form>
+                    <Nav pullRight>
+                        <NavItem href="#">
+                        <Workers />
+                        </NavItem>
+                    </Nav>
+                </Navbar.Collapse>
             </Navbar>
-          </div>;
+            <SearchByName workersList={this.state.workers} />
+        </div>
     }
 }
