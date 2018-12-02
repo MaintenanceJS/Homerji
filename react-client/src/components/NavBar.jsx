@@ -64,7 +64,7 @@ export default class NavBar extends React.Component {
                     </Navbar.Form>
                     <Nav pullRight>
                         <NavItem href="#">
-                            <Workers />
+                        <Workers />
                         </NavItem>
                     </Nav>
                 </Navbar.Collapse>

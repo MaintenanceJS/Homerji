@@ -21,6 +21,7 @@ var itemSchema = mongoose.Schema({
   description: String,
   availability: String,
   phonenumber: Number,
+  ratingCount: Number,
   //image: { data: Buffer, contentType: String }
 });
 
@@ -65,8 +66,34 @@ var selectAllMajors = function (major, callback) {
   });
 };
 
+var updateRating = function(username, newRating, callback) {
+  worker.updateOne({ username: username }, { rating: newRating }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
+var updateRatingCount = function(username, newCount, callback) {
+  worker.updateOne({ username: username }, { ratingCount: newCount }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
 module.exports.worker = worker;
 module.exports.selectAll = selectAll;
 module.exports.selectAllNames = selectAllNames;
 module.exports.selectAllUsernames = selectAllUsernames;
 module.exports.selectAllMajors = selectAllMajors;
+module.exports.updateRatingCount = updateRatingCount;
+module.exports.updateRating = updateRating;
+
+
+
+

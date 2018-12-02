@@ -9,7 +9,7 @@ class Logout extends React.Component {
 
   output() {
     $.ajax({
-      type: 'GET',
+      type: 'POST',
       url: '/logout',
       success: (data) => {
         console.log("logout")
