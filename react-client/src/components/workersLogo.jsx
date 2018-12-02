@@ -10,30 +10,41 @@ class Workers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            workers: []
+            show: false
         };
     }
-    // get All the workers information from the database
-    getAllWorkers() {
-        $('button, h1').hide();
-        var that = this;
-        axios.get('/workers')
-            .then(function (res) {
-                that.setState({
-                    workers: res.data
-                })
-            })
+
+    componentDidMount() {
     }
+
+    handleButton() {
+      this.setState({
+          show: !this.state.show
+        })
+    }
+
     render() {
+      if (this.state.show) {
         return (
             <div>
                 <button onClick={this.getAllWorkers.bind(this)}> Register & Login</button>
                 {/* <Sign />
                 <Login />
                 <Logout /> */}
+              <button onClick={this.handleButton.bind(this)}> Workers </button>
+              <Sign className='show' />
+              <Login className='show' />
+              <Logout className='show' />
+            </div>
+        )
+    } else {
+      return (
+            <div>
+              <button onClick={this.handleButton.bind(this)}> Workers </button>
             </div>
         )
     }
+  }
 
 }
 

@@ -22,7 +22,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    $('.login, .edit').hide()
+    $('.login, .edit, .submit').hide()
     if (this.state.loggedin === true) {
       $('.edit').show()
     }
@@ -36,9 +36,9 @@ class Login extends React.Component {
       shown: !this.state.shown
     })
     if (!this.state.shown) {
-      $('.login').show()
+      $('.login, .submit').show()
     } else {
-      $('.login').hide()
+      $('.login, .submit').hide()
     }
   }
 
@@ -144,15 +144,15 @@ class Login extends React.Component {
 
         <h4 onClick={this.handleOnClick.bind(this)}> login </h4>
 
-          <label>
+          <label className='login'>
             Username:
             <br /><input type="text" onChange={this.handleUsername.bind(this)} />
           </label> <br />
-          <label>
+          <label className='login'>
             Password:
             <br /><input type="text" onChange={this.handlePassword.bind(this)} />
           </label> <br />
-          <button onClick={this.handleSubmit.bind(this)}> Submit </button>
+          <button onClick={this.handleSubmit.bind(this)} className='submit'> Submit </button>
 
           <form className='edit'>
           <label>
@@ -181,7 +181,7 @@ class Login extends React.Component {
             Phonenumber:
             <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
-          <button onClick={this.handleEdit.bind(this)}> Submit </button>
+          <button onClick={this.handleEdit.bind(this)} className='submit'> Submit </button>
         </form>
         
 

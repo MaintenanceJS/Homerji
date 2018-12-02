@@ -10,8 +10,10 @@ import Furniture from './components/forniture.jsx';
 import Carpenter from './components/Carpenter.jsx';
 import NavBar from "./components/NavBar.jsx";
 import Gardener from "./components/Gardener.jsx";
-import Login from "./components/Login.jsx";
-import { BrowserRouter,Route } from "react-router-dom";
+//import Link from 'react-router-dom'
+//import Router from 'react-router'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { browserHistory } from "react-router";
 
 
 class App extends React.Component {
@@ -53,38 +55,32 @@ class App extends React.Component {
 
   render() {
     return (
-    <BrowserRouter>
-        <div>
-          <NavBar />
-          <Route path='/Register' component={Login}/>
-          <div>
-            <WorkersLogo />
-          </div>
-          <div>
-            <Furniture />
-          </div>
-          <div>
-            <Electric />
-          </div>
-          <div>
-            {" "}
-            <Painting />
-          </div>
-          <div>
-            {" "}
-            <Plump />
-          </div>
-          <div>
-            {" "}
-            <Carpenter />
-          </div>
-          <div>
-            <Gardener />
-          </div>
-        </div>
-      </BrowserRouter>
-      );
+      <Router history={browserHistory}>
+      <div>
+        <Route path='/' component={NavBar} />
+        <Link to="/Electric"><button className='btn btn-primary'>Electric</button></Link>
+        <Link to="/Painting"><button className='btn btn-primary'>Painting</button></Link>
+        <Link to="/Plump"><button className='btn btn-primary'>Plump</button></Link>
+        <Link to="/Carpenter"><button className='btn btn-primary'>Carpenter</button></Link>
+        <Link to="/Gardener"><button className='btn btn-primary'>Gardener</button></Link>
+        <Link to="/Furniture"><button className='btn btn-primary'>Furniture</button></Link>
+
+        <Route path='/Electric' component={Electric} />
+        <Route path='/Painting' component={Painting} />
+        <Route path='/Plump' component={Plump} />
+        <Route path='/Carpenter' component={Carpenter} />
+        <Route path='/Gardener' component={Gardener} />
+        <Route path='/Furniture' component={Furniture} />
+      </div>
+      </Router>
+    )
   }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+//      <div><WorkersLogo /></div>
+//        <NavBar />
+
+
+
