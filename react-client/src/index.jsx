@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import Workers from './components/workersLogo.jsx';
+import WorkersLogo from './components/workersLogo.jsx';
 import WorkerName from './components/searchBarWorkers.jsx';
 import Painting from './components/painting.jsx';
 import Plump from './components/plump.jsx';
 import Electric from './components/electric.jsx';
-import Forniture from './components/forniture.jsx';
+import Furniture from './components/forniture.jsx';
 import Carpenter from './components/Carpenter.jsx';
 import NavBar from "./components/NavBar.jsx";
 import Gardener from "./components/Gardener.jsx";
+
 
 class App extends React.Component {
   constructor(props) {
@@ -51,9 +52,6 @@ class App extends React.Component {
   render() {
     return (<div>
       <NavBar />
-      <Sign />
-      <Login />
-      <Logout />
       <div><WorkersLogo /></div>
       <div><Furniture /></div>
       <div><Electric /></div>
@@ -66,5 +64,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
-//      <SearchBar />
