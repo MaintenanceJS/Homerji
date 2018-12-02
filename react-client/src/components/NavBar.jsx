@@ -26,25 +26,27 @@ export default class NavBar extends React.Component {
     render() {
         return <div>
             <Navbar inverse collapseOnSelect>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <a href="/">Homerji</a>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Collapse>
-                    <Navbar.Form pullLeft>
-                        <FormGroup>
-                            <FormControl type="text" placeholder="Search" />
-                        </FormGroup> <Button type="submit">Submit</Button>
-                    </Navbar.Form>
-                    <Nav pullRight>
-                        <NavItem href="#">
-                            <Workers />
-              </NavItem>
-                    </Nav>
-                </Navbar.Collapse>
+              <Navbar.Header>
+                <Navbar.Brand>
+                  <a href="/">Homerji</a>
+                </Navbar.Brand>
+                <Navbar.Toggle />
+              </Navbar.Header>
+              <Navbar.Collapse>
+                <Navbar.Form pullLeft>
+                  <FormGroup>
+                    <FormControl type="text" placeholder="Search" />
+                  </FormGroup> <Button type="submit">
+                    Submit
+                  </Button>
+                </Navbar.Form>
+                <Nav pullRight>
+                  <NavItem href="#">
+                    <Workers />
+                  </NavItem>
+                </Nav>
+              </Navbar.Collapse>
             </Navbar>
-        </div>
+          </div>;
     }
 }
