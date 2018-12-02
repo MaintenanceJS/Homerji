@@ -11,22 +11,20 @@ class Electric extends React.Component {
         };
     }
     // get All the workers information from the database
-    getAllWorkers() {
+    componentDidMount() {
         $('button, input, h1').hide();
         var that = this;
         axios.post('/majors', { major: 'Electrician' })
             .then(function (res) {
-                console.log(res.data)
-
                 that.setState({
                     workers: res.data
                 })
             })
     }
+    
     render() {
         return (
             <div>
-                <button onClick={this.getAllWorkers.bind(this)}> Electric</button>
                 <Worker workersList={this.state.workers} />
             </div>
         )
