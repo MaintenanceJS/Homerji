@@ -1,12 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import Worker from './workers.jsx';
 import $ from 'jquery';
-import Sign from './Signup.jsx';
-import Login from './Login.jsx';
-import Logout from './logout.jsx';
 
-
-class Workers extends React.Component {
+class Carpenter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,9 +12,9 @@ class Workers extends React.Component {
     }
     // get All the workers information from the database
     getAllWorkers() {
-        $('button, h1').hide();
+        $('button, input, h1').hide();
         var that = this;
-        axios.get('/workers')
+        axios.post('/majors', { major: 'Carpenter' })
             .then(function (res) {
                 that.setState({
                     workers: res.data
@@ -27,15 +24,11 @@ class Workers extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.getAllWorkers.bind(this)}> Register & Login</button>
-                <Sign />
-                <Login />
-                <Logout />
+                <button onClick={this.getAllWorkers.bind(this)}> Carpenter</button>
+                <Worker workersList={this.state.workers} />
             </div>
         )
     }
 
 }
-
-export default Workers;
-
+export default Carpenter;

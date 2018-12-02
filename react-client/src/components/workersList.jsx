@@ -8,15 +8,15 @@ class WorkerList extends React.Component {
     super(props);
     this.state = {
       worker: [],
-      rating: props.item.rating,
-      state: props.item.state
+      rating: 0,
+      state: props.item.state,
+      rate: Math.ceil(this.props.item.rating)
     };
   }
 
-  handleMajor (e) {
-    var average = this.state.rating + e / 2
+  handleRate (e) {
     this.setState({
-      rating: average
+      rating: e
     })
   }
 
@@ -26,7 +26,7 @@ class WorkerList extends React.Component {
       url: '/rating',
       data: { rating: this.state.rating, username: this.props.item.username},
       success: (data) => {
-        console.log('rating is sent')
+        
       },
       error: (err) => {
         console.log('err', err);
@@ -39,14 +39,14 @@ class WorkerList extends React.Component {
       <div style={{border: '2px solid red', margin: '10px', textAlign:'center'}}>
         Name: {this.props.item.name} <br/>
         Major: {this.props.item.major}<br/>
-        Rating: {this.props.item.rating}<br/>
+        Rating: {this.state.rate}<br/>
         Email: {this.props.item.email}<br/>
         Username: {this.props.item.username}<br/>
         Description: {this.props.item.description}<br/>
         Availability: {this.props.item.availability}<br/>
         Phonenumber: {this.props.item.phonenumber}<br />
         <Dropdown value={this.state.major}
-                  onChange={this.handleMajor.bind(this)}
+                  onChange={this.handleRate.bind(this)}
                   options={[ '0', '1', '2', '3', '4', '5']} />
         <button onClick={this.handleRateClick.bind(this)}> Rate </button>
           

@@ -32,19 +32,19 @@ export default class NavBar extends React.Component {
     getWorkersByName() {
         $('button, input, h1, h4').hide();
         var that = this;
-        axios.post('/name', {name: this.state.name})
-        .then(function(res){
-            that.setState({
-              workers: res.data
+        axios.post('/name', { name: this.state.name })
+            .then(function (res) {
+                that.setState({
+                    workers: res.data
+                })
             })
-        })
     }
 
 
     getUserName(e) {
-      this.setState({
-        name: e.target.value
-      })
+        this.setState({
+            name: e.target.value
+        })
     }
 
 
@@ -53,24 +53,23 @@ export default class NavBar extends React.Component {
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="/">Homerji</a>
+                        <a href="/">HomerJi</a>
                     </Navbar.Brand>
-                    <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Navbar.Form pullLeft>
                         <FormGroup>
-                            <FormControl type="text" placeholder="Search" onChange={this.getUserName.bind(this)}/>
+                            <FormControl type="text" placeholder="Search" onChange={this.getUserName.bind(this)} />
                         </FormGroup> <Button onClick={this.getWorkersByName.bind(this)}>Search</Button>
                     </Navbar.Form>
                     <Nav pullRight>
                         <NavItem href="#">
-                            <Workers />
-              </NavItem>
+                        <Workers />
+                        </NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <SearchByName workersList={this.state.workers}/>
+            <SearchByName workersList={this.state.workers} />
         </div>
     }
 }

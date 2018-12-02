@@ -16,7 +16,7 @@ var app = express();
 
 //body parser
 app.use(bodyParser.urlencoded({
-    extended: false
+  extended: false
 }))
 app.use(bodyParser.json());
 
@@ -37,18 +37,28 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 //request functions
 app.get('/workers', function (req, res) {
-  db.selectAll(function(err, data) {
-    if(err) {
+  db.selectAll(function (err, data) {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.send(data);
+    }
+  });
+});
+//majors
+app.post('/majors', function (req, res) {
+  // console.log(req.body.major, 'majorssss')
+  db.selectAllMajors(req.body.major, function (err, data) {
+    if (err) {
       res.sendStatus(500);
     } else {
       res.json(data);
     }
   });
 });
-
 app.post('/name', function (req, res) {
-	var name = req.body.name;
-  db.selectAllNames(name, function(err, data) {
+  var name = req.body.name;
+  db.selectAllNames(name, function (err, data) {
     if (err) {
       res.sendStatus(500);
     } else {
@@ -59,27 +69,28 @@ app.post('/name', function (req, res) {
 
 
 //add an item to dataBase
-var manualAddingToDB = function() {
+var manualAddingToDB = function () {
   var x = new worker({
-    name: 'testName', 
-    major: 'testMajor', 
-    rating: 0, 
-    email: 'test@tester.com', 
-    username:'tester', 
+    name: 'testName',
+    major: 'testMajor',
+    rating: 0,
+    email: 'test@tester.com',
+    username: 'tester',
     password: '123',
     description: 'testing',
     availability: "yes",
-    phonenumber: 1111111
+    phonenumber: 1111111,
+    ratingCount: 0
   })
   x.save()
-  .then(function() {
-    console.log('worker is saved in database, in signupWorker')
-  })
+    .then(function () {
+      console.log('worker is saved in database, in signupWorker')
+    })
 }
 
 
 //signup functions
-var signupWorker = function(req, res) {
+var signupWorker = function (req, res) {
   // console.log('you are at signupWorker in server index.js')
   var name = req.body.name;
   var major = req.body.major;
@@ -101,20 +112,21 @@ var signupWorker = function(req, res) {
       } else {
         console.log("empty found array")
         var newWorker = new worker({
-          name: name, 
-          major: major, 
-          rating: rating, 
-          email: email, 
-          username: username, 
+          name: name,
+          major: major,
+          rating: rating,
+          email: email,
+          username: username,
           password: hash,
           description: description,
           availability: availability,
-          phonenumber: phonenumber
+          phonenumber: phonenumber,
+          ratingCount: 1
         })
         newWorker.save()
         .then(function() {
           console.log('saved')
-          //createSession(req, res, newWorker)
+          createSession(req, res, newWorker)
           res.status(200).send()
         })
       }
@@ -123,7 +135,7 @@ var signupWorker = function(req, res) {
 };
 
 //login functions
-var loginUser = function(req, res) {
+var loginUser = function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
   db.selectAllUsernames(username, function(err, found) {
@@ -134,8 +146,8 @@ var loginUser = function(req, res) {
         console.log("Username doesn't exist");
         res.status(404).send();
       } else {
-        var item = found[0].password 
-        comparePassword(password, item,function(match) {
+        var item = found[0].password
+        comparePassword(password, item, function (match) {
           if (match) {
             res.setHeader('Content-Type', 'application/json');
             createSession(req, res, found[0]);
@@ -152,49 +164,62 @@ var loginUser = function(req, res) {
 
 
 //create a session function
-var createSession = function(req, res, newUser) {
+var createSession = function (req, res, newUser) {
   console.log("before regenerate", 'req.session', req.session)
-  return req.session.regenerate(function(err) {
-      if(err) {return err}
-      req.session.userID = newUser._id;
-      console.log("in generator of session", "req.cookies", req.cookies)
-      console.log("in generator of session", 'req.session', req.session)
-      //res.redirect('/'); ////////////TODO
-    });
+  return req.session.regenerate(function (err) {
+    if (err) { return err }
+    req.session.userID = newUser._id;
+    console.log("in generator of session", "req.cookies", req.cookies)
+    console.log("in generator of session", 'req.session', req.session)
+    //res.redirect('/'); ////////////TODO
+  });
 };
 
 //destroy a session function
-var logoutUser = function(req, res) {
+var logoutUser = function (req, res) {
   console.log("before", req.session)
   req.session.destroy(function() {
     //res.redirect('/');
-    
   });
   console.log("after", req.session)
 };
 
 //password functions
-var comparePassword = function(attemptedPassword, hashed,callback) {
-  bcrypt.compare(attemptedPassword, hashed, function(err, isMatch) {
+var comparePassword = function (attemptedPassword, hashed, callback) {
+  bcrypt.compare(attemptedPassword, hashed, function (err, isMatch) {
     callback(isMatch);
   });
 }
-var hashPassword = function() {
+var hashPassword = function () {
   var cipher = Promise.promisify(bcrypt.hash);
   return cipher(this.get('password'), null, null).bind(this)
-    .then(function(hash) {
+    .then(function (hash) {
       this.set('password', hash);
     });
 }
 
 //edit rating
 var rating = function (req, res) {
-  var newRating = req.body.rating;
+  var newRating = Number(req.body.rating);
   var username = req.body.username;
-  db.updateRating(username, newRating, function () {
-    return
+  db.selectAllUsernames(username, function(err, found) {
+    if (!found) {res.status(500).send()}
+    if (found.length === 0) {res.status(401).send()}
+    if (found.length !== 0) {
+      var count = found[0].ratingCount;
+      var rate = found[0].rating;
+      var ratio = count * rate;
+      var newCount = count+1;
+      var result = (newRating+ratio) / newCount
+      db.updateRating(username, result, function () {
+        return
+      })
+      db.updateRatingCount(username, newCount, function () {
+        return
+      })
+      res.status(200).send('')
+    } 
   })
-  res.send('')
 }
 
 //signup 
@@ -216,7 +241,7 @@ app.post('/rating', rating);
 
 //listen to local host
 var port = process.env.PORT || 3000;
-app.listen(port, function() {
+app.listen(port, function () {
   console.log('listening on port 3000!');
 });
 

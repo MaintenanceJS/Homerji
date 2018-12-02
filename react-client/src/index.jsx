@@ -2,20 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import WorkersLogo from './components/workersLogo.jsx';
-import Sign from './components/Signup.jsx';
 import WorkerName from './components/searchBarWorkers.jsx';
-import SearchBar from './components/searchBarWorkers.jsx';
-import Login from './components/Login.jsx';
-import Logout from './components/logout.jsx';
 import Painting from './components/painting.jsx';
 import Plump from './components/plump.jsx';
 import Electric from './components/electric.jsx';
 import Furniture from './components/forniture.jsx';
-import Others from './components/others.jsx';
+import Carpenter from './components/Carpenter.jsx';
 import NavBar from "./components/NavBar.jsx";
-// uncomment this when using the frontend routers
-// import { Router, Route, Switch } from 'react-router'
-// import { BrowserRouter, Route, Link } from 'react-router-dom'
+import Gardener from "./components/Gardener.jsx";
+
 
 class App extends React.Component {
   constructor(props) {
@@ -57,15 +52,13 @@ class App extends React.Component {
   render() {
     return (<div>
       <NavBar />
-      <Sign />
-      <Login />
-      <Logout />
       <div><WorkersLogo /></div>
       <div><Furniture /></div>
       <div><Electric /></div>
       <div> <Painting /></div>
       <div> <Plump /></div>
-      <div> <Others /></div>
+      <div> <Carpenter /></div>
+      <div><Gardener /></div>
     </div>)
   }
 }
