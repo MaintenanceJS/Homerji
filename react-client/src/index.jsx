@@ -10,10 +10,13 @@ import Furniture from './components/forniture.jsx';
 import Carpenter from './components/Carpenter.jsx';
 import NavBar from "./components/NavBar.jsx";
 import Gardener from "./components/Gardener.jsx";
+// import Sign from "./components/Signup.jsx";
+// import Login from "./components/Login.jsx";
+// import Logout from "./components/logout.jsx";
 //import Link from 'react-router-dom'
 //import Router from 'react-router'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { browserHistory } from "react-router";
+
 
 
 class App extends React.Component {
