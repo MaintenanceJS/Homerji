@@ -15,7 +15,7 @@ class Plumb extends React.Component {
     componentDidMount() {
         $('button, input, h1').hide();
         var that = this;
-        axios.post('/majors', { major: 'Plumber' })
+        axios.post('/Plumb', { major: 'Plumber' })
             .then(function (res) {
                 that.setState({
                     workers: res.data

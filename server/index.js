@@ -37,12 +37,9 @@ app.use(bodyParser.json());
 //cookies and session
 app.use(cookieParser('shhhh, very secret'));
 app.use(session({
-  // secret: 'shhh, it\'s a secret',
-  // resave: true,
-  // saveUninitialized: true,
-  // cookie: { path: '/', httpOnly: true, secure: false, maxAge: 60000 }
+  cookie: {secure: false, maxAge: 60000},
   secret: 'shhh, it\'s a secret',
-  resave: false,
+  resave: true,
   saveUninitialized: true
 }));
 
@@ -174,6 +171,7 @@ var signupWorker = function (req, res) {
         .then(function() {
           console.log('saved')
           createSession(req, res, newWorker)
+          console.log('after createSession')
           res.status(200).send()
         })
       }
@@ -198,14 +196,18 @@ var loginUser = function (req, res) {
          comparePassword(password, item, function (match) {
           if (match) {
             res.setHeader('Content-Type', 'application/json');
-             createSession(req, res, found[0], function(done) {
-              if (done) {
-                 res.json('')
-              } else {
-                console.log('should not seen')
-                res.status(401).json('')
-              }
-            });
+            createSession(req, res, found[0])
+            // , function(done) {
+            //   res.json('')
+            // console.log('after createSession')
+            //   if (done) {
+            //      res.json('')
+
+            //   } else {
+            //     console.log('should not seen')
+            //     res.status(401).json('')
+            //   }
+            // });
           } else {
             console.log('wrong password or username')
             res.status(404).json();
@@ -223,10 +225,14 @@ var createSession = function (req, res, newUser) {
   req.session.regenerate(function (err) {
     if (err) { return err }
     req.session.userID = newUser._id;
-    console.log("in generator of session", "req.cookies", req.cookies)
+    req.session.cookie.expires = new Date(Date.now() + 3600000)
+    req.session.cookie.maxAge = 3600000;
+    req.session.cookie.secure = true;
     console.log("in generator of session", 'req.session', req.session)
-    //callback(true)
-    //res.redirect('/'); ////////////TODO
+    req.session.save(function(err) {
+      console.log('in save session')
+      res.status(200).json('')
+    })
   });
 };
 
@@ -234,7 +240,6 @@ var createSession = function (req, res, newUser) {
 var logoutUser = function (req, res) {
   console.log("before", req.session)
   req.session.destroy(function() {
-    //res.redirect('/');
     res.status(200).send()
   });
   console.log("after", req.session)
@@ -355,7 +360,10 @@ app.get('/test', function (req, res) {
 app.post('/rating', rating);
 app.post('/edit', edting);
 app.post('/newClient', newClient);
-
+app.get('/sess', function (req, res) {
+  console.log(req.session)
+  console.log(req.session.cookies)
+});
 
 // app.get('/Gardener', function(req, res) {
 //   console.log('isa')
