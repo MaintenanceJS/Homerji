@@ -3,7 +3,6 @@ import axios from 'axios';
 import Worker from './workers.jsx';
 import $ from 'jquery';
 
-
 class Gardener extends React.Component {
     constructor(props) {
         super(props);

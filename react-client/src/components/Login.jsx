@@ -191,3 +191,5 @@ class Login extends React.Component {
 }
 
 export default Login;
+
+//          <button onClick={this.handleEdit.bind(this)} className='submit'> I'm available </button>
