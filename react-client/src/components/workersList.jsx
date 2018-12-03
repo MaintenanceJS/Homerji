@@ -14,9 +14,7 @@ class WorkerList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      worker: [],
       rating: 0,
-      state: props.item.state,
       rate: Math.ceil(this.props.item.rating)
     };
   }
@@ -33,7 +31,7 @@ class WorkerList extends React.Component {
       url: '/rating',
       data: { rating: this.state.rating, username: this.props.item.username},
       success: (data) => {
-        
+        window.location.reload();
       },
       error: (err) => {
         console.log('err', err);
@@ -52,7 +50,7 @@ class WorkerList extends React.Component {
         Description: {this.props.item.description}<br/>
         Availability: {this.props.item.availability}<br/>
         Phonenumber: {this.props.item.phonenumber}<br />
-        <Dropdown value={'3'}
+        <Dropdown value={this.state.rating.toString()}
                   onChange={this.handleRate.bind(this)}
                   options={[ '0', '1', '2', '3', '4', '5']} />
         <Button onClick={this.handleRateClick.bind(this)}> Rate </Button>
