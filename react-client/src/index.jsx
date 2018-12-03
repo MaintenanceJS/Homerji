@@ -63,6 +63,7 @@ class App extends React.Component {
         <Link to="/Carpenter"><button className='btn btn-primary'>Carpenter</button></Link>
         <Link to="/Gardener"><button className='btn btn-primary'>Gardener</button></Link>
         <Link to="/Furniture"><button className='btn btn-primary'>Furniture</button></Link>
+        <Link to="/map"><button className='btn btn-primary'>Map</button></Link>
 
         <Route path='/Electric' component={Electric} />
         <Route path='/Painting' component={Painting} />
@@ -70,6 +71,7 @@ class App extends React.Component {
         <Route path='/Carpenter' component={Carpenter} />
         <Route path='/Gardener' component={Gardener} />
         <Route path='/Furniture' component={Furniture} />
+        <Route path='/map' component={map} />
       </div>
       </Router>
     )
