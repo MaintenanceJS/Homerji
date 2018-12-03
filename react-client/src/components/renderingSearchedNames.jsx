@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
-import tickets from "./maps.jsx";
+import Tickets from "./maps.jsx";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { browserHistory } from "react-router";
 
@@ -13,8 +13,8 @@ class ListWrkersName extends React.Component {
       name: '',
       phonenumber: 0,
       issue: '',
-      latitude: 0,
-      longtitude: 0
+      latitude: 35,
+      longtitude: 31
     };
   }
 
@@ -45,6 +45,7 @@ class ListWrkersName extends React.Component {
     })
   }
   handleSubmit() {
+    console.log('Amjad digger')
     axios.post('/userissue', {
       name: this.state.name,
       phonenumber: this.state.phonenumber,
@@ -70,12 +71,10 @@ class ListWrkersName extends React.Component {
     }
   }
 
-
-
   render() {
     return (
        <Router history={browserHistory}>
-      <div style={{border: '2px solid red', margin: '10px', textAlign:'center'}}>
+      <div style={{border: '2px solid red', margin: '10px', textAlign:'center',zIndex:'10'}}>
         <p>Name: {this.props.item.name}</p> 
         <p>Major:{this.props.item.major}</p>
         <p>Rating:{this.props.item.rating}</p>
@@ -90,8 +89,9 @@ class ListWrkersName extends React.Component {
         Name: <input type='text' placeholder="Enter your name" onChange={this.handleName.bind(this)}/> <br/><br/>
         Phonenumber: <input type='text' placeholder="Enter your phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
         Issue: <input type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
-         <div style={{ width:'50%', marginLeft:'40%', marginBottom: '320px'}}><Route path='/tickets' component={tickets} /></div>
-        <input type='button' value='submit' onClick={this.handleSubmit.bind(this)} />
+         <div style={{ width:'50%', marginLeft:'40%', marginBottom: '370px'}}><Route style={{ width:'50%', height:'50%'}} path='/tickets' component={() => 
+          <Tickets style={{ width:'50%', height:'50%'}} lat={this.state.latitude} long={this.state.longtitude} />} /></div>
+        <input style={{marginTop: '50px', zIndex: '10'}} type='button' value='submit' onClick={this.handleSubmit.bind(this)} />
         </div>
 
       </div>
