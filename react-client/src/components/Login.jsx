@@ -1,5 +1,5 @@
 import React from 'react';
-import WorkerList from './workersList.jsx';
+//import WorkerListRender from './WorkerListRender.jsx';
 import $ from 'jquery';
 import Dropdown from 'react-drop-down'
 
