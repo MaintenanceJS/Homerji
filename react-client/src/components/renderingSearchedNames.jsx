@@ -15,7 +15,7 @@ class ListWrkersName extends React.Component {
       <div style={{border: '2px solid red', margin: '10px', textAlign:'center'}}>
         Name: {this.props.item.name} <br/>
         Major:{this.props.item.major}<br/>
-        Rating:{this.props.item.rating}<br/>
+        Rating:{Math.ceil(this.props.item.rating)}<br/>
         Email:{this.props.item.email}<br/>
         Description: {this.props.item.description}<br/>
         Availability: {this.props.item.availability}<br/>

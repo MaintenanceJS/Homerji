@@ -12,13 +12,11 @@ class Gardener extends React.Component {
         };
     }
     // get All the workers information from the database
-    getAllWorkers() {
+    componentDidMount() {
         $('button, input, h1').hide();
         var that = this;
         axios.post('/majors', { major: 'Gardener' })
             .then(function (res) {
-                console.log(res.data)
-
                 that.setState({
                     workers: res.data
                 })
@@ -27,7 +25,6 @@ class Gardener extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.getAllWorkers.bind(this)}> Gardener</button>
                 <Worker workersList={this.state.workers} />
             </div>
         )
