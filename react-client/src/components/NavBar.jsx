@@ -1,5 +1,5 @@
 import React from "react";
-import Workers from "./workersLogo.jsx";
+import WorkersLogo from "./workersLogo.jsx";
 import SearchByName from "./searchbyname.jsx";
 import axios from "axios";
 import $ from "jquery";
@@ -76,7 +76,7 @@ class NavBar extends React.Component {
                 <NavItem href="#">
                   <div>
                     {" "}
-                    <Workers
+                    <WorkersLogo
                       handleWorkersButton={this.props.handleWorkersButton}
                     />{" "}
                   </div>

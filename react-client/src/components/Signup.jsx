@@ -1,5 +1,5 @@
 import React from 'react';
-import WorkerList from './workersList.jsx';
+//import workersListRender from './workersListRender.jsx';
 import $ from 'jquery';
 import Dropdown from 'react-drop-down'
 
@@ -147,6 +147,11 @@ class Sign extends React.Component {
             Phonenumber:
             <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
+
+<form action='/api/images' method="post" enctype="multipart/form-data">
+  <input type='file' name='image' />
+</form>
+
           <button onClick={this.handleSubmit.bind(this)}> Submit </button>
         </form>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Worker from './workers.jsx';
+import Workers from './workers.jsx';
 import $ from 'jquery';
 
 class Painting extends React.Component {
@@ -26,7 +26,7 @@ class Painting extends React.Component {
     render() {
         return (
             <div>
-                <Worker workersList={this.state.workers} />
+                <Workers workersList={this.state.workers} />
             </div>
         )
     }
