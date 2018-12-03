@@ -1,7 +1,14 @@
 import React from 'react';
 import $ from 'jquery';
 import Dropdown from 'react-drop-down'
-
+import {
+    Navbar,
+    Nav,
+    NavItem,
+    FormGroup,
+    FormControl,
+    Button
+} from "react-bootstrap";
 
 class WorkerList extends React.Component {
   constructor(props) {
@@ -45,10 +52,10 @@ class WorkerList extends React.Component {
         Description: {this.props.item.description}<br/>
         Availability: {this.props.item.availability}<br/>
         Phonenumber: {this.props.item.phonenumber}<br />
-        <Dropdown value={this.state.major}
+        <Dropdown value={'3'}
                   onChange={this.handleRate.bind(this)}
                   options={[ '0', '1', '2', '3', '4', '5']} />
-        <button onClick={this.handleRateClick.bind(this)}> Rate </button>
+        <Button onClick={this.handleRateClick.bind(this)}> Rate </Button>
           
       </div>
     )

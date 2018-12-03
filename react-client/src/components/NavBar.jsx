@@ -9,7 +9,8 @@ import {
     NavItem,
     FormGroup,
     FormControl,
-    Button
+    Button,
+    Glyphicon
 } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -64,7 +65,7 @@ class NavBar extends React.Component {
                     <Navbar.Form pullLeft>
                         <FormGroup>
                             <FormControl type="text" placeholder="Username" onChange={this.getUserName.bind(this)} />
-                        </FormGroup> <Link to="/search"><Button onClick={this.getWorkersByName.bind(this)}>Search</Button></Link>
+                        </FormGroup> <Link to="/search"><Button onClick={this.getWorkersByName.bind(this)}>  Search</Button></Link>
                     </Navbar.Form>
                     <Nav pullRight>
                         <NavItem href="#">

@@ -4,7 +4,16 @@ import $ from 'jquery';
 import Sign from './Signup.jsx';
 import Login from './Login.jsx';
 import Logout from './logout.jsx';
-
+//import { FiHome } from "react-icons/fi";
+import {
+    Navbar,
+    Nav,
+    NavItem,
+    FormGroup,
+    FormControl,
+    Button,
+    Glyphicon
+} from "react-bootstrap";
 
 class Workers extends React.Component {
     constructor(props) {
@@ -27,7 +36,7 @@ class Workers extends React.Component {
       if (this.state.show) {
         return (
             <div>
-              <button onClick={this.handleButton.bind(this)}> Workers </button>
+              <button className='glyphicon glyphicon-wrench' bsSize="large" onClick={this.handleButton.bind(this)}> Workers </button>
               <Sign className='show' />
               <Login className='show' />
               <Logout className='show' />
@@ -36,7 +45,7 @@ class Workers extends React.Component {
     } else {
       return (
             <div>
-              <button onClick={this.handleButton.bind(this)}> Workers </button>
+              <Button style={{'marginTop': '-9px'}} className='glyphicon glyphicon-wrench' onClick={this.handleButton.bind(this)}> Workers</Button>
             </div>
         )
     }
@@ -46,3 +55,4 @@ class Workers extends React.Component {
 
 export default Workers;
 
+//className='glyphicon glyphicon-home'

@@ -8,7 +8,10 @@ var session = require('express-session'); //requires npm install
 var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
 var worker = db.worker;
-
+// import express from 'express';
+// import React from 'react';
+// import { renderToString } from 'react-dom/server';
+// import App from '../react-client/src/index';
 //use express
 var app = express();
 
@@ -45,17 +48,27 @@ app.get('/workers', function (req, res) {
     }
   });
 });
+
 //majors
 app.post('/majors', function (req, res) {
+  //req.params.something
   // console.log(req.body.major, 'majorssss')
   db.selectAllMajors(req.body.major, function (err, data) {
     if (err) {
       res.sendStatus(500);
     } else {
+      // const appString = renderToString(<App />);
+
+      // res.send(template({
+      //   body: appString,
+      //   title: 'Hello World from the server',
+      // }));
       res.json(data);
     }
   });
 });
+
+//names
 app.post('/name', function (req, res) {
   var name = req.body.name;
   db.selectAllNames(name, function (err, data) {
@@ -281,6 +294,15 @@ app.get('/test', function (req, res) {
 });
 app.post('/rating', rating);
 app.post('/edit', edting);
+
+// app.get('/Gardener', function(req, res) {
+//   console.log('isa')
+//   res.json('')
+// });
+// app.get('/:majors(Gardener|Carpenter|article3)?', function(req, res) {
+//   console.log('isa')
+//   res.json('')
+// });
 
 
 
