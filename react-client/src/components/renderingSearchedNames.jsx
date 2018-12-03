@@ -1,7 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
 import axios from 'axios';
-
+import tickets from "./maps.jsx";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { browserHistory } from "react-router";
 
 class ListWrkersName extends React.Component {
   constructor(props) {
@@ -72,6 +74,7 @@ class ListWrkersName extends React.Component {
 
   render() {
     return (
+       <Router history={browserHistory}>
       <div style={{border: '2px solid red', margin: '10px', textAlign:'center'}}>
         <p>Name: {this.props.item.name}</p> 
         <p>Major:{this.props.item.major}</p>
@@ -80,15 +83,20 @@ class ListWrkersName extends React.Component {
         <p>Description: {this.props.item.description}</p>
         <p>Availability: {this.props.item.availability}</p>
         <p>Phonenumber: {this.props.item.phonenumber}</p>
-        
-        <button style={{margin:'10px'}} onClick={this.confirm.bind(this)}>Confirm</button><button>Rating</button>
+          
+        <Link to="/tickets"><button style={{margin:'10px'}} onClick={this.confirm.bind(this)}>Confirm</button></Link>
+        <button>Rating</button>
         <div style={{display:'none'}} id='confirm'>
         Name: <input type='text' placeholder="Enter your name" onChange={this.handleName.bind(this)}/> <br/><br/>
         Phonenumber: <input type='text' placeholder="Enter your phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
         Issue: <input type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+         <div style={{ width:'50%', marginLeft:'40%', marginBottom: '320px'}}><Route path='/tickets' component={tickets} /></div>
         <input type='button' value='submit' onClick={this.handleSubmit.bind(this)} />
         </div>
+
       </div>
+
+      </Router>
     )
   }
 }
