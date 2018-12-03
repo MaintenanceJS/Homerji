@@ -19,7 +19,7 @@ class Workers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false
+            show: false,
         };
     }
 
@@ -27,25 +27,21 @@ class Workers extends React.Component {
     }
 
     handleButton() {
-      this.setState({
-          show: !this.state.show
-        })
+        // console.log("in handle workers logo", this.props.handleWorkersButton)
+        // this.props.handleWorkersButton
     }
 
     render() {
       if (this.state.show) {
         return (
             <div>
-              <button className='glyphicon glyphicon-wrench' bsSize="large" onClick={this.handleButton.bind(this)}> Workers </button>
-              <Sign className='show' />
-              <Login className='show' />
-              <Logout className='show' />
+                <button className='glyphicon glyphicon-wrench' onClick={this.props.handleWorkersButton}> Workers </button>
             </div>
         )
     } else {
       return (
             <div>
-              <Button style={{'marginTop': '-9px'}} className='glyphicon glyphicon-wrench' onClick={this.handleButton.bind(this)}> Workers</Button>
+              <button className='glyphicon glyphicon-wrench' onClick={this.props.handleWorkersButton}> Workers </button>
             </div>
         )
     }
