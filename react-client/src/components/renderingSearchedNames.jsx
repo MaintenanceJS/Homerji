@@ -1,5 +1,19 @@
+//new file name 
+
+
+
 import React from 'react';
 import $ from 'jquery';
+import {
+    Navbar,
+    Nav,
+    NavItem,
+    FormGroup,
+    FormControl,
+    Button,
+    Glyphicon
+} from "react-bootstrap";
+import Dropdown from 'react-drop-down'
 import axios from 'axios';
 import Tickets from "./maps.jsx";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -10,12 +24,34 @@ class ListWrkersName extends React.Component {
     super(props);
     this.state = {
       worker: [],
-      name: '',
+      rate: Math.ceil(this.props.item.rating),
+      rating: 0,
+      name: 'Default',
       phonenumber: 0,
-      issue: '',
-      latitude: 35,
-      longtitude: 31
+      issue: 'Default',
+      latitude: 0,
+      longtitude: 0
     };
+  }
+
+  handleRate (e) {
+    this.setState({
+      rating: e
+    })
+  }
+
+  handleRateClick() {
+    $.ajax({
+      type: 'POST',
+      url: '/rating',
+      data: { rating: this.state.rating, username: this.props.item.username},
+      success: (data) => {
+        
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
   }
 
   confirm() {
@@ -29,25 +65,32 @@ class ListWrkersName extends React.Component {
       name: e.target.value
     })
   }
+
   handlephonenumber(e) {
     this.setState({
       phonenumber: e.target.value
     })
   }
+
   handleissue(e) {
     this.setState({
       issue: e.target.value
     })
   }
+
   handlelocation(e) {
     this.setState({
       location: e.target.value
     })
   }
+
   handleSubmit() {
-    console.log('Amjad digger')
-    axios.post('/userissue', {
-      name: this.state.name,
+    // console.log('Amjad digger')
+    // axios.post('/userissue', {
+    //   name: this.state.name,
+    axios.post('/newClient', {
+      workerUsername: this.props.item.username,
+      clientName: this.state.name,
       phonenumber: this.state.phonenumber,
       issue: this.state.issue,
       latitude: this.state.latitude,
@@ -73,32 +116,62 @@ class ListWrkersName extends React.Component {
 
   render() {
     return (
-       <Router history={browserHistory}>
-      <div style={{border: '2px solid red', margin: '10px', textAlign:'center',zIndex:'10'}}>
-        <p>Name: {this.props.item.name}</p> 
-        <p>Major:{this.props.item.major}</p>
-        <p>Rating:{this.props.item.rating}</p>
-        <p>Email:{this.props.item.email}</p>
-        <p>Description: {this.props.item.description}</p>
-        <p>Availability: {this.props.item.availability}</p>
-        <p>Phonenumber: {this.props.item.phonenumber}</p>
+      //  <Router history={browserHistory}>
+      // <div style={{border: '2px solid red', margin: '10px', textAlign:'center',zIndex:'10'}}>
+      //   <p>Name: {this.props.item.name}</p> 
+      //   <p>Major:{this.props.item.major}</p>
+      //   <p>Rating:{this.props.item.rating}</p>
+      //   <p>Email:{this.props.item.email}</p>
+      //   <p>Description: {this.props.item.description}</p>
+      //   <p>Availability: {this.props.item.availability}</p>
+      //   <p>Phonenumber: {this.props.item.phonenumber}</p>
           
-        <Link to="/tickets"><button style={{margin:'10px'}} onClick={this.confirm.bind(this)}>Confirm</button></Link>
-        <button>Rating</button>
-        <div style={{display:'none'}} id='confirm'>
-        Name: <input type='text' placeholder="Enter your name" onChange={this.handleName.bind(this)}/> <br/><br/>
-        Phonenumber: <input type='text' placeholder="Enter your phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
-        Issue: <input type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
-         <div style={{ width:'50%', marginLeft:'40%', marginBottom: '370px'}}><Route style={{ width:'50%', height:'50%'}} path='/tickets' component={() => 
-          <Tickets style={{ width:'50%', height:'50%'}} lat={this.state.latitude} long={this.state.longtitude} />} /></div>
-        <input style={{marginTop: '50px', zIndex: '10'}} type='button' value='submit' onClick={this.handleSubmit.bind(this)} />
+      //   <Link to="/tickets"><button style={{margin:'10px'}} onClick={this.confirm.bind(this)}>Confirm</button></Link>
+      //   <button>Rating</button>
+      //   <div style={{display:'none'}} id='confirm'>
+      //   Name: <input type='text' placeholder="Enter your name" onChange={this.handleName.bind(this)}/> <br/><br/>
+      //   Phonenumber: <input type='text' placeholder="Enter your phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
+      //   Issue: <input type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+      //    <div style={{ width:'50%', marginLeft:'40%', marginBottom: '370px'}}><Route style={{ width:'50%', height:'50%'}} path='/tickets' component={() => 
+      //     <Tickets style={{ width:'50%', height:'50%'}} lat={this.state.latitude} long={this.state.longtitude} />} /></div>
+      //   <input style={{marginTop: '50px', zIndex: '10'}} type='button' value='submit' onClick={this.handleSubmit.bind(this)} />
+
+      <div style={{margin: '10px', textAlign:'center'}}>
+        <div className="row">
+          <div className="col-sm-6 col-md-4">
+            <div className="thumbnail" style={{'border':'red'}}>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnWwwZo27QSdHZL6ogED-K7qn6hzgGItV9JanqTzFdNbKZUA1v" alt="..." />
+              <div className="caption">
+                <h3>{this.props.item.username}</h3>
+                Name: {this.props.item.name} <br/>
+                Major:{this.props.item.major}<br/>
+                Rating:{Math.ceil(this.props.item.rate)}<br/>
+                Email:{this.props.item.email}<br/>
+                Description: {this.props.item.description}<br/>
+                Phonenumber: {this.props.item.phonenumber}
+                <p><Dropdown value={'3'}
+                  onChange={this.handleRate.bind(this)}
+                  options={[ '0', '1', '2', '3', '4', '5']} /><a href="#" className="btn btn-primary" role="button" onClick={this.handleRateClick.bind(this)}>Rate</a>  
+                <button className="btn btn-default" style={{margin:'10px'}} onClick={this.confirm.bind(this)}>Request</button></p>
+                <div style={{display:'none'}} id='confirm'>
+                  Client Name: <input type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
+                  Client Phonenumber: <input type='text' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
+                  Client Issue: <input style={{height: '100px', width:'200px'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+                  <input type='button' value='Submit worker requesting' onClick={this.handleSubmit.bind(this)} />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
 
-      </Router>
+      // </Router>
     )
   }
 }
 
 export default ListWrkersName;
+
+
+    

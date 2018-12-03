@@ -1,15 +1,16 @@
 import React from "react";
-import Workers from "./workersLogo.jsx";
+import WorkersLogo from "./workersLogo.jsx";
 import SearchByName from "./searchbyname.jsx";
 import axios from "axios";
 import $ from "jquery";
 import {
-  Navbar,
-  Nav,
-  NavItem,
-  FormGroup,
-  FormControl,
-  Button
+    Navbar,
+    Nav,
+    NavItem,
+    FormGroup,
+    FormControl,
+    Button,
+    Glyphicon
 } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -75,7 +76,7 @@ class NavBar extends React.Component {
                 <NavItem href="#">
                   <div>
                     {" "}
-                    <Workers
+                    <WorkersLogo
                       handleWorkersButton={this.props.handleWorkersButton}
                     />{" "}
                   </div>
