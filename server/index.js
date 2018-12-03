@@ -13,6 +13,13 @@ var mongoose = require('mongoose');
 // import React from 'react';
 // import { renderToString } from 'react-dom/server';
 // import App from '../react-client/src/index';
+var multer = require("multer");
+var cloudinary = require("cloudinary");
+var cloudinaryStorage = require("multer-storage-cloudinary");
+
+
+
+
 var client = db.client;
 
 
@@ -360,6 +367,30 @@ app.post('/newClient', newClient);
 // });
 
 
+cloudinary.config({
+cloud_name: process.env.CLOUD_NAME,
+api_key: process.env.API_KEY,
+api_secret: process.env.API_SECRET
+});
+const storage = cloudinaryStorage({
+cloudinary: cloudinary,
+folder: "demo",
+allowedFormats: ["jpg", "png"],
+transformation: [{ width: 500, height: 500, crop: "limit" }]
+});
+const parser = multer({ storage: storage });
+
+app.post('/api/images', parser.single("image"), (req, res) => {
+  console.log(req.file) // to see what is returned to you
+  const image = {};
+  image.url = req.file.url;
+  image.id = req.file.public_id;
+  Image.create(image) // save image information in database
+    .then(newImage => res.json(newImage))
+    .catch(err => console.log(err));
+});
+
+
 
 //listen to local host
 var port = process.env.PORT || 3000;
@@ -369,7 +400,7 @@ app.listen(port, function () {
 
 
 
-
+//cloudinary.uploader.upload("sample.jpg", {"crop":"limit","tags":"samples","width":3000,"height":2000}, function(result) { console.log(result) });
 
 
 
