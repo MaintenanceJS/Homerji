@@ -1,5 +1,5 @@
 import React from 'react';
-import WorkerList from './workersList.jsx';
+//import WorkerListRender from './WorkerListRender.jsx';
 import $ from 'jquery';
 import Dropdown from 'react-drop-down'
 
@@ -144,17 +144,17 @@ class Login extends React.Component {
 
         <h4 onClick={this.handleOnClick.bind(this)}> login </h4>
 
-          <label className='login'>
-            Username:
+        <label className='login'>
+          Username:
             <br /><input type="text" onChange={this.handleUsername.bind(this)} />
-          </label> <br />
-          <label className='login'>
-            Password:
+        </label> <br />
+        <label className='login'>
+          Password:
             <br /><input type="text" onChange={this.handlePassword.bind(this)} />
-          </label> <br />
-          <button onClick={this.handleSubmit.bind(this)} className='submit'> Submit </button>
+        </label> <br />
+        <button onClick={this.handleSubmit.bind(this)} className='submit'> Submit </button>
 
-          <form className='edit'>
+        <form className='edit'>
           <label>
             Name:
             <br /><input type="text" onChange={this.handleName.bind(this)} />
@@ -183,7 +183,7 @@ class Login extends React.Component {
           </label> <br />
           <button onClick={this.handleEdit.bind(this)} className='submit'> Submit </button>
         </form>
-        
+
 
       </div>
     )
@@ -191,3 +191,5 @@ class Login extends React.Component {
 }
 
 export default Login;
+
+//          <button onClick={this.handleEdit.bind(this)} className='submit'> I'm available </button>

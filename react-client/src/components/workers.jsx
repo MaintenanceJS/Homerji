@@ -1,8 +1,8 @@
 import React from 'react';
-import WorkerList from './workersList.jsx';
+import WorkerListRender from './workersListRender.jsx';
 
 
-class Worker extends React.Component {
+class Workers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +15,7 @@ class Worker extends React.Component {
       <div>
         <div>
           {this.props.workersList.map(item =>
-            <WorkerList key={item._id} item={item} />
+            <WorkerListRender key={item._id} item={item} />
           )}
         </div>
       </div>
@@ -23,4 +23,4 @@ class Worker extends React.Component {
   }
 }
 
-export default Worker;
+export default Workers;

@@ -22,10 +22,22 @@ var itemSchema = mongoose.Schema({
   availability: String,
   phonenumber: Number,
   ratingCount: Number,
+  client: [{ type: mongoose.Schema.Types.ObjectId, ref: 'client' }],
   //image: { data: Buffer, contentType: String }
 });
 
+var clientSchema = mongoose.Schema({
+  _id: mongoose.Schema.Types.ObjectId,
+  name: String,
+  phonenumber: Number,
+  issue: String,
+  latitude: Number,
+  longtitude: Number
+});
+
 var worker = mongoose.model('worker', itemSchema);
+var client = mongoose.model('client', clientSchema);
+
 
 var selectAll = function (callback) {
   worker.find({}, function (err, items) {
@@ -48,6 +60,7 @@ var selectAllNames = function (name, callback) {
 };
 
 var selectAllUsernames = function (username, req, res, callback) {
+  console.log(callback)
   worker.find({ username: username }, function (err, items) {
     if (err) {
       callback(err, null);
@@ -66,9 +79,9 @@ var selectAllMajors = function (major, callback) {
   });
 };
 
-var updateRating = function(username, newRating, callback) {
-  worker.updateOne({ username: username }, { rating: newRating }, function(err, res) {
-    if(err) {
+var updateRating = function (username, newRating, callback) {
+  worker.updateOne({ username: username }, { rating: newRating }, function (err, res) {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, res);
@@ -76,9 +89,9 @@ var updateRating = function(username, newRating, callback) {
   })
 }
 
-var updateName = function(username, newName, callback) {
-  worker.updateOne({ username: username }, { name: newName }, function(err, res) {
-    if(err) {
+var updateName = function (username, newName, callback) {
+  worker.updateOne({ username: username }, { name: newName }, function (err, res) {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, res);
@@ -86,9 +99,9 @@ var updateName = function(username, newName, callback) {
   })
 }
 
-var updateMajor = function(username, newMajor, callback) {
-  worker.updateOne({ username: username }, { major: newMajor }, function(err, res) {
-    if(err) {
+var updateMajor = function (username, newMajor, callback) {
+  worker.updateOne({ username: username }, { major: newMajor }, function (err, res) {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, res);
@@ -96,9 +109,9 @@ var updateMajor = function(username, newMajor, callback) {
   })
 }
 
-var updateEmail = function(username, newEmail, callback) {
-  worker.updateOne({ username: username }, { email: newEmail }, function(err, res) {
-    if(err) {
+var updateEmail = function (username, newEmail, callback) {
+  worker.updateOne({ username: username }, { email: newEmail }, function (err, res) {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, res);
@@ -106,9 +119,9 @@ var updateEmail = function(username, newEmail, callback) {
   })
 }
 
-var updatePassword = function(username, newPassword, callback) {
-  worker.updateOne({ username: username }, { password: newPassword }, function(err, res) {
-    if(err) {
+var updatePassword = function (username, newPassword, callback) {
+  worker.updateOne({ username: username }, { password: newPassword }, function (err, res) {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, res);
@@ -116,9 +129,9 @@ var updatePassword = function(username, newPassword, callback) {
   })
 }
 
-var updateDescription = function(username, newDescription, callback) {
-  worker.updateOne({ username: username }, { description: newDescription }, function(err, res) {
-    if(err) {
+var updateDescription = function (username, newDescription, callback) {
+  worker.updateOne({ username: username }, { description: newDescription }, function (err, res) {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, res);
@@ -126,9 +139,9 @@ var updateDescription = function(username, newDescription, callback) {
   })
 }
 
-var updatePhonenumber = function(username, newPhonenumber, callback) {
-  worker.updateOne({ username: username }, { phonenumber: newPhonenumber }, function(err, res) {
-    if(err) {
+var updatePhonenumber = function (username, newPhonenumber, callback) {
+  worker.updateOne({ username: username }, { phonenumber: newPhonenumber }, function (err, res) {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, res);
@@ -136,17 +149,38 @@ var updatePhonenumber = function(username, newPhonenumber, callback) {
   })
 }
 
-var updateRatingCount = function(username, newCount, callback) {
-  worker.updateOne({ username: username }, { ratingCount: newCount }, function(err, res) {
-    if(err) {
+var updateRatingCount = function (username, newCount, callback) {
+  worker.updateOne({ username: username }, { ratingCount: newCount }, function (err, res) {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, res);
+    }
+  })
+}
+
+var updateClient = function (username, newClient, callback) {
+  worker.find({ username: username }, function (err, res) {
+    if (err) {
+      callback(err, null);
+    } else {
+      console.log(res[0], res[0].client, newClient)
+      var clientArr = res[0].client
+      clientArr = clientArr.push(newClient);
+      console.log(res[0])
+      worker.updateOne({ username: username }, { client: newClient }, function (err, res) {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, res);
+        }
+      })
     }
   })
 }
 
 module.exports.worker = worker;
+module.exports.client = client;
 module.exports.selectAll = selectAll;
 module.exports.selectAllNames = selectAllNames;
 module.exports.selectAllUsernames = selectAllUsernames;
@@ -159,6 +193,11 @@ module.exports.updateEmail = updateEmail;
 module.exports.updatePassword = updatePassword;
 module.exports.updateDescription = updateDescription;
 module.exports.updatePhonenumber = updatePhonenumber;
+module.exports.updateClient = updateClient;
+
+
+
+
 
 
 

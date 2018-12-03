@@ -9,6 +9,20 @@ var session = require('express-session'); //requires npm install
 var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
 var worker = db.worker;
+var mongoose = require('mongoose');
+// import express from 'express';
+// import React from 'react';
+// import { renderToString } from 'react-dom/server';
+// import App from '../react-client/src/index';
+var multer = require("multer");
+var cloudinary = require("cloudinary");
+var cloudinaryStorage = require("multer-storage-cloudinary");
+
+
+
+
+var client = db.client;
+
 
 //use express
 var app = express();
@@ -49,6 +63,7 @@ app.get('/workers', function (req, res) {
 
 //majors
 app.post('/majors', function (req, res) {
+  //req.params.something
   // console.log(req.body.major, 'majorssss')
   db.selectAllMajors(req.body.major, function (err, data) {
     if (err) {
@@ -75,25 +90,53 @@ app.post('/name', function (req, res) {
   });
 });
 
+app.post('/userissue', function (req, res) {
+  console.log(req.body)
+  var newClient = new client({
+    name: req.body.name,
+    phonenumber: req.body.phonenumber,
+    issue: req.body.issue,
+    latitude: req.body.latitude,
+    longtitude: req.body.latitude
+  })
+  newClient.save()
+    .then(function () {
+      console.log('saved')
+      res.status(200).send()
+    })
+});
+
 
 //add an item to dataBase
 var manualAddingToDB = function () {
-  var x = new worker({
-    name: 'testName',
-    major: 'testMajor',
-    rating: 0,
-    email: 'test@tester.com',
-    username: 'tester',
-    password: '123',
-    description: 'testing',
-    availability: "yes",
-    phonenumber: 1111111,
-    ratingCount: 0
-  })
-  x.save()
-    .then(function () {
-      console.log('worker is saved in database, in signupWorker')
+  var y = new client({
+    _id: new mongoose.Types.ObjectId(),
+    name: 'jaa2e3',
+    phonenumber: 123,
+    issue: 'jo3aan',
+    latitude: 19,
+    longtitude: 15
+  });
+  y.save(function (err) {
+    if (err) { return err }
+    x = new worker({
+      name: 'Name',
+      major: 'Major',
+      rating: 0,
+      email: 'test@tester.com',
+      username: 'TEST',
+      password: '123',
+      description: 'testing',
+      availability: "yes",
+      phonenumber: 1111111,
+      ratingCount: 0,
+      client: y._id
     })
+    x.save()
+      .then(function () {
+        console.log('worker is saved in database, in signupWorker')
+      })
+  })
 }
 
 
@@ -111,7 +154,7 @@ var signupWorker = function (req, res) {
   var phonenumber = req.body.phonenumber;
   var hash = bcrypt.hashSync(password);
 
-  db.selectAllUsernames(username, function (err, found) {
+  db.selectAllUsernames(username, req, res, function (err, found) {
     if (err) { res.sendStatus(500) }; //only for unpredictable errors
 
     if (found) {
@@ -129,7 +172,8 @@ var signupWorker = function (req, res) {
           description: description,
           availability: availability,
           phonenumber: phonenumber,
-          ratingCount: 1
+          ratingCount: 1,
+          client: []
         })
         newWorker.save()
           .then(function () {
@@ -186,7 +230,7 @@ var createSession = function (req, res, newUser, callback) {
     req.session.userID = newUser._id;
     console.log("in generator of session", "req.cookies", req.cookies)
     console.log("in generator of session", 'req.session', req.session)
-    callback(true)
+    //callback(true)
     //res.redirect('/'); ////////////TODO
   });
 };
@@ -273,6 +317,32 @@ var edting = function (req, res) {
   res.status(200).send('')
 }
 
+var newClient = function (req, res) {
+  var workerUsername = req.body.workerUsername
+  var name = req.body.clientName
+  var phonenumber = Number(req.body.phonenumber)
+  var issue = req.body.issue
+  var latitude = Number(req.body.latitude)
+  var longtitude = Number(req.body.longtitude)
+
+  var requester = new client({
+    _id: new mongoose.Types.ObjectId(),
+    name: name,
+    phonenumber: phonenumber,
+    issue: issue,
+    latitude: latitude,
+    longtitude: longtitude
+  });
+  requester.save(function (err) {
+    if (err) return handleError(err);
+    console.log('requester is saved', requester)
+    db.updateClient(workerUsername, requester._id, function () {
+      return
+    })
+  })
+  res.status(200).send()
+}
+
 //signup 
 //app.get('/signup', signupUserForm);
 app.post('/signup', signupWorker);
@@ -289,6 +359,41 @@ app.get('/test', function (req, res) {
 });
 app.post('/rating', rating);
 app.post('/edit', edting);
+app.post('/newClient', newClient);
+
+
+// app.get('/Gardener', function(req, res) {
+//   console.log('isa')
+//   res.json('')
+// });
+// app.get('/:majors(Gardener|Carpenter|article3)?', function(req, res) {
+//   console.log('isa')
+//   res.json('')
+// });
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
+const storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: "demo",
+  allowedFormats: ["jpg", "png"],
+  transformation: [{ width: 500, height: 500, crop: "limit" }]
+});
+const parser = multer({ storage: storage });
+
+app.post('/api/images', parser.single("image"), (req, res) => {
+  console.log(req.file) // to see what is returned to you
+  const image = {};
+  image.url = req.file.url;
+  image.id = req.file.public_id;
+  Image.create(image) // save image information in database
+    .then(newImage => res.json(newImage))
+    .catch(err => console.log(err));
+});
 
 
 
@@ -300,7 +405,7 @@ app.listen(port, function () {
 
 
 
-
+//cloudinary.uploader.upload("sample.jpg", {"crop":"limit","tags":"samples","width":3000,"height":2000}, function(result) { console.log(result) });
 
 
 
