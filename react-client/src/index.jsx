@@ -10,6 +10,7 @@ import Furniture from './components/forniture.jsx';
 import Carpenter from './components/Carpenter.jsx';
 import NavBar from "./components/NavBar.jsx";
 import Gardener from "./components/Gardener.jsx";
+import map from "./components/maps.jsx";
 import Sign from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import Logout from "./components/logout.jsx";
@@ -17,8 +18,6 @@ import Logout from "./components/logout.jsx";
 //import Router from 'react-router'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { browserHistory } from "react-router";
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -74,7 +73,7 @@ class App extends React.Component {
           <Logout className="show" />
         </div>
       </Router>;
-    }else {
+    } else {
       return <Router history={browserHistory}>
         <div>
           <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
@@ -96,16 +95,20 @@ class App extends React.Component {
           <Link to="/Furniture">
             <button className="btn btn-primary">Furniture</button>
           </Link>
+          <Link to="/map">
+          <button className='btn btn-primary'>Map</button>
+          </Link>
 
-          <Route path="/Electric" component={Electric} />
-          <Route path="/Painting" component={Painting} />
-          <Route path="/Plump" component={Plump} />
-          <Route path="/Carpenter" component={Carpenter} />
-          <Route path="/Gardener" component={Gardener} />
-          <Route path="/Furniture" component={Furniture} />
 
-        </div>
-      </Router>;
+        <Route path='/Electric' component={Electric} />
+        <Route path='/Painting' component={Painting} />
+        <Route path='/Plump' component={Plump} />
+        <Route path='/Carpenter' component={Carpenter} />
+        <Route path='/Gardener' component={Gardener} />
+        <Route path='/Furniture' component={Furniture} />
+        <Route path='/map' component={map} />
+      </div>
+      </Router>
     }
   }
 }

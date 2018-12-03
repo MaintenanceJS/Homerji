@@ -27,6 +27,17 @@ var itemSchema = mongoose.Schema({
 
 var worker = mongoose.model('worker', itemSchema);
 
+var clientSchema = mongoose.Schema({
+  name: String,
+  phonenumber: Number,
+  issue: String,
+  latitude: Number,
+  longtitude: Number
+});
+
+var client = mongoose.model('client', clientSchema);
+
+
 var selectAll = function (callback) {
   worker.find({}, function (err, items) {
     if (err) {
@@ -147,6 +158,7 @@ var updateRatingCount = function(username, newCount, callback) {
 }
 
 module.exports.worker = worker;
+module.exports.client = client;
 module.exports.selectAll = selectAll;
 module.exports.selectAllNames = selectAllNames;
 module.exports.selectAllUsernames = selectAllUsernames;
