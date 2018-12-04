@@ -10,9 +10,9 @@ class Electric extends React.Component {
             workers: []
         };
     }
+    
     // get All the workers information from the database depending on their major
     componentDidMount() {
-        $('button, input, h1').hide();
         var that = this;
         axios.post('/majors', { major: 'Electrician' })
             .then(function (res) {

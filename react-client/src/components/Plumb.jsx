@@ -9,15 +9,13 @@ class Plumb extends React.Component {
         super(props);
         this.state = {
             workers: []
-
         }
     }
 
     // get All the workers information from the database depending on their major
     componentDidMount() {
-        $('button, input, h1').hide();
         var that = this;
-        axios.post('/Plumb', { major: 'Plumber' })
+        axios.post('/majors', { major: 'Plumber' })
             .then(function (res) {
                 that.setState({
                     workers: res.data
@@ -27,7 +25,7 @@ class Plumb extends React.Component {
     render() {
         return (
             <div>
-                <Worker workersList={this.state.workers} />
+                <Workers workersList={this.state.workers} />
             </div>
         )
     }

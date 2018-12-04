@@ -1,12 +1,12 @@
 import React from 'react';
-import WorkerListRender from './workersListRender.jsx';
+import SearchedNames from './workersList.jsx';
 
 
-class Workers extends React.Component {
+class SearchByName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      worker: []
+       worker: []
     };
   }
 
@@ -15,7 +15,7 @@ class Workers extends React.Component {
       <div>
         <div>
           {this.props.workersList.map(item =>
-            <WorkerListRender key={item._id} item={item} />
+            <SearchedNames key={item._id} item={item}/>
           )}
         </div>
       </div>
@@ -23,4 +23,7 @@ class Workers extends React.Component {
   }
 }
 
-export default Workers;
+export default SearchByName;
+
+
+

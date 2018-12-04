@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import WorkersLogo from './components/workersLogo.jsx';
-//import WorkerName from './components/searchBarWorkers.jsx';
 import Painting from './components/painting.jsx';
 import Plumb from './components/plumb.jsx';
 import Electric from './components/electric.jsx';
@@ -13,8 +11,6 @@ import Gardener from "./components/Gardener.jsx";
 import Sign from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import Logout from "./components/logout.jsx";
-//import Link from 'react-router-dom'
-//import Router from 'react-router'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { browserHistory } from "react-router";
 
@@ -22,86 +18,63 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      getItems: [],
-      postItems: [],
-      name: '',
-      show: false
+      show: false //to see categories or signup and login page
     }
   }
 
-  sendData(data) {
-    $.ajax({
-      type: 'POST',
-      url: '/name',
-      data: { name: data },
-      success: (data) => {
-        this.setState({
-          postItems: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
-  }
-
-  clickHandle() {
-    this.sendData(this.state.name)
-    $('#name').val('')
-  }
-
-  inputHandle(e) {
-    this.setState({
-      name: e.target.value
-    })
-  }
-
+  //toggle
   handleWorkersButton() {
-    console.log("in handle workers")
     this.setState({
       show: !this.state.show
     })
   }
 
   render() {
-    if (this.state.show) {
+    if (this.state.show) { //to see signup and login page
     return <Router history={browserHistory}>
-        <div>
-        <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
-          <Sign className="show" />
-          <Login className="show" />
-          <Logout className="show" />
+        <div style={{cursor: 'auto'}}>
+          <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
+          <div className="col" >
+            <div className="col-sm-4 col-md-3">
+                <Sign className="show" style={{cursor: 'pointer'}}/>
+            </div>
+          </div>
+          <div className="col">
+            <div className="col-sm-4 col-md-3">
+                <Login className="show" style={{cursor: 'pointer'}}/> 
+            </div>
+          </div>
+          <div className="col">
+            <div className="col-sm-3 col-md-3">
+                <Logout className="show"/>
+            </div>
+          </div>
         </div>
       </Router>;
-    } else {
+    } else { //to see categories
       return <Router history={browserHistory}>
-        <div>
+        <div style={{cursor: 'auto'}}>
           <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
+          <div style={{"width": "100%"}}>
           <Link to="/Electric">
-            <button className="btn btn-primary">Electric</button>
+            <button className="home btn btn-primary">Electric</button>
           </Link>
           <Link to="/Painting">
-            <button className="btn btn-primary">Painting</button>
+            <button className="home btn btn-primary">Painting</button>
           </Link>
           <Link to="/Plumb">
-            <button className="btn btn-primary">Plumb</button>
+            <button className="home btn btn-primary">Plumb</button>
           </Link>
           <Link to="/Carpenter">
-            <button className="btn btn-primary">Carpenter</button>
+            <button className="home btn btn-primary">Carpenter</button>
           </Link>
           <Link to="/Gardener">
-            <button className="btn btn-primary">Gardener</button>
+            <button className="home btn btn-primary">Gardener</button>
           </Link>
           <Link to="/Furniture">
-            <button className="btn btn-primary">Furniture</button>
+            <button className="home btn btn-primary">Furniture</button>
           </Link>
-
-
-
-          <input name="file" type="file"
-   className="file-upload" data-cloudinary-field="image_id"
-   data-form-data="{ 'transformation': {'crop':'limit','tags':'samples','width':3000,'height':2000}}"/>
-
+          </div>
 
         <Route path='/Electric' component={Electric} />
         <Route path='/Painting' component={Painting} />

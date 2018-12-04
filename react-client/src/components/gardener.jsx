@@ -12,7 +12,6 @@ class Gardener extends React.Component {
     }
     // get All the workers information from the database depending on their major
     componentDidMount() {
-        $('button, input, h1').hide();
         var that = this;
         axios.post('/majors', { major: 'Gardener' })
             .then(function (res) {

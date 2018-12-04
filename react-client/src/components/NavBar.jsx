@@ -1,6 +1,6 @@
 import React from "react";
 import WorkersLogo from "./workersLogo.jsx";
-import SearchByName from "./searchbyname.jsx";
+import SearchByName from "./workers.jsx";
 import axios from "axios";
 import $ from "jquery";
 import {
@@ -17,27 +17,27 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      name: "",
-      workers: []
+      name: "", //search bar
+      workers: [] //searched workers
     };
   }
-
-  // For the search in 
+  
+  // For the search
   getWorkersByName() {
-    $("button, h1, h4").hide();
     var that = this;
     axios.post("/name", { name: this.state.name }).then(function(res) {
       that.setState({
         workers: res.data
       });
+      $('#textInbox').val('') //to empty the input box
+      $('.home').hide() //categories buttons on index file
     });
   }
 
   getUserName(e) {
     this.setState({
-      name: e.target.value
+      name: e.target.value //search bar value
     });
   }
 
@@ -55,6 +55,7 @@ class NavBar extends React.Component {
               <Navbar.Form pullLeft>
                 <FormGroup>
                   <FormControl
+                    id='textInbox'
                     type="text"
                     placeholder="Username"
                     onChange={this.getUserName.bind(this)}

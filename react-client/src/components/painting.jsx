@@ -12,12 +12,9 @@ class Painting extends React.Component {
     }
     // get All the workers information from the database depending on their major
     componentDidMount() {
-        $('button, input, h1').hide();
         var that = this;
         axios.post('/majors', { major: 'Painter' })
             .then(function (res) {
-                console.log(res.data)
-
                 that.setState({
                     workers: res.data
                 })

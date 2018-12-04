@@ -11,6 +11,7 @@ var mongoose = require('mongoose');
 var multer = require("multer");
 var cloudinary = require("cloudinary");
 var cloudinaryStorage = require("multer-storage-cloudinary");
+var path = require("path");
 
 //from Database
 var worker = db.worker;
@@ -46,7 +47,7 @@ app.get('/workers', function (req, res) {
     if (err) {
       res.sendStatus(500);
     } else {
-      res.send(data);
+      res.status(200).send(data);
     }
   });
 });
@@ -58,7 +59,7 @@ app.post('/majors', function (req, res) {
     if (err) {
       res.sendStatus(500);
     } else {
-      res.json(data);
+      res.status(200).json(data);
     }
   });
 });
@@ -71,7 +72,7 @@ app.post('/name', function (req, res) {
     if (err) {
       res.sendStatus(500);
     } else {
-      res.json(data);
+      res.status(200).json(data);
     }
   });
 });
@@ -163,12 +164,11 @@ var signupWorker = function (req, res) {
           ratingCount: 1,
           client: []
         })
-        newWorker.save()
+        newWorker.save() //save to database
         .then(function() {
-          console.log('saved')
-          createSession(req, res, newWorker)
-          console.log('after createSession')
-          res.status(200).send()
+          res.setHeader('Content-Type', 'application/json'); //res should be json
+          console.log('new worker')
+          createSession(req, res, newWorker) //res is from the session function
         })
       }
     }
@@ -190,9 +190,9 @@ var loginUser = function (req, res) {
         res.status(404).json('');
       } else {
         var hashed = found[0].password //hashed password in database
-          comparePassword(password, hashed, function(match) {
+        comparePassword(password, hashed, function(match) {
           if (match) {
-            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Content-Type', 'application/json'); //res should be json
             createSession(req, res, found[0])
             console.log("session is done")
           } else {
@@ -214,11 +214,9 @@ var createSession = function (req, res, newUser) {
     req.session.userID = String(newUser._id); //most important section of this function
     req.session.cookie.expires = new Date(Date.now() + 3600000) //a date for expiration
     req.session.cookie.maxAge = 3600000; //a specific time to destroys
-    console.log("in generator of session", 'req.session', req.session)
     req.session.save(function(err) {
-      console.log('in save session', req.session)
-      res.status(200).json('')
-      console.log('after save', req.body)
+      res.status(200).json('') //header is json
+      console.log('after save session', req.session)
     })
   });
 };
@@ -235,8 +233,8 @@ var isLoggedIn = function (username, req, res, callback) {
         console.log("Username doesn't exist");
         res.status(404).json('');
       } else {
-        var itemId = found[0]._id
-        var sessionId = req.session.userID
+        var itemId = found[0]._id //req ID
+        var sessionId = req.session.userID //seassion ID
         if (itemId === sessionId) {
           callback(true)
         } else {
@@ -251,7 +249,7 @@ var isLoggedIn = function (username, req, res, callback) {
 //destroy session function
 var logoutUser = function (req, res) {
   console.log("before", req.session)
-  req.session.destroy(function() {
+  req.session.destroy(function() { //remove session
     res.status(200).send()
   });
   console.log("after", req.session)
@@ -276,15 +274,16 @@ var hashPassword = function () {
 var rating = function (req, res) {
   var newRating = Number(req.body.rating);
   var username = req.body.username;
-  db.selectAllUsernames(username, req, res, function(err, found) {
+  db.selectAllUsernames(username, req, res, function(err, found) { //search for the worker
     if (!found) {res.status(500).send()}
     if (found.length === 0) {res.status(401).send()}
     if (found.length !== 0) {
+      //rating equation
       var count = found[0].ratingCount;
       var rate = found[0].rating;
       var ratio = count * rate;
       var newCount = count+1;
-      var result = (newRating+ratio) / newCount
+      var result = (newRating+ratio) / newCount //new rate
       db.updateRating(username, result, function () {
         return
       })
@@ -296,6 +295,7 @@ var rating = function (req, res) {
   })
 }
 
+//after sign in editing
 var edting = function (req, res) {
   var username = req.body.username
   var name = req.body.name
@@ -330,11 +330,13 @@ var edting = function (req, res) {
   res.status(200).send('')
 }
 
+//adding a new client to database
 var newClient = function (req, res) {
     var workerUsername = req.body.workerUsername
     var name = req.body.clientName
     var phonenumber = Number(req.body.phonenumber)
     var issue = req.body.issue
+    //map
     var latitude = Number(req.body.latitude)
     var longtitude = Number(req.body.longtitude)
 
@@ -346,10 +348,10 @@ var newClient = function (req, res) {
       latitude: latitude,
       longtitude: longtitude
     });
-    requester.save(function (err) {
+    requester.save(function (err) { //requester is the client
       if (err) return handleError(err);
       console.log('requester is saved', requester)
-      db.updateClient(workerUsername, requester._id, function () {
+      db.updateClient(workerUsername, requester._id, function () { //update client row in worker table
         return
       })
     })
@@ -362,21 +364,16 @@ app.post('/signup', signupWorker);
 app.post('/login', loginUser);
 app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB);
-app.get('/test', function (req, res) {
-  console.log(req.session)
-  if(!req.session.userID) {
-    res.status(401).send()
-  } else {
-    res.status(200).send()
-  }
-});
 app.post('/rating', rating);
 app.post('/edit', edting);
 app.post('/newClient', newClient);
-app.get('/sess', function (req, res) {
-  console.log(req.session)
-  console.log(req.session.cookies)
+
+//to not get 404 error when reload page( redirect to index.html when reload )
+app.get('/*', (req, res) => {
+ res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
 });
+
+
 
 // app.get('/Gardener', function(req, res) {
 //   console.log('isa')

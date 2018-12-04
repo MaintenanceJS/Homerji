@@ -1,28 +1,37 @@
 import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+//import GoogleMapReact from 'google-map-react';
+import {Map, InfoWindow, Marker, GoogleApiWrapper, GoogleMapReact} from 'google-maps-react';
  
 // We have a bug with the map div style, check it on chrome
 export class MapContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      //Maps dont read but strings
+      lat: String(this.props.lat), 
+      lng: String(this.props.long)
+    }
+  }
+
   render() {
     return (
-      <Map style= {{width: '500px', height: '500px'}} google={this.props.google} initialCenter={{
-            lat: 31.986586499999998,
-            lng: 35.8378334
-          }} zoom={14}>
+      <Map  google={this.props.google} style= {{marginBottom:'0', marginTop:'-80%', width: '85%', height: '30%', position: 'relative'}}  initialCenter={this.state} zoom={14}>
  
         <Marker onClick={this.onMarkerClick}
                 name={'Current location'} />
  
         <InfoWindow onClose={this.onInfoWindowClose}>
-            <div>
-            </div>
+          <div>
+            
+          </div>
         </InfoWindow>
       </Map>
     );
   }
 }
- 
+
+//API key
 export default GoogleApiWrapper({
-  apiKey: ('AIzaSyDEKhrwickTOSkRZSDDZ9--cNVJcJUqCE0')
+  apiKey: ('AIzaSyCmsc0QpnUMshiGBiTrO4y68j6Jmoy41Xs')
 })(MapContainer)
+

@@ -22,8 +22,8 @@ class Login extends React.Component {
 
   componentDidMount() {
     $('.login, .edit, .submit').hide() // To hide any unwanted components
-    if (this.state.loggedin === true) {
-      $('.edit').show()
+    if (this.state.loggedin === true) { //to check if the user is logged in
+      $('.edit').show() //show edit inputs
     }
     this.setState({
       shown: false
@@ -41,6 +41,7 @@ class Login extends React.Component {
     }
   }
 
+  //login request
   handleSubmit() {
     $.ajax({
       type: 'POST',
@@ -59,6 +60,7 @@ class Login extends React.Component {
     });
   }
 
+  //Worker fields editing 
   handleUsername(e) {
     this.setState({
       username: e.target.value
@@ -113,6 +115,7 @@ class Login extends React.Component {
     })
   }
 
+  //new values request
   handleEdit() { // Worker profile editing after login
     $.ajax({
       type: 'POST',
@@ -140,9 +143,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-
-        <h4 onClick={this.handleOnClick.bind(this)}> login </h4>
-
+        <h4 style={{cursor: 'pointer'}} onClick={this.handleOnClick.bind(this)}> Login </h4>
           <label className='login'>
             Username:
             <br /><input type="text" onChange={this.handleUsername.bind(this)} />
@@ -182,8 +183,6 @@ class Login extends React.Component {
           </label> <br />
           <button onClick={this.handleEdit.bind(this)} className='submit'> Submit </button>
         </form>
-        
-
       </div>
     )
   }
