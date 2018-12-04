@@ -148,9 +148,7 @@ class Sign extends React.Component {
             <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
 
-<form action='/api/images' method="post" enctype="multipart/form-data">
-  <input type='file' name='image' />
-</form>
+
 
           <button onClick={this.handleSubmit.bind(this)}> Submit </button>
         </form>
@@ -164,3 +162,6 @@ export default Sign;
 
 
 //<br /><input type="text" onChange={this.handleMajor.bind(this)}/>
+// <form action='/api/images' method="post" enctype="multipart/form-data">
+//   <input type='file' name='image' />
+// </form>

@@ -6,7 +6,7 @@ class SearchByName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      worker: []
+       worker: []
     };
   }
 
@@ -15,7 +15,7 @@ class SearchByName extends React.Component {
       <div>
         <div>
           {this.props.workersList.map(item =>
-            <SearchedNames key={item._id} item={item} />
+            <SearchedNames key={item._id} item={item}/>
           )}
         </div>
       </div>

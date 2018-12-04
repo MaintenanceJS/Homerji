@@ -10,7 +10,8 @@ import {
   FormGroup,
   FormControl,
   Button,
-  Glyphicon
+  NavDropdown,
+  MenuItem
 } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -51,13 +52,67 @@ class NavBar extends React.Component {
     return (
       <Router>
         <div>
-          <Navbar collapseOnSelect>
+
+          <Navbar inverse collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="/" >HomerJi</a>
+                <a href="/">HomeRG</a>
               </Navbar.Brand>
+              <Navbar.Toggle />
             </Navbar.Header>
             <Navbar.Collapse>
+              <Nav>
+                <NavItem eventKey={1} href="/contactus">
+                  Contact Us
+                </NavItem>
+                <NavItem eventKey={2} href="#">
+                  About
+      </NavItem>
+
+              </Nav>
+
+              <Navbar.Form>
+                <FormGroup>
+                  <FormControl
+                    type="text"
+                    placeholder="Username"
+                    onChange={this.getUserName.bind(this)}
+                  />
+
+                </FormGroup>{" "}
+                <Link to="/search">
+                  <Button onClick={this.getWorkersByName.bind(this)}>
+                    Search
+                  </Button>
+
+                </Link>
+
+
+              </Navbar.Form>
+
+              {/* <Nav pullRight>
+                <NavDropdown eventKey={3} title="Workers" id="basic-nav-dropdown">
+                  <MenuItem eventKey={3.1} href='/signup'>Sign up</MenuItem>
+                  <MenuItem eventKey={3.2}>Login In</MenuItem>
+                  <MenuItem divider />
+                  <MenuItem eventKey={3.3}>Log out</MenuItem>
+                </NavDropdown>
+              </Nav> */}
+              <WorkersLogo />
+              <Route
+                path="/search"
+                component={() => <SearchByName workersList={this.state.workers} />}
+              />
+            </Navbar.Collapse>
+          </Navbar>;
+
+          {/* <Navbar collapseOnSelect>
+            <Navbar.Header>
+              <Navbar.Brand> */}
+          {/* <a href="/" >HomerJi</a> */}
+          {/* </Navbar.Brand>
+            </Navbar.Header> */}
+          {/* <Navbar.Collapse>
               <Navbar.Form pullLeft>
                 <FormGroup>
                   <FormControl
@@ -71,23 +126,18 @@ class NavBar extends React.Component {
                     Search
                   </Button>
                 </Link>
-              </Navbar.Form>
-              <Nav pullRight>
-                <NavItem href="#">
-                  <div>
-                    {" "}
-                    <WorkersLogo
-                      handleWorkersButton={this.props.handleWorkersButton}
-                    />{" "}
-                  </div>
-                </NavItem>
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-          <Route
+              </Navbar.Form> */}
+          {/* <Nav pullRight> */}
+
+
+
+          {/* </Nav> */}
+          {/* </Navbar.Collapse>
+          </Navbar> */}
+          {/* <Route
             path="/search"
             component={() => <SearchByName workersList={this.state.workers} />}
-          />
+          /> */}
         </div>
       </Router>
     );
@@ -96,3 +146,16 @@ class NavBar extends React.Component {
 
 export default NavBar;
 //            <SearchByName workersList={this.state.workers}> </SearchByName>
+
+
+
+
+
+// <NavItem href="#">
+// <div>
+//   {" "}
+//   <WorkersLogo
+//     handleWorkersButton={this.props.handleWorkersButton}
+//   />{" "}
+// </div>
+// </NavItem>

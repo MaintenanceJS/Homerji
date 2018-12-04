@@ -21,7 +21,7 @@ class Electric extends React.Component {
                 })
             })
     }
-
+    
     render() {
         return (
             <div>

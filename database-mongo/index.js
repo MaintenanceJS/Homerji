@@ -159,6 +159,16 @@ var updateRatingCount = function (username, newCount, callback) {
   })
 }
 
+var updateAvailability = function (username, newAvailability, callback) {
+  worker.updateOne({ username: username }, { availability: newAvailability }, function (err, res) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
 var updateClient = function (username, newClient, callback) {
   worker.find({ username: username }, function (err, res) {
     if (err) {
@@ -194,6 +204,7 @@ module.exports.updatePassword = updatePassword;
 module.exports.updateDescription = updateDescription;
 module.exports.updatePhonenumber = updatePhonenumber;
 module.exports.updateClient = updateClient;
+module.exports.updateAvailability = updateAvailability;
 
 
 

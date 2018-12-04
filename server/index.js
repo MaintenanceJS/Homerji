@@ -1,8 +1,7 @@
 var express = require('express');
-var path = require('path');
 var bodyParser = require('body-parser');
 var db = require('../database-mongo');
-var request = require('request'); //requires npm install
+var path = require('path');
 var partial = require('express-partial'); //requires npm install
 var cookieParser = require('cookie-parser'); //requires npm install
 var session = require('express-session'); //requires npm install
@@ -60,6 +59,10 @@ app.get('/workers', function (req, res) {
     }
   });
 });
+//to not get 404 error when reload page( redirect to index.html when reload )
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
+});
 
 //majors
 app.post('/majors', function (req, res) {
@@ -73,12 +76,8 @@ app.post('/majors', function (req, res) {
     }
   });
 });
-//to not get 404 error when reload page( redirect to index.html when reload )
-app.get('/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
-});
 
-
+//names
 app.post('/name', function (req, res) {
   var name = req.body.name;
   db.selectAllNames(name, function (err, data) {
@@ -203,17 +202,10 @@ var loginUser = function (req, res) {
         comparePassword(password, item, function (match) {
           if (match) {
             res.setHeader('Content-Type', 'application/json');
-            createSession(req, res, found[0], function (done) {
-              if (done) {
-                res.json('')
-              } else {
-                console.log('should not seen')
-                res.status(401).json('')
-              }
-            });
+            createSession(req, res, found[0]);
           } else {
             console.log('wrong password or username')
-            res.status(404).json();
+            res.status(404).json("");
           }
         })
       }
@@ -223,7 +215,7 @@ var loginUser = function (req, res) {
 
 
 //create a session function
-var createSession = function (req, res, newUser, callback) {
+var createSession = function (req, res, newUser) {
   console.log("before regenerate", 'req.session', req.session)
   req.session.regenerate(function (err) {
     if (err) { return err }
@@ -231,7 +223,7 @@ var createSession = function (req, res, newUser, callback) {
     console.log("in generator of session", "req.cookies", req.cookies)
     console.log("in generator of session", 'req.session', req.session)
     //callback(true)
-    //res.redirect('/'); ////////////TODO
+    res.json('');
   });
 };
 
@@ -291,6 +283,7 @@ var edting = function (req, res) {
   var password = req.body.password
   var description = req.body.description
   var phonenumber = Number(req.body.phonenumber)
+  var availability = req.body.availability
   var hash = bcrypt.hashSync(password);
 
   db.selectAllUsernames(username, req, res, function (err, found) {
@@ -311,6 +304,9 @@ var edting = function (req, res) {
       return
     })
     db.updatePhonenumber(username, phonenumber, function () {
+      return
+    })
+    db.updateAvailability(username, availability, function () {
       return
     })
   })

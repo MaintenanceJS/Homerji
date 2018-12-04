@@ -17,7 +17,8 @@ class Login extends React.Component {
       email: '',
       password: '',
       description: '',
-      phonenumber: 0
+      phonenumber: 0,
+      availability: ""
     };
   }
 
@@ -51,6 +52,7 @@ class Login extends React.Component {
         this.setState({
           loggedin: true
         })
+        console.log('logged in')
         $('.edit').show()
       },
       error: (err) => {
@@ -113,6 +115,11 @@ class Login extends React.Component {
       phonenumber: e.target.value
     })
   }
+  handleAvailability(e) {
+    this.setState({
+      availability: e
+    })
+  }
 
   handleEdit() {
     $.ajax({
@@ -125,7 +132,8 @@ class Login extends React.Component {
         email: this.state.email,
         password: this.state.password,
         description: this.state.description,
-        phonenumber: this.state.phonenumber
+        phonenumber: this.state.phonenumber,
+        availability: this.state.availability
       },
       success: (data) => {
         this.setState({
@@ -182,6 +190,12 @@ class Login extends React.Component {
             <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
           <button onClick={this.handleEdit.bind(this)} className='submit'> Submit </button>
+          <label>
+            Availability: <br />
+            <Dropdown value={String(this.state.availability)}
+              onChange={this.handleAvailability.bind(this)}
+              options={['Yes', 'No']} />
+          </label> <br />
         </form>
 
 
