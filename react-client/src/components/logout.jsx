@@ -12,7 +12,6 @@ class Logout extends React.Component {
       type: 'POST',
       url: '/logout',
       success: (data) => {
-        console.log("logout")
       },
       error: (err) => {
         console.log('err', err);

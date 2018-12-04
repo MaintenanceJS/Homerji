@@ -11,26 +11,20 @@ import {
     FormControl,
     Button,
     Glyphicon
-} from "react-bootstrap";
+} from "react-bootstrap"; // For Designing
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false,
       name: "",
       workers: []
     };
   }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
 
+  // For the search in 
   getWorkersByName() {
     $("button, h1, h4").hide();
     var that = this;
@@ -95,4 +89,3 @@ class NavBar extends React.Component {
 }
 
 export default NavBar;
-//            <SearchByName workersList={this.state.workers}> </SearchByName>

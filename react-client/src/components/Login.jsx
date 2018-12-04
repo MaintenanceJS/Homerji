@@ -1,7 +1,6 @@
 import React from 'react';
-//import WorkerListRender from './WorkerListRender.jsx';
 import $ from 'jquery';
-import Dropdown from 'react-drop-down'
+import Dropdown from 'react-drop-down' // Library from npm
 
 
 class Login extends React.Component {
@@ -22,7 +21,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    $('.login, .edit, .submit').hide()
+    $('.login, .edit, .submit').hide() // To hide any unwanted components
     if (this.state.loggedin === true) {
       $('.edit').show()
     }
@@ -31,7 +30,7 @@ class Login extends React.Component {
     })
   }
 
-  handleOnClick() {
+  handleOnClick() { // When click on login word
     this.setState({
       shown: !this.state.shown
     })
@@ -114,7 +113,7 @@ class Login extends React.Component {
     })
   }
 
-  handleEdit() {
+  handleEdit() { // Worker profile editing after login
     $.ajax({
       type: 'POST',
       url: '/edit',
@@ -191,5 +190,3 @@ class Login extends React.Component {
 }
 
 export default Login;
-
-//          <button onClick={this.handleEdit.bind(this)} className='submit'> I'm available </button>

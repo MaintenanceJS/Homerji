@@ -7,21 +7,14 @@ var cookieParser = require('cookie-parser'); //requires npm install
 var session = require('express-session'); //requires npm install
 var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
-var worker = db.worker;
 var mongoose = require('mongoose');
-// import express from 'express';
-// import React from 'react';
-// import { renderToString } from 'react-dom/server';
-// import App from '../react-client/src/index';
 var multer = require("multer");
 var cloudinary = require("cloudinary");
 var cloudinaryStorage = require("multer-storage-cloudinary");
 
-
-
-
+//from Database
+var worker = db.worker;
 var client = db.client;
-
 
 //use express
 var app = express();
@@ -46,7 +39,8 @@ app.use(session({
 //connect to react
 app.use(express.static(__dirname + '/../react-client/dist'));
 
-//request functions
+
+//get all workers (not used)
 app.get('/workers', function (req, res) {
   db.selectAll(function (err, data) {
     if (err) {
@@ -57,10 +51,9 @@ app.get('/workers', function (req, res) {
   });
 });
 
-//majors
+
+//Get all worker depending on major
 app.post('/majors', function (req, res) {
-  //req.params.something
-  // console.log(req.body.major, 'majorssss')
   db.selectAllMajors(req.body.major, function (err, data) {
     if (err) {
       res.sendStatus(500);
@@ -70,7 +63,8 @@ app.post('/majors', function (req, res) {
   });
 });
 
-//names
+
+//Get all worker depending on name
 app.post('/name', function (req, res) {
   var name = req.body.name;
   db.selectAllNames(name, function (err, data) {
@@ -82,12 +76,15 @@ app.post('/name', function (req, res) {
   });
 });
 
-app.post('/userissue', function (req, res) {
+
+//add a client to dataBase (not used)
+app.post('/makeclient', function (req, res) {
   console.log(req.body)
   var newClient = new client({
           name: req.body.name,
           phonenumber: req.body.phonenumber,
           issue: req.body.issue,
+          //for the map location
           latitude: req.body.latitude,
           longtitude: req.body.latitude
         })
@@ -99,10 +96,10 @@ app.post('/userissue', function (req, res) {
 });
 
 
-//add an item to dataBase
+//add a worker and a client to dataBase (not used)
 var manualAddingToDB = function () {
-  var y = new client({
-    _id: new mongoose.Types.ObjectId(),
+  var y = new client({ //client schema
+    _id: new mongoose.Types.ObjectId(), //for linking the schemas
     name: 'jaa2e3',
     phonenumber: 123,
     issue: 'jo3aan',
@@ -111,7 +108,7 @@ var manualAddingToDB = function () {
   });
   y.save(function(err) {
     if (err) {return err}
-    x = new worker({
+    x = new worker({ //worker schema
       name: 'Name',
       major: 'Major',
       rating: 0,
@@ -122,7 +119,7 @@ var manualAddingToDB = function () {
       availability: "yes",
       phonenumber: 1111111,
       ratingCount: 0,
-      client: y._id
+      client: y._id //for linking the schemas
     })
     x.save()
     .then(function () {
@@ -132,9 +129,8 @@ var manualAddingToDB = function () {
 }
 
 
-//signup functions
+//signup function
 var signupWorker = function (req, res) {
-  // console.log('you are at signupWorker in server index.js')
   var name = req.body.name;
   var major = req.body.major;
   var rating = req.body.rating;
@@ -150,7 +146,7 @@ var signupWorker = function (req, res) {
     if (err) {res.sendStatus(500)}; //only for unpredictable errors
 
     if (found) {
-      if (found.length > 0) {
+      if (found.length > 0) { //account is not new
         res.send('Account already exists, please try another username');
       } else {
         console.log("empty found array")
@@ -179,11 +175,12 @@ var signupWorker = function (req, res) {
   })
 };
 
-//login functions
+
+//login function
 var loginUser = function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
-   db.selectAllUsernames(username, req, res, function(err, found) {
+  db.selectAllUsernames(username, req, res, function(err, found) {
     if (err) { //only for unpredictable errors
       res.sendStatus(500)
       return err
@@ -192,22 +189,12 @@ var loginUser = function (req, res) {
         console.log("Username doesn't exist");
         res.status(404).json('');
       } else {
-        var item = found[0].password
-         comparePassword(password, item, function (match) {
+        var hashed = found[0].password //hashed password in database
+          comparePassword(password, hashed, function(match) {
           if (match) {
             res.setHeader('Content-Type', 'application/json');
             createSession(req, res, found[0])
-            // , function(done) {
-            //   res.json('')
-            // console.log('after createSession')
-            //   if (done) {
-            //      res.json('')
-
-            //   } else {
-            //     console.log('should not seen')
-            //     res.status(401).json('')
-            //   }
-            // });
+            console.log("session is done")
           } else {
             console.log('wrong password or username')
             res.status(404).json();
@@ -224,19 +211,44 @@ var createSession = function (req, res, newUser) {
   console.log("before regenerate", 'req.session', req.session)
   req.session.regenerate(function (err) {
     if (err) { return err }
-    req.session.userID = newUser._id;
-    req.session.cookie.expires = new Date(Date.now() + 3600000)
-    req.session.cookie.maxAge = 3600000;
-    req.session.cookie.secure = true;
+    req.session.userID = String(newUser._id); //most important section of this function
+    req.session.cookie.expires = new Date(Date.now() + 3600000) //a date for expiration
+    req.session.cookie.maxAge = 3600000; //a specific time to destroys
     console.log("in generator of session", 'req.session', req.session)
     req.session.save(function(err) {
-      console.log('in save session')
+      console.log('in save session', req.session)
       res.status(200).json('')
+      console.log('after save', req.body)
     })
   });
 };
 
-//destroy a session function
+
+//For authentication
+var isLoggedIn = function (username, req, res, callback) {
+  db.selectAllUsernames(username, req, res, function(err, found) {
+    if (err) { //only for unpredictable errors
+      res.sendStatus(500)
+      return err
+    } else {
+      if (found.length === 0) {
+        console.log("Username doesn't exist");
+        res.status(404).json('');
+      } else {
+        var itemId = found[0]._id
+        var sessionId = req.session.userID
+        if (itemId === sessionId) {
+          callback(true)
+        } else {
+          callback(false)
+        }
+      }
+    }
+  })
+} 
+
+
+//destroy session function
 var logoutUser = function (req, res) {
   console.log("before", req.session)
   req.session.destroy(function() {
@@ -244,6 +256,7 @@ var logoutUser = function (req, res) {
   });
   console.log("after", req.session)
 };
+
 
 //password functions
 var comparePassword = function (attemptedPassword, hashed, callback) {
@@ -259,7 +272,7 @@ var hashPassword = function () {
     });
 }
 
-//edit rating
+//Edit rating
 var rating = function (req, res) {
   var newRating = Number(req.body.rating);
   var username = req.body.username;

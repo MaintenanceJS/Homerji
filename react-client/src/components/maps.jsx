@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
  
+// We have a bug with the map div style, check it on chrome
 export class MapContainer extends Component {
   render() {
     return (
