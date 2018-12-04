@@ -134,8 +134,8 @@ class ListWorkersName extends React.Component {
                 <div id='confirm'>
                   Client Name: <input type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
                   Client Phonenumber: <input type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
-                  Client Issue: <input style={{height: '100px', width:'200px'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
-                  <button style={{marginBottom: '350px'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
+                  Client Issue: <input style={{height: '100%', width:'50%'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+                  <button style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
                     Submit worker requesting
                   </button>
                     <Route component={() => 
