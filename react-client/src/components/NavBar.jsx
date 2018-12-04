@@ -1,6 +1,6 @@
 import React from "react";
 import WorkersLogo from "./workersLogo.jsx";
-import SearchByName from "./searchbyname.jsx";
+import SearchByName from "./workers.jsx";
 import axios from "axios";
 import $ from "jquery";
 import {
@@ -18,33 +18,27 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-
-    this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false,
-      name: "",
-      workers: []
+      name: "", //search bar
+      workers: [] //searched workers
     };
   }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
 
+  // For the search
   getWorkersByName() {
-    $("button, h1, h4").hide();
     var that = this;
     axios.post("/name", { name: this.state.name }).then(function (res) {
       that.setState({
         workers: res.data
       });
+      $('#textInbox').val('') //to empty the input box
+      $('.home').hide() //categories buttons on index file
     });
   }
 
   getUserName(e) {
     this.setState({
-      name: e.target.value
+      name: e.target.value //search bar value
     });
   }
 
@@ -67,18 +61,16 @@ class NavBar extends React.Component {
                 </NavItem>
                 <NavItem eventKey={2} href="#">
                   About
-      </NavItem>
-
+                </NavItem>
               </Nav>
-
               <Navbar.Form>
                 <FormGroup>
                   <FormControl
+                    id='textInbox'
                     type="text"
                     placeholder="Username"
                     onChange={this.getUserName.bind(this)}
                   />
-
                 </FormGroup>{" "}
                 <Link to="/search">
                   <Button onClick={this.getWorkersByName.bind(this)}>
@@ -86,18 +78,7 @@ class NavBar extends React.Component {
                   </Button>
 
                 </Link>
-
-
               </Navbar.Form>
-
-              {/* <Nav pullRight>
-                <NavDropdown eventKey={3} title="Workers" id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1} href='/signup'>Sign up</MenuItem>
-                  <MenuItem eventKey={3.2}>Login In</MenuItem>
-                  <MenuItem divider />
-                  <MenuItem eventKey={3.3}>Log out</MenuItem>
-                </NavDropdown>
-              </Nav> */}
               <WorkersLogo />
               <Route
                 path="/search"
@@ -105,39 +86,6 @@ class NavBar extends React.Component {
               />
             </Navbar.Collapse>
           </Navbar>;
-
-          {/* <Navbar collapseOnSelect>
-            <Navbar.Header>
-              <Navbar.Brand> */}
-          {/* <a href="/" >HomerJi</a> */}
-          {/* </Navbar.Brand>
-            </Navbar.Header> */}
-          {/* <Navbar.Collapse>
-              <Navbar.Form pullLeft>
-                <FormGroup>
-                  <FormControl
-                    type="text"
-                    placeholder="Username"
-                    onChange={this.getUserName.bind(this)}
-                  />
-                </FormGroup>{" "}
-                <Link to="/search">
-                  <Button onClick={this.getWorkersByName.bind(this)}>
-                    Search
-                  </Button>
-                </Link>
-              </Navbar.Form> */}
-          {/* <Nav pullRight> */}
-
-
-
-          {/* </Nav> */}
-          {/* </Navbar.Collapse>
-          </Navbar> */}
-          {/* <Route
-            path="/search"
-            component={() => <SearchByName workersList={this.state.workers} />}
-          /> */}
         </div>
       </Router>
     );
@@ -145,17 +93,3 @@ class NavBar extends React.Component {
 }
 
 export default NavBar;
-//            <SearchByName workersList={this.state.workers}> </SearchByName>
-
-
-
-
-
-// <NavItem href="#">
-// <div>
-//   {" "}
-//   <WorkersLogo
-//     handleWorkersButton={this.props.handleWorkersButton}
-//   />{" "}
-// </div>
-// </NavItem>

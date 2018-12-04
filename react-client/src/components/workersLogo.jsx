@@ -4,14 +4,6 @@ import {
   NavDropdown,
   MenuItem
 } from "react-bootstrap";
-import { BrowserRouter as Link } from "react-router-dom";
-
-import axios from 'axios';
-import $ from 'jquery';
-import Sign from './Signup.jsx';
-import Login from './Login.jsx';
-import Logout from './logout.jsx';
-
 
 class WorkersLogo extends React.Component {
   constructor(props) {
@@ -41,4 +33,3 @@ class WorkersLogo extends React.Component {
 
 export default WorkersLogo;
 
-//className='glyphicon glyphicon-home'

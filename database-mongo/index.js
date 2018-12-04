@@ -174,11 +174,9 @@ var updateClient = function (username, newClient, callback) {
     if (err) {
       callback(err, null);
     } else {
-      console.log(res[0], res[0].client, newClient)
       var clientArr = res[0].client
-      clientArr = clientArr.push(newClient);
-      console.log(res[0])
-      worker.updateOne({ username: username }, { client: newClient }, function (err, res) {
+      clientArr.push(newClient);
+      worker.updateOne({ username: username }, { client: clientArr }, function (err, res) {
         if (err) {
           callback(err, null);
         } else {

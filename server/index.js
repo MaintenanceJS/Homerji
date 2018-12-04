@@ -7,21 +7,15 @@ var cookieParser = require('cookie-parser'); //requires npm install
 var session = require('express-session'); //requires npm install
 var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
-var worker = db.worker;
 var mongoose = require('mongoose');
-// import express from 'express';
-// import React from 'react';
-// import { renderToString } from 'react-dom/server';
-// import App from '../react-client/src/index';
 var multer = require("multer");
 var cloudinary = require("cloudinary");
 var cloudinaryStorage = require("multer-storage-cloudinary");
+var path = require("path");
 
-
-
-
+//from Database
+var worker = db.worker;
 var client = db.client;
-
 
 //use express
 var app = express();
@@ -37,25 +31,23 @@ app.use(bodyParser.json());
 //cookies and session
 app.use(cookieParser('shhhh, very secret'));
 app.use(session({
-  // secret: 'shhh, it\'s a secret',
-  // resave: true,
-  // saveUninitialized: true,
-  // cookie: { path: '/', httpOnly: true, secure: false, maxAge: 60000 }
+  cookie: { secure: false, maxAge: 60000 },
   secret: 'shhh, it\'s a secret',
-  resave: false,
+  resave: true,
   saveUninitialized: true
 }));
 
 //connect to react
 app.use(express.static(__dirname + '/../react-client/dist'));
 
-//request functions
+
+//get all workers (not used)
 app.get('/workers', function (req, res) {
   db.selectAll(function (err, data) {
     if (err) {
       res.sendStatus(500);
     } else {
-      res.send(data);
+      res.status(200).send(data);
     }
   });
 });
@@ -64,37 +56,40 @@ app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
 });
 
-//majors
+
+//Get all worker depending on major
 app.post('/majors', function (req, res) {
-  //req.params.something
-  // console.log(req.body.major, 'majorssss')
   db.selectAllMajors(req.body.major, function (err, data) {
     if (err) {
       res.sendStatus(500);
     } else {
-      res.json(data);
+      res.status(200).json(data);
     }
   });
 });
 
-//names
+
+//Get all worker depending on name
 app.post('/name', function (req, res) {
   var name = req.body.name;
   db.selectAllNames(name, function (err, data) {
     if (err) {
       res.sendStatus(500);
     } else {
-      res.json(data);
+      res.status(200).json(data);
     }
   });
 });
 
-app.post('/userissue', function (req, res) {
+
+//add a client to dataBase (not used)
+app.post('/makeclient', function (req, res) {
   console.log(req.body)
   var newClient = new client({
     name: req.body.name,
     phonenumber: req.body.phonenumber,
     issue: req.body.issue,
+    //for the map location
     latitude: req.body.latitude,
     longtitude: req.body.latitude
   })
@@ -106,10 +101,10 @@ app.post('/userissue', function (req, res) {
 });
 
 
-//add an item to dataBase
+//add a worker and a client to dataBase (not used)
 var manualAddingToDB = function () {
-  var y = new client({
-    _id: new mongoose.Types.ObjectId(),
+  var y = new client({ //client schema
+    _id: new mongoose.Types.ObjectId(), //for linking the schemas
     name: 'jaa2e3',
     phonenumber: 123,
     issue: 'jo3aan',
@@ -118,7 +113,7 @@ var manualAddingToDB = function () {
   });
   y.save(function (err) {
     if (err) { return err }
-    x = new worker({
+    x = new worker({ //worker schema
       name: 'Name',
       major: 'Major',
       rating: 0,
@@ -129,7 +124,7 @@ var manualAddingToDB = function () {
       availability: "yes",
       phonenumber: 1111111,
       ratingCount: 0,
-      client: y._id
+      client: y._id //for linking the schemas
     })
     x.save()
       .then(function () {
@@ -139,9 +134,8 @@ var manualAddingToDB = function () {
 }
 
 
-//signup functions
+//signup function
 var signupWorker = function (req, res) {
-  // console.log('you are at signupWorker in server index.js')
   var name = req.body.name;
   var major = req.body.major;
   var rating = req.body.rating;
@@ -157,7 +151,7 @@ var signupWorker = function (req, res) {
     if (err) { res.sendStatus(500) }; //only for unpredictable errors
 
     if (found) {
-      if (found.length > 0) {
+      if (found.length > 0) { //account is not new
         res.send('Account already exists, please try another username');
       } else {
         console.log("empty found array")
@@ -174,18 +168,19 @@ var signupWorker = function (req, res) {
           ratingCount: 1,
           client: []
         })
-        newWorker.save()
+        newWorker.save() //save to database
           .then(function () {
-            console.log('saved')
-            createSession(req, res, newWorker)
-            res.status(200).send()
+            res.setHeader('Content-Type', 'application/json'); //res should be json
+            console.log('new worker')
+            createSession(req, res, newWorker) //res is from the session function
           })
       }
     }
   })
 };
 
-//login functions
+
+//login function
 var loginUser = function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
@@ -198,11 +193,12 @@ var loginUser = function (req, res) {
         console.log("Username doesn't exist");
         res.status(404).json('');
       } else {
-        var item = found[0].password
-        comparePassword(password, item, function (match) {
+        var hashed = found[0].password //hashed password in database
+        comparePassword(password, hashed, function (match) {
           if (match) {
-            res.setHeader('Content-Type', 'application/json');
-            createSession(req, res, found[0]);
+            res.setHeader('Content-Type', 'application/json'); //res should be json
+            createSession(req, res, found[0])
+            console.log("session is done")
           } else {
             console.log('wrong password or username')
             res.status(404).json("");
@@ -219,23 +215,50 @@ var createSession = function (req, res, newUser) {
   console.log("before regenerate", 'req.session', req.session)
   req.session.regenerate(function (err) {
     if (err) { return err }
-    req.session.userID = newUser._id;
-    console.log("in generator of session", "req.cookies", req.cookies)
-    console.log("in generator of session", 'req.session', req.session)
-    //callback(true)
-    res.json('');
+    req.session.userID = String(newUser._id); //most important section of this function
+    req.session.cookie.expires = new Date(Date.now() + 3600000) //a date for expiration
+    req.session.cookie.maxAge = 3600000; //a specific time to destroys
+    req.session.save(function (err) {
+      res.status(200).json('') //header is json
+      console.log('after save session', req.session)
+    })
   });
 };
 
-//destroy a session function
+
+//For authentication
+var isLoggedIn = function (username, req, res, callback) {
+  db.selectAllUsernames(username, req, res, function (err, found) {
+    if (err) { //only for unpredictable errors
+      res.sendStatus(500)
+      return err
+    } else {
+      if (found.length === 0) {
+        console.log("Username doesn't exist");
+        res.status(404).json('');
+      } else {
+        var itemId = found[0]._id //req ID
+        var sessionId = req.session.userID //seassion ID
+        if (itemId === sessionId) {
+          callback(true)
+        } else {
+          callback(false)
+        }
+      }
+    }
+  })
+}
+
+
+//destroy session function
 var logoutUser = function (req, res) {
   console.log("before", req.session)
-  req.session.destroy(function () {
-    //res.redirect('/');
+  req.session.destroy(function () { //remove session
     res.status(200).send()
   });
   console.log("after", req.session)
 };
+
 
 //password functions
 var comparePassword = function (attemptedPassword, hashed, callback) {
@@ -251,19 +274,20 @@ var hashPassword = function () {
     });
 }
 
-//edit rating
+//Edit rating
 var rating = function (req, res) {
   var newRating = Number(req.body.rating);
   var username = req.body.username;
-  db.selectAllUsernames(username, req, res, function (err, found) {
+  db.selectAllUsernames(username, req, res, function (err, found) { //search for the worker
     if (!found) { res.status(500).send() }
     if (found.length === 0) { res.status(401).send() }
     if (found.length !== 0) {
+      //rating equation
       var count = found[0].ratingCount;
       var rate = found[0].rating;
       var ratio = count * rate;
       var newCount = count + 1;
-      var result = (newRating + ratio) / newCount
+      var result = (newRating + ratio) / newCount //new rate
       db.updateRating(username, result, function () {
         return
       })
@@ -275,6 +299,7 @@ var rating = function (req, res) {
   })
 }
 
+//after sign in editing
 var edting = function (req, res) {
   var username = req.body.username
   var name = req.body.name
@@ -313,11 +338,13 @@ var edting = function (req, res) {
   res.status(200).send('')
 }
 
+//adding a new client to database
 var newClient = function (req, res) {
   var workerUsername = req.body.workerUsername
   var name = req.body.clientName
   var phonenumber = Number(req.body.phonenumber)
   var issue = req.body.issue
+  //map
   var latitude = Number(req.body.latitude)
   var longtitude = Number(req.body.longtitude)
 
@@ -329,10 +356,10 @@ var newClient = function (req, res) {
     latitude: latitude,
     longtitude: longtitude
   });
-  requester.save(function (err) {
+  requester.save(function (err) { //requester is the client
     if (err) return handleError(err);
     console.log('requester is saved', requester)
-    db.updateClient(workerUsername, requester._id, function () {
+    db.updateClient(workerUsername, requester._id, function () { //update client row in worker table
       return
     })
   })
@@ -345,28 +372,14 @@ app.post('/signup', signupWorker);
 app.post('/login', loginUser);
 app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB);
-app.get('/test', function (req, res) {
-  console.log(req.session)
-  if (!req.session.userID) {
-    res.status(401).send()
-  } else {
-    res.status(200).send()
-  }
-});
 app.post('/rating', rating);
 app.post('/edit', edting);
 app.post('/newClient', newClient);
 
-
-// app.get('/Gardener', function(req, res) {
-//   console.log('isa')
-//   res.json('')
-// });
-// app.get('/:majors(Gardener|Carpenter|article3)?', function(req, res) {
-//   console.log('isa')
-//   res.json('')
-// });
-
+//to not get 404 error when reload page( redirect to index.html when reload )
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
+});
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,

@@ -12,7 +12,6 @@ class Logout extends React.Component {
       type: 'POST',
       url: '/logout',
       success: (data) => {
-        console.log("logout")
       },
       error: (err) => {
         console.log('err', err);
@@ -22,7 +21,7 @@ class Logout extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{cursor: 'pointer'}}>
         <h4 onClick={this.output.bind(this)}> Logout </h4>
       </div>
     )

@@ -1,7 +1,7 @@
 import React from 'react';
-import Worker from './workers.jsx';
+import Workers from './workers.jsx'; // Mid component to map workers tickets
 import $ from 'jquery';
-import axios from 'axios';
+import axios from 'axios'; // Promise based HTTP client for the browser and node.js
 
 
 class Plumb extends React.Component {
@@ -9,11 +9,11 @@ class Plumb extends React.Component {
         super(props);
         this.state = {
             workers: []
-
         }
     }
+
+    // get All the workers information from the database depending on their major
     componentDidMount() {
-        $('button, input, h1').hide();
         var that = this;
         axios.post('/majors', { major: 'Plumber' })
             .then(function (res) {
@@ -25,7 +25,7 @@ class Plumb extends React.Component {
     render() {
         return (
             <div>
-                <Worker workersList={this.state.workers} />
+                <Workers workersList={this.state.workers} />
             </div>
         )
     }

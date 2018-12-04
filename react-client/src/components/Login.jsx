@@ -1,7 +1,6 @@
 import React from 'react';
-//import WorkerListRender from './WorkerListRender.jsx';
 import $ from 'jquery';
-import Dropdown from 'react-drop-down'
+import Dropdown from 'react-drop-down' // Library from npm
 
 
 class Login extends React.Component {
@@ -23,16 +22,16 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    $('.login, .edit, .submit').hide()
-    if (this.state.loggedin === true) {
-      $('.edit').show()
+    $('.login, .edit, .submit').hide() // To hide any unwanted components
+    if (this.state.loggedin === true) { //to check if the user is logged in
+      $('.edit').show() //show edit inputs
     }
     this.setState({
       shown: false
     })
   }
 
-  handleOnClick() {
+  handleOnClick() { // When click on login word
     this.setState({
       shown: !this.state.shown
     })
@@ -43,6 +42,7 @@ class Login extends React.Component {
     }
   }
 
+  //login request
   handleSubmit() {
     $.ajax({
       type: 'POST',
@@ -62,6 +62,7 @@ class Login extends React.Component {
     });
   }
 
+  //Worker fields editing 
   handleUsername(e) {
     this.setState({
       username: e.target.value
@@ -121,7 +122,8 @@ class Login extends React.Component {
     })
   }
 
-  handleEdit() {
+  //new values request
+  handleEdit() { // Worker profile editing after login
     $.ajax({
       type: 'POST',
       url: '/edit',
@@ -149,9 +151,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-
-        <h4 onClick={this.handleOnClick.bind(this)}> login </h4>
-
+        <h4 style={{ cursor: 'pointer' }} onClick={this.handleOnClick.bind(this)}> Login </h4>
         <label className='login'>
           Username:
             <br /><input type="text" onChange={this.handleUsername.bind(this)} />
@@ -197,13 +197,9 @@ class Login extends React.Component {
               options={['Yes', 'No']} />
           </label> <br />
         </form>
-
-
       </div>
     )
   }
 }
 
 export default Login;
-
-//          <button onClick={this.handleEdit.bind(this)} className='submit'> I'm available </button>

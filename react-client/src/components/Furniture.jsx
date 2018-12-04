@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
-import Workers from './workers.jsx';
+import axios from 'axios'; // Promise based HTTP client for the browser and node.js
+import Workers from './workers.jsx'; // Mid component to map workers tickets
 import $ from 'jquery';
 
 class Furniture extends React.Component {
@@ -10,11 +10,10 @@ class Furniture extends React.Component {
             workers: []
         };
     }
-    // get All the workers information from the database
+    // get All the workers information from the database depending on their major
     componentDidMount() {
-        $('button, input, h1').hide();
         var that = this;
-        axios.post('/majors', { major: 'furniture' })
+        axios.post('/majors', { major: 'Furniture' })
             .then(function (res) {
                 that.setState({
                     workers: res.data
