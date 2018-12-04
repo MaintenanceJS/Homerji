@@ -4,7 +4,7 @@ import $ from 'jquery';
 import Sign from './Signup.jsx';
 import Login from './Login.jsx';
 import Logout from './logout.jsx';
-//import { FiHome } from "react-icons/fi";
+//import { FiHome } from "react-icons/fi";\
 import {
     Navbar,
     Nav,
@@ -19,20 +19,13 @@ class WorkersLogo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false,
         };
-    }
-
-    componentDidMount() {
-    }
-
-    handleButton() {
     }
 
     render() {
         return (
             <div>
-                <button className='glyphicon glyphicon-wrench' onClick={this.props.handleWorkersButton}> Workers </button>
+                <Button style={{height: '34px', marginTop: '-7.75px'}} className='' onClick={this.props.handleWorkersButton}> Workers </Button>
             </div>
         )
   }

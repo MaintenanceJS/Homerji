@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
+//import GoogleMapReact from 'google-map-react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper, GoogleMapReact} from 'google-maps-react';
  
+// We have a bug with the map div style, check it on chrome
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
-      lat: String(this.props.lat),
+      //Maps dont read but strings
+      lat: String(this.props.lat), 
       lng: String(this.props.long)
     }
   }
-  render() {
-    
-    return (
 
-      <Map  google={this.props.google} style= {{width: '300px', height: '300px'}}  initialCenter={this.state} zoom={14}>
+  render() {
+    return (
+      <Map  google={this.props.google} style= {{marginBottom:'0', marginTop:'-80%', width: '85%', height: '30%', position: 'relative'}}  initialCenter={this.state} zoom={14}>
  
         <Marker onClick={this.onMarkerClick}
                 name={'Current location'} />
@@ -28,7 +29,8 @@ export class MapContainer extends Component {
     );
   }
 }
- 
+
+//API key
 export default GoogleApiWrapper({
   apiKey: ('AIzaSyCmsc0QpnUMshiGBiTrO4y68j6Jmoy41Xs')
 })(MapContainer)

@@ -9,14 +9,14 @@ class Sign extends React.Component {
     this.state = {
       shown: false,
       name: 'Unknown',
-      major: 'Plumber',
-      rating: 3,
+      major: 'Plumber', //default value (changable)
+      rating: 3, //default value (unchangable)
       email: 'Unkown@unkown.com',
       username: 'Unkown',
       password: 'Unkown',
       description: 'Unkown',
-      availability: 'yes',
-      phonenumber: 0
+      availability: 'yes', //default value (unchangable)
+      phonenumber: 0 //default value (changable)
     };
   }
 
@@ -115,7 +115,7 @@ class Sign extends React.Component {
   render() {
     return (
       <div>
-        <h4 onClick={this.handleOnClick.bind(this)}> signup </h4>
+        <h4 style={{cursor: 'pointer'}} onClick={this.handleOnClick.bind(this)}> Signup </h4>
         <form className='form'>
           <label>
             Name:
@@ -125,7 +125,7 @@ class Sign extends React.Component {
             Major: <br />
             <Dropdown value={this.state.major}
               onChange={this.handleMajor.bind(this)}
-              options={['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener']} />
+              options={['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener', 'Furniture']} />
           </label> <br />
           <label>
             Email:
@@ -148,9 +148,7 @@ class Sign extends React.Component {
             <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
 
-<form action='/api/images' method="post" enctype="multipart/form-data">
-  <input type='file' name='image' />
-</form>
+
 
           <button onClick={this.handleSubmit.bind(this)}> Submit </button>
         </form>
@@ -163,4 +161,6 @@ export default Sign;
 
 
 
-//<br /><input type="text" onChange={this.handleMajor.bind(this)}/>
+// <form action='/api/images' method="post" encType="multipart/form-data">
+//   <input type='file' name='image' />
+// </form>
