@@ -1,6 +1,6 @@
 import React from "react";
 import WorkersLogo from "./workersLogo.jsx";
-import SearchByName from "./searchbyname.jsx";
+import SearchByName from "./workers.jsx";
 import axios from "axios";
 import $ from "jquery";
 import {

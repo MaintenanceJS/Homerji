@@ -98,10 +98,7 @@ class App extends React.Component {
 
 
 
-          <input name="file" type="file"
-   className="file-upload" data-cloudinary-field="image_id"
-   data-form-data="{ 'transformation': {'crop':'limit','tags':'samples','width':3000,'height':2000}}"/>
-
+         
 
         <Route path='/Electric' component={Electric} />
         <Route path='/Painting' component={Painting} />

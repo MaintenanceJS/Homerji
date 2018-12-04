@@ -200,7 +200,7 @@ var loginUser = function (req, res) {
             res.setHeader('Content-Type', 'application/json');
              createSession(req, res, found[0], function(done) {
               if (done) {
-                 res.status(200).json('')
+                 res.json('')
               } else {
                 console.log('should not seen')
                 res.status(401).json('')
