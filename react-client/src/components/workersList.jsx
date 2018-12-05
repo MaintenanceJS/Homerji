@@ -7,6 +7,7 @@ import {
     FormGroup,
     FormControl,
     Button,
+    Modal,
     Glyphicon
 } from "react-bootstrap";
 import Dropdown from 'react-drop-down'
@@ -18,6 +19,10 @@ import { browserHistory } from "react-router";
 class ListWorkersName extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
     this.state = {
       worker: [],
       rate: Math.ceil(this.props.item.rating),
@@ -26,7 +31,8 @@ class ListWorkersName extends React.Component {
       phonenumber: 0,
       issue: 'Default',
       latitude: 0,
-      longtitude: 0
+      longtitude: 0,
+      show: false
     };
   }
 
@@ -106,12 +112,21 @@ class ListWorkersName extends React.Component {
   }
 
 
+handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+  }
+
+
   
 
   render() {
     return (
       <Router history={browserHistory}>
-      <div style={{margin: '10px', textAlign:'center'}}>
+      <div style={{marginTop: '10px', textAlign:'center'}} >
         <div className="col">
           <div className="col-sm-5 col-md-4">
             <div className="thumbnail">
@@ -119,10 +134,10 @@ class ListWorkersName extends React.Component {
               <div className="caption">
                 <h3>{this.props.item.username}</h3>
                 Name: {this.props.item.name} <br/>
-                Major:{this.props.item.major}<br/>
-                Rating:{Math.ceil(this.props.item.rating)}<br/>
-                Email:{this.props.item.email}<br/>
-                Description: {this.props.item.description}<br/>
+                Major: {this.props.item.major} <br/>
+                Rating: {Math.ceil(this.props.item.rating)} <br/>
+                Email: {this.props.item.email} <br/>
+                Description: {this.props.item.description} <br/>
                 Phonenumber: {this.props.item.phonenumber}
                 <p><Dropdown value={String(this.state.rating)}
                   onChange={this.handleRate.bind(this)}
@@ -131,16 +146,27 @@ class ListWorkersName extends React.Component {
                     Rate
                   </a>  
                 </p> 
+                <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
+                  Request
+                </Button>
+
                 <div id='confirm'>
-                  Client Name: <input type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
-                  Client Phonenumber: <input type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
-                  Client Issue: <input style={{height: '100%', width:'50%'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
-                  <button style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
-                    Submit worker requesting
-                  </button>
-                    <Route component={() => 
-                    <Maps lat={this.state.latitude} long={this.state.longtitude} />} />
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                  <Modal.Body style={{textAlign:'left', marginLeft: '10px'}}>
+                    Client Name <input style={{height: '28px', width:'50%'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
+                    Client Phonenumber <input style={{height: '28px', width:'50%'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
+                    Client Issue <input style={{height: '60px', width:'50%'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+                    <button style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
+                      Submit worker requesting
+                    </button>
+                    <Route component={() =>  <Maps lat={this.state.latitude} long={this.state.longtitude} />} />
+                  </Modal.Body>
+                  <Modal.Footer style={{marginTop: '30px', textAlign:'center'}}>
+                    <Button onClick={this.handleClose}>Close</Button>
+                  </Modal.Footer>
+                </Modal>
                 </div>
+
               </div>
             </div>
           </div>
@@ -152,4 +178,8 @@ class ListWorkersName extends React.Component {
   }
 }
 
+//                   
+
+
 export default ListWorkersName;
+

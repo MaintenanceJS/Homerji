@@ -9,6 +9,7 @@ var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
 var multer = require("multer");
+//var upload = multer({dest: '/uploads/'})
 var cloudinary = require("cloudinary");
 var cloudinaryStorage = require("multer-storage-cloudinary");
 var path = require("path");
@@ -375,6 +376,56 @@ app.get('/*', (req, res) => {
 
 
 
+
+
+
+// function fileUploadMiddleware(req, res) {
+//   cloudinary.uploader.upload_stream((result) => {
+//     axios({
+//       url: '/api/upload', //API endpoint that needs file URL from CDN
+//       method: 'post',
+//       data: {
+//         url: result.secure_url,
+//         name: req.body.name,
+//         description: req.body.description,
+//       },
+//     }).then((response) => {
+//       res.status(200).json(response.data.data);
+//     }).catch((error) => {
+//       res.status(500).json(error.response.data);
+//     });
+//   }).end(req.file.buffer);
+// }
+
+// cloudinary.config({
+//   cloud_name: 'dlrmithhm',
+//   api_key: '487477829567923',
+//   api_secret: '41HzsLtymXy7oxwygs3NhZ8BpIM',
+// });
+
+// /**
+//   * Multer config for file upload
+// */
+
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage });
+// app.post('/files', upload.single('file'), fileUploadMiddleware);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // app.get('/Gardener', function(req, res) {
 //   console.log('isa')
 //   res.json('')
@@ -385,28 +436,39 @@ app.get('/*', (req, res) => {
 // });
 
 
-cloudinary.config({
-cloud_name: process.env.CLOUD_NAME,
-api_key: process.env.API_KEY,
-api_secret: process.env.API_SECRET
-});
-const storage = cloudinaryStorage({
-cloudinary: cloudinary,
-folder: "demo",
-allowedFormats: ["jpg", "png"],
-transformation: [{ width: 500, height: 500, crop: "limit" }]
-});
-const parser = multer({ storage: storage });
+// cloudinary.config({
+// cloud_name: 'dlrmithhm',
+// api_key: 487477829567923,
+// api_secret: '41HzsLtymXy7oxwygs3NhZ8BpIM'
+// });
+// const storage = cloudinaryStorage({
+// cloudinary: cloudinary,
+// folder: "demo",
+// allowedFormats: ["jpg", "png"],
+// transformation: [{ width: 500, height: 500, crop: "limit" }]
+// });
+// const parser = multer({ storage: storage });
 
-app.post('/api/images', parser.single("image"), (req, res) => {
-  console.log(req.file) // to see what is returned to you
-  const image = {};
-  image.url = req.file.url;
-  image.id = req.file.public_id;
-  Image.create(image) // save image information in database
-    .then(newImage => res.json(newImage))
-    .catch(err => console.log(err));
-});
+// app.post('/api/images', parser.single("image"), (req, res) => {
+//   console.log('hon',req.file.url) // to see what is returned to you
+//   const fileGettingUploaded = req.body.fileUrl;
+//   console.log('hnaak',fileGettingUploaded)
+
+// cloudinary.uploader.upload(fileGettingUploaded, {"crop":"limit","tags":"samples","width":3000,"height":2000}, function(result) { 
+//   console.log(result)
+//   json(result) 
+// });
+
+//   // const image = {};
+//   // image.url = req.file.url;
+//   // image.id = req.file.public_id;
+//   // Image.create(image) // save image information in database
+//   //   .then(newImage => {
+//   //     console.log(newImage)
+//   //     res.json(newImage)
+//   //   })
+//   //   .catch(err => console.log('err', err));
+// });
 
 
 
