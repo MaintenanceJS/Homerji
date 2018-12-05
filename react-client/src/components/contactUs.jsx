@@ -12,7 +12,7 @@ class ContactUs extends React.Component {
       <section id="contact">
         <div className="container">
           <h3 className="text-center text-uppercase">contact us</h3>
-          <p className="text-center w-75 m-auto">askdalks asljdl aalu woepq ald [qwe aksjd [quw aslkdj asu qw asdjl we q-slkd qwp euaslkdj wque slkdj quw p;ald qwpoe adk; aspi ;we pqw;asldk apiwe qwk;asldj poir ;LSDF PAWE RLDKFJ ASLJD ;AK DQ DAPSDJ LASJD  A SDLA lkjd lsjd alsljd owq</p>
+          <p className="text-center w-75 m-auto">askdalks asljdl aalu woepq ald qwe aksjd quw aslkdj asu qw asdjl we q-slkd qwp euaslkdj wque slkdj quw p;ald qwpoe adk; aspi ;we pqw;asldk apiwe qwk;asldj poir ;LSDF PAWE RLDKFJ ASLJD ;AK DQ DAPSDJ LASJD  A SDLA lkjd lsjd alsljd owq</p>
           <div className="row">
             <div className="col-lg-12 col-lg-6 col-lg-4 my-5">
               <div className="card border-1">
