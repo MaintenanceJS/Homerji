@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
+import axios from 'axios'; // Promise based HTTP client for the browser and node.js
 import contactUs from './components/contactUs.jsx';
 import Painting from './components/painting.jsx';
 import Plumb from './components/plumb.jsx';
@@ -15,11 +15,13 @@ import Logout from "./components/logout.jsx";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { browserHistory } from "react-router";
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false //to see categories or signup and login page
+      show: false, //to see categories or signup and login page
+      selectedFile: null
     }
   }
 
@@ -29,6 +31,7 @@ class App extends React.Component {
       show: !this.state.show
     })
   }
+
 
   render() {
     if (this.state.show) { //to see signup and login page
@@ -107,6 +110,28 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
+// handleFileUpload(e) {
+
+//   const file = e.target.files[0];
+//   this.setState({
+//     selectedFile: file
+//   });
+
+// }
+
+
+// imageUploadHandler(event) {
+//   const data = new FormData();
+//   data.append('file', event.target.files[0]);
+//   data.append('name', 'some value user types');
+//   data.append('description', 'some value user types');
+//   // '/files' is your node.js route that triggers our middleware
+//   axios.post('/files', data).then((response) => {
+//     console.log(response); // do something with the response
+//   });
+// }
+
+  // * /
 
 
 

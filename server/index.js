@@ -9,6 +9,7 @@ var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
 var multer = require("multer");
+//var upload = multer({dest: '/uploads/'})
 var cloudinary = require("cloudinary");
 var cloudinaryStorage = require("multer-storage-cloudinary");
 var path = require("path");
