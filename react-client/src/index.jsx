@@ -32,6 +32,41 @@ class App extends React.Component {
     })
   }
 
+  handleClients() { // Worker profile editing after login
+    $.ajax({
+      type: 'POST',
+      url: '/show',
+      data: {username: this.state.username},
+      contentType: 'application/json',
+      success: (data) => {
+        console.log('data', data)
+        alert(data)
+        // this.setState({
+        //   clients: data
+        // })
+      },
+      error: (err) => {
+        console.log('err', err);
+        alert('err')
+      }
+    });
+
+  }
+
+  handleMyClick() {
+    $.ajax({
+      type: 'POST',
+      url: '/show',
+      data: {username: 'g'},
+      success: (data) => {
+        console.log(data)
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
+
 
   render() {
     if (this.state.show) { //to see signup and login page
@@ -79,6 +114,8 @@ class App extends React.Component {
             <button className="home btn btn-primary">Furniture</button>
           </Link>
           </div>
+
+<button onClick={this.handleMyClick.bind(this)}> clients </button>
 
 
         <Route path='/Electric' component={Electric} />

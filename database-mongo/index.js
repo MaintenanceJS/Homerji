@@ -178,14 +178,43 @@ var updateClient = function(username, newClient, callback) {
   })  
 }
 
-var filterClients = function(username, req, res, callback) {
-  console.log('in filterClients', username)
-  worker.find({ username: username }, function(err, out) {
-    client.find({
-      '_id': { $in: out[0].client}
-    }, function(err, docs){
-      callback(null, docs) 
-    });         
+var filterClients = function(user, callback) {
+  console.log('in filterClients', user)
+  worker.find({ username: user }, function(err, out) {
+    if (err) {
+      callback(err, null)
+    } else {
+      client.find({'_id': { $in: out[0].client}}, function(err, docs){
+        if (err) {
+          callback(err, null)
+        } else {
+          callback(null, docs)
+        } 
+      });
+    }         
+  }) 
+}
+
+var updateClientsArr = function(username, id, callback) {
+  console.log('username', username, 'id', id)
+  worker.find({ username: username }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      var clientArr = res[0].client
+      for (var i = 0; i < clientArr.length; i++) {
+        if (clientArr[i].$oid = id) {
+          clientArr.splice(i, 1)
+        }
+      }
+      worker.updateOne({ username: username }, { client: clientArr }, function(err, data) {
+        if(err) {
+          callback(err, null);
+        } else {
+          callback(null, data);
+        }
+      })
+    }
   }) 
 }
 
@@ -205,6 +234,7 @@ module.exports.updateDescription = updateDescription;
 module.exports.updatePhonenumber = updatePhonenumber;
 module.exports.updateClient = updateClient;
 module.exports.filterClients = filterClients;
+module.exports.updateClientsArr = updateClientsArr;
 
 
 

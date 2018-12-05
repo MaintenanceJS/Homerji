@@ -56,6 +56,14 @@ class NavBar extends React.Component {
               </Navbar.Brand>
             </Navbar.Header>
             <Navbar.Collapse>
+              <Nav>
+                <NavItem eventKey={1} href="/contactus">
+                  Contact Us
+                </NavItem>
+                <NavItem eventKey={2} href="/about">
+                  About
+                </NavItem>
+              </Nav>
               <Navbar.Form pullLeft>
                 <FormGroup>
                   <FormControl

@@ -371,18 +371,32 @@ app.get('/add', manualAddingToDB);
 app.post('/rating', rating);
 app.post('/edit', edting);
 app.post('/newClient', newClient);
-app.post('/showclient', function (req, res) {
-  var workerUsername = req.body.username
-  worker.find({ username: workerUsername }, function(err, out) {
-    client.find({
-      '_id': { $in: out[0].client}
-    }, function(err, docs){
-      console.log('docs', docs)
-      res.status(200).json(docs) 
-      console.log('after')
-    });         
+app.post('/show', function (req, res) {
+  var arr = [];
+  db.filterClients(req.body.username, function(err, data){
+    if (err) {
+      console.log('err', err)
+      //res.sendStatus(500);
+    } else {
+      console.log('data', data)
+      //res.setHeader('Content-Type', 'application/json');
+      res.send(data)
+    }
   })
 });
+app.post('/clientedit', function (req, res) {
+  db.updateClientsArr(req.body.username, req.body.id, function(err, data) {
+    if (err) {
+      res.sendStatus(500)
+    } else {
+      res.sendStatus(200)
+    }
+  })
+});
+
+
+
+
 
 //to not get 404 error when reload page( redirect to index.html when reload )
 app.get('/*', (req, res) => {

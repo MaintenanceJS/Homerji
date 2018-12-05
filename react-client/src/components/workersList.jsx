@@ -112,7 +112,7 @@ class ListWorkersName extends React.Component {
   }
 
 
-handleClose() {
+  handleClose() {
     this.setState({ show: false });
   }
 
