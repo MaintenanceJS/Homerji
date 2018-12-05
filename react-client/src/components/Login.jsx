@@ -16,7 +16,8 @@ class Login extends React.Component {
       email: '',
       password: '',
       description: '',
-      phonenumber: 0
+      phonenumber: 0,
+      availability: ""
     };
   }
 
@@ -51,6 +52,7 @@ class Login extends React.Component {
         this.setState({
           loggedin: true
         })
+        console.log('logged in')
         $('.edit').show()
       },
       error: (err) => {
@@ -114,6 +116,11 @@ class Login extends React.Component {
       phonenumber: e.target.value
     })
   }
+  handleAvailability(e) {
+    this.setState({
+      availability: e
+    })
+  }
 
   //new values request
   handleEdit() { // Worker profile editing after login
@@ -127,7 +134,8 @@ class Login extends React.Component {
         email: this.state.email,
         password: this.state.password,
         description: this.state.description,
-        phonenumber: this.state.phonenumber
+        phonenumber: this.state.phonenumber,
+        availability: this.state.availability
       },
       success: (data) => {
         this.setState({
@@ -143,18 +151,18 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <h4 style={{cursor: 'pointer'}} onClick={this.handleOnClick.bind(this)}> Login </h4>
-          <label className='login'>
-            Username:
+        <h4 style={{ cursor: 'pointer' }} onClick={this.handleOnClick.bind(this)}> Login </h4>
+        <label className='login'>
+          Username:
             <br /><input type="text" onChange={this.handleUsername.bind(this)} />
-          </label> <br />
-          <label className='login'>
-            Password:
+        </label> <br />
+        <label className='login'>
+          Password:
             <br /><input type="text" onChange={this.handlePassword.bind(this)} />
-          </label> <br />
-          <button onClick={this.handleSubmit.bind(this)} className='submit'> Submit </button>
+        </label> <br />
+        <button onClick={this.handleSubmit.bind(this)} className='submit'> Submit </button>
 
-          <form className='edit'>
+        <form className='edit'>
           <label>
             Name:
             <br /><input type="text" onChange={this.handleName.bind(this)} />
@@ -182,6 +190,12 @@ class Login extends React.Component {
             <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
           <button onClick={this.handleEdit.bind(this)} className='submit'> Submit </button>
+          <label>
+            Availability: <br />
+            <Dropdown value={String(this.state.availability)}
+              onChange={this.handleAvailability.bind(this)}
+              options={['Yes', 'No']} />
+          </label> <br />
         </form>
       </div>
     )

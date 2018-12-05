@@ -4,14 +4,15 @@ import SearchByName from "./workers.jsx";
 import axios from "axios";
 import $ from "jquery";
 import {
-    Navbar,
-    Nav,
-    NavItem,
-    FormGroup,
-    FormControl,
-    Button,
-    Glyphicon
-} from "react-bootstrap"; // For Designing
+  Navbar,
+  Nav,
+  NavItem,
+  FormGroup,
+  FormControl,
+  Button,
+  NavDropdown,
+  MenuItem
+} from "react-bootstrap";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class NavBar extends React.Component {
@@ -22,11 +23,11 @@ class NavBar extends React.Component {
       workers: [] //searched workers
     };
   }
-  
+
   // For the search
   getWorkersByName() {
     var that = this;
-    axios.post("/name", { name: this.state.name }).then(function(res) {
+    axios.post("/name", { name: this.state.name }).then(function (res) {
       that.setState({
         workers: res.data
       });
@@ -49,14 +50,24 @@ class NavBar extends React.Component {
     return (
       <Router>
         <div>
-          <Navbar collapseOnSelect>
+
+          <Navbar inverse collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="/" >HomerJi</a>
+                <a href="/">HomeRG</a>
               </Navbar.Brand>
+              <Navbar.Toggle />
             </Navbar.Header>
             <Navbar.Collapse>
-              <Navbar.Form pullLeft>
+              <Nav>
+                <NavItem eventKey={1} href="/contactus">
+                  Contact Us
+                </NavItem>
+                <NavItem eventKey={2} href="#">
+                  About
+                </NavItem>
+              </Nav>
+              <Navbar.Form>
                 <FormGroup>
                   <FormControl
                     id='textInbox'
@@ -69,24 +80,16 @@ class NavBar extends React.Component {
                   <Button onClick={this.getWorkersByName.bind(this)}>
                     Search
                   </Button>
+
                 </Link>
               </Navbar.Form>
-              <Nav pullRight>
-                <NavItem href="#">
-                  <div>
-                    {" "}
-                    <WorkersLogo
-                      handleWorkersButton={this.props.handleWorkersButton}
-                    />{" "}
-                  </div>
-                </NavItem>
-              </Nav>
+              <WorkersLogo />
+              <Route
+                path="/search"
+                component={() => <SearchByName workersList={this.state.workers} />}
+              />
             </Navbar.Collapse>
-          </Navbar>
-          <Route
-            path="/search"
-            component={() => <SearchByName workersList={this.state.workers} />}
-          />
+          </Navbar>;
         </div>
       </Router>
     );

@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var db = require('../database-mongo');
-var request = require('request'); //requires npm install
+var path = require('path');
 var partial = require('express-partial'); //requires npm install
 var cookieParser = require('cookie-parser'); //requires npm install
 var session = require('express-session'); //requires npm install
@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 //cookies and session
 app.use(cookieParser('shhhh, very secret'));
 app.use(session({
-  cookie: {secure: false, maxAge: 60000},
+  cookie: { secure: false, maxAge: 60000 },
   secret: 'shhh, it\'s a secret',
   resave: true,
   saveUninitialized: true
@@ -51,6 +51,10 @@ app.get('/workers', function (req, res) {
       res.status(200).send(data);
     }
   });
+});
+//to not get 404 error when reload page( redirect to index.html when reload )
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
 });
 
 
@@ -83,18 +87,18 @@ app.post('/name', function (req, res) {
 app.post('/makeclient', function (req, res) {
   console.log(req.body)
   var newClient = new client({
-          name: req.body.name,
-          phonenumber: req.body.phonenumber,
-          issue: req.body.issue,
-          //for the map location
-          latitude: req.body.latitude,
-          longtitude: req.body.latitude
-        })
-        newClient.save()
-        .then(function() {
-          console.log('saved')
-          res.status(200).send()
-        })
+    name: req.body.name,
+    phonenumber: req.body.phonenumber,
+    issue: req.body.issue,
+    //for the map location
+    latitude: req.body.latitude,
+    longtitude: req.body.latitude
+  })
+  newClient.save()
+    .then(function () {
+      console.log('saved')
+      res.status(200).send()
+    })
 });
 
 
@@ -108,8 +112,8 @@ var manualAddingToDB = function () {
     latitude: 19,
     longtitude: 15
   });
-  y.save(function(err) {
-    if (err) {return err}
+  y.save(function (err) {
+    if (err) { return err }
     x = new worker({ //worker schema
       name: 'Name',
       major: 'Major',
@@ -124,10 +128,10 @@ var manualAddingToDB = function () {
       client: y._id //for linking the schemas
     })
     x.save()
-    .then(function () {
-      console.log('worker is saved in database, in signupWorker')
-    })
-  })  
+      .then(function () {
+        console.log('worker is saved in database, in signupWorker')
+      })
+  })
 }
 
 
@@ -144,8 +148,8 @@ var signupWorker = function (req, res) {
   var phonenumber = req.body.phonenumber;
   var hash = bcrypt.hashSync(password);
 
-  db.selectAllUsernames(username, req, res, function(err, found) {
-    if (err) {res.sendStatus(500)}; //only for unpredictable errors
+  db.selectAllUsernames(username, req, res, function (err, found) {
+    if (err) { res.sendStatus(500) }; //only for unpredictable errors
 
     if (found) {
       if (found.length > 0) { //account is not new
@@ -166,11 +170,11 @@ var signupWorker = function (req, res) {
           client: []
         })
         newWorker.save() //save to database
-        .then(function() {
-          res.setHeader('Content-Type', 'application/json'); //res should be json
-          console.log('new worker')
-          createSession(req, res, newWorker) //res is from the session function
-        })
+          .then(function () {
+            res.setHeader('Content-Type', 'application/json'); //res should be json
+            console.log('new worker')
+            createSession(req, res, newWorker) //res is from the session function
+          })
       }
     }
   })
@@ -181,7 +185,7 @@ var signupWorker = function (req, res) {
 var loginUser = function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
-  db.selectAllUsernames(username, req, res, function(err, found) {
+  db.selectAllUsernames(username, req, res, function (err, found) {
     if (err) { //only for unpredictable errors
       res.sendStatus(500)
       return err
@@ -191,14 +195,14 @@ var loginUser = function (req, res) {
         res.status(404).json('');
       } else {
         var hashed = found[0].password //hashed password in database
-        comparePassword(password, hashed, function(match) {
+        comparePassword(password, hashed, function (match) {
           if (match) {
             res.setHeader('Content-Type', 'application/json'); //res should be json
             createSession(req, res, found[0])
             console.log("session is done")
           } else {
             console.log('wrong password or username')
-            res.status(404).json();
+            res.status(404).json("");
           }
         })
       }
@@ -215,7 +219,7 @@ var createSession = function (req, res, newUser) {
     req.session.userID = String(newUser._id); //most important section of this function
     req.session.cookie.expires = new Date(Date.now() + 3600000) //a date for expiration
     req.session.cookie.maxAge = 3600000; //a specific time to destroys
-    req.session.save(function(err) {
+    req.session.save(function (err) {
       res.status(200).json('') //header is json
       console.log('after save session', req.session)
     })
@@ -225,7 +229,7 @@ var createSession = function (req, res, newUser) {
 
 //For authentication
 var isLoggedIn = function (username, req, res, callback) {
-  db.selectAllUsernames(username, req, res, function(err, found) {
+  db.selectAllUsernames(username, req, res, function (err, found) {
     if (err) { //only for unpredictable errors
       res.sendStatus(500)
       return err
@@ -244,13 +248,13 @@ var isLoggedIn = function (username, req, res, callback) {
       }
     }
   })
-} 
+}
 
 
 //destroy session function
 var logoutUser = function (req, res) {
   console.log("before", req.session)
-  req.session.destroy(function() { //remove session
+  req.session.destroy(function () { //remove session
     res.status(200).send()
   });
   console.log("after", req.session)
@@ -275,16 +279,16 @@ var hashPassword = function () {
 var rating = function (req, res) {
   var newRating = Number(req.body.rating);
   var username = req.body.username;
-  db.selectAllUsernames(username, req, res, function(err, found) { //search for the worker
-    if (!found) {res.status(500).send()}
-    if (found.length === 0) {res.status(401).send()}
+  db.selectAllUsernames(username, req, res, function (err, found) { //search for the worker
+    if (!found) { res.status(500).send() }
+    if (found.length === 0) { res.status(401).send() }
     if (found.length !== 0) {
       //rating equation
       var count = found[0].ratingCount;
       var rate = found[0].rating;
       var ratio = count * rate;
-      var newCount = count+1;
-      var result = (newRating+ratio) / newCount //new rate
+      var newCount = count + 1;
+      var result = (newRating + ratio) / newCount //new rate
       db.updateRating(username, result, function () {
         return
       })
@@ -292,7 +296,7 @@ var rating = function (req, res) {
         return
       })
       res.status(200).send('')
-    } 
+    }
   })
 }
 
@@ -305,9 +309,10 @@ var edting = function (req, res) {
   var password = req.body.password
   var description = req.body.description
   var phonenumber = Number(req.body.phonenumber)
+  var availability = req.body.availability
   var hash = bcrypt.hashSync(password);
 
-  db.selectAllUsernames(username, req, res, function(err, found) {
+  db.selectAllUsernames(username, req, res, function (err, found) {
     console.log(found)
     db.updateName(username, name, function () {
       return
@@ -327,35 +332,38 @@ var edting = function (req, res) {
     db.updatePhonenumber(username, phonenumber, function () {
       return
     })
+    db.updateAvailability(username, availability, function () {
+      return
+    })
   })
   res.status(200).send('')
 }
 
 //adding a new client to database
 var newClient = function (req, res) {
-    var workerUsername = req.body.workerUsername
-    var name = req.body.clientName
-    var phonenumber = Number(req.body.phonenumber)
-    var issue = req.body.issue
-    //map
-    var latitude = Number(req.body.latitude)
-    var longtitude = Number(req.body.longtitude)
+  var workerUsername = req.body.workerUsername
+  var name = req.body.clientName
+  var phonenumber = Number(req.body.phonenumber)
+  var issue = req.body.issue
+  //map
+  var latitude = Number(req.body.latitude)
+  var longtitude = Number(req.body.longtitude)
 
-    var requester = new client({
-      _id: new mongoose.Types.ObjectId(),
-      name: name,
-      phonenumber: phonenumber,
-      issue: issue,
-      latitude: latitude,
-      longtitude: longtitude
-    });
-    requester.save(function (err) { //requester is the client
-      if (err) return handleError(err);
-      console.log('requester is saved', requester)
-      db.updateClient(workerUsername, requester._id, function () { //update client row in worker table
-        return
-      })
+  var requester = new client({
+    _id: new mongoose.Types.ObjectId(),
+    name: name,
+    phonenumber: phonenumber,
+    issue: issue,
+    latitude: latitude,
+    longtitude: longtitude
+  });
+  requester.save(function (err) { //requester is the client
+    if (err) return handleError(err);
+    console.log('requester is saved', requester)
+    db.updateClient(workerUsername, requester._id, function () { //update client row in worker table
+      return
     })
+  })
   res.status(200).send()
 }
 
@@ -371,104 +379,31 @@ app.post('/newClient', newClient);
 
 //to not get 404 error when reload page( redirect to index.html when reload )
 app.get('/*', (req, res) => {
- res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
 });
 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
+const storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: "demo",
+  allowedFormats: ["jpg", "png"],
+  transformation: [{ width: 500, height: 500, crop: "limit" }]
+});
+const parser = multer({ storage: storage });
 
-
-
-
-
-// function fileUploadMiddleware(req, res) {
-//   cloudinary.uploader.upload_stream((result) => {
-//     axios({
-//       url: '/api/upload', //API endpoint that needs file URL from CDN
-//       method: 'post',
-//       data: {
-//         url: result.secure_url,
-//         name: req.body.name,
-//         description: req.body.description,
-//       },
-//     }).then((response) => {
-//       res.status(200).json(response.data.data);
-//     }).catch((error) => {
-//       res.status(500).json(error.response.data);
-//     });
-//   }).end(req.file.buffer);
-// }
-
-// cloudinary.config({
-//   cloud_name: 'dlrmithhm',
-//   api_key: '487477829567923',
-//   api_secret: '41HzsLtymXy7oxwygs3NhZ8BpIM',
-// });
-
-// /**
-//   * Multer config for file upload
-// */
-
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage });
-// app.post('/files', upload.single('file'), fileUploadMiddleware);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// app.get('/Gardener', function(req, res) {
-//   console.log('isa')
-//   res.json('')
-// });
-// app.get('/:majors(Gardener|Carpenter|article3)?', function(req, res) {
-//   console.log('isa')
-//   res.json('')
-// });
-
-
-// cloudinary.config({
-// cloud_name: 'dlrmithhm',
-// api_key: 487477829567923,
-// api_secret: '41HzsLtymXy7oxwygs3NhZ8BpIM'
-// });
-// const storage = cloudinaryStorage({
-// cloudinary: cloudinary,
-// folder: "demo",
-// allowedFormats: ["jpg", "png"],
-// transformation: [{ width: 500, height: 500, crop: "limit" }]
-// });
-// const parser = multer({ storage: storage });
-
-// app.post('/api/images', parser.single("image"), (req, res) => {
-//   console.log('hon',req.file.url) // to see what is returned to you
-//   const fileGettingUploaded = req.body.fileUrl;
-//   console.log('hnaak',fileGettingUploaded)
-
-// cloudinary.uploader.upload(fileGettingUploaded, {"crop":"limit","tags":"samples","width":3000,"height":2000}, function(result) { 
-//   console.log(result)
-//   json(result) 
-// });
-
-//   // const image = {};
-//   // image.url = req.file.url;
-//   // image.id = req.file.public_id;
-//   // Image.create(image) // save image information in database
-//   //   .then(newImage => {
-//   //     console.log(newImage)
-//   //     res.json(newImage)
-//   //   })
-//   //   .catch(err => console.log('err', err));
-// });
+app.post('/api/images', parser.single("image"), (req, res) => {
+  console.log(req.file) // to see what is returned to you
+  const image = {};
+  image.url = req.file.url;
+  image.id = req.file.public_id;
+  Image.create(image) // save image information in database
+    .then(newImage => res.json(newImage))
+    .catch(err => console.log(err));
+});
 
 
 
