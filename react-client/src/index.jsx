@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios'; // Promise based HTTP client for the browser and node.js
 import $ from 'jquery';
 import Painting from './components/painting.jsx';
 import Plumb from './components/plumb.jsx';
@@ -14,11 +15,13 @@ import Logout from "./components/logout.jsx";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { browserHistory } from "react-router";
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false //to see categories or signup and login page
+      show: false, //to see categories or signup and login page
+      selectedFile: null
     }
   }
 
@@ -28,6 +31,7 @@ class App extends React.Component {
       show: !this.state.show
     })
   }
+
 
   render() {
     if (this.state.show) { //to see signup and login page
@@ -76,6 +80,7 @@ class App extends React.Component {
           </Link>
           </div>
 
+
         <Route path='/Electric' component={Electric} />
         <Route path='/Painting' component={Painting} />
         <Route path='/Plumb' component={Plumb} />
@@ -91,13 +96,52 @@ class App extends React.Component {
 ReactDOM.render(<App />, document.getElementById('app'));
 
 
-//   <img src=imageURL />
+
+/*
+
+<input type="file" onChange={this.handleFileUpload} />
+
+         
+            <button onClick={this.imageUploadHandler.bind(this)}> send image</button>
 
 
-          // <form action='/api/images' method="post" enctype="multipart/form-data">
-          //   <input type='file' name='image' />
-          // </form>
+  <img src=imageURL />
+<input type='submit' name='image' />
 
+  <input type='file' name='image' onChange={this.imageHandler.bind(this)}/>
+
+  imageHandler(e) {
+    console.log(e.target)
+    this.setState({
+      selectedFile: e.target.files[0]
+    })
+  }
+
+
+  handleFileUpload(e) {
+    console.log(e)
+    const file = e.target.files[0];
+    // this.props.actions.uploadRequest({
+    //    file,
+    //    name: 'Awesome Cat Pic'
+    // })
+    this.setState({
+      selectedFile: file
+    })
+  }
+
+  imageUploadHandler(event) {
+    const data = new FormData();
+    data.append('file', event.target.files[0]);
+    data.append('name', 'some value user types');
+    data.append('description', 'some value user types');
+    // '/files' is your node.js route that triggers our middleware
+    axios.post('/files', data).then((response) => {
+      console.log(response); // do something with the response
+    });
+  }
+
+  */
 
 
 

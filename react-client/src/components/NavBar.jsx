@@ -41,6 +41,10 @@ class NavBar extends React.Component {
     });
   }
 
+  handle() {
+    
+  }
+
   render() {
     return (
       <Router>
@@ -57,7 +61,7 @@ class NavBar extends React.Component {
                   <FormControl
                     id='textInbox'
                     type="text"
-                    placeholder="Username"
+                    placeholder="Worker name"
                     onChange={this.getUserName.bind(this)}
                   />
                 </FormGroup>{" "}

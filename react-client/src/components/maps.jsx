@@ -15,8 +15,9 @@ export class MapContainer extends Component {
 
   render() {
     return (
-      <Map  google={this.props.google} style= {{marginBottom:'0', marginTop:'-80%', width: '85%', height: '30%', position: 'relative'}}  initialCenter={this.state} zoom={14}>
- 
+    <div id="mapBox">
+      <Map style={{zIndex: 0}} google={this.props.google} style= {{marginBottom:'0', marginTop:'-65%', width: '85%', height: '30%'}}  initialCenter={this.state} zoom={14}>
+        
         <Marker onClick={this.onMarkerClick}
                 name={'Current location'} />
  
@@ -26,6 +27,7 @@ export class MapContainer extends Component {
           </div>
         </InfoWindow>
       </Map>
+    </div>
     );
   }
 }

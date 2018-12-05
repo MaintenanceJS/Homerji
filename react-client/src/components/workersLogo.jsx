@@ -4,7 +4,6 @@ import $ from 'jquery';
 import Sign from './Signup.jsx';
 import Login from './Login.jsx';
 import Logout from './logout.jsx';
-//import { FiHome } from "react-icons/fi";\
 import {
     Navbar,
     Nav,
@@ -33,5 +32,3 @@ class WorkersLogo extends React.Component {
 }
 
 export default WorkersLogo;
-
-//className='glyphicon glyphicon-home'
