@@ -16,7 +16,8 @@ class Login extends React.Component {
       email: '',
       password: '',
       description: '',
-      phonenumber: 0
+      phonenumber: 0,
+      clients: []
     };
   }
 
@@ -130,11 +131,30 @@ class Login extends React.Component {
         phonenumber: this.state.phonenumber
       },
       success: (data) => {
+        
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
+
+  handleClients() { // Worker profile editing after login
+    $.ajax({
+      type: 'POST',
+      url: '/showclient',
+      data: {
+        username: this.state.username,
+      },
+      success: (data) => {
+        console.log('data', data)
+        alert(data)
         this.setState({
-          getItems: data
+          clients: data
         })
       },
       error: (err) => {
+        alert('err')
         console.log('err', err);
       }
     });
@@ -144,17 +164,22 @@ class Login extends React.Component {
     return (
       <div>
         <h4 style={{cursor: 'pointer'}} onClick={this.handleOnClick.bind(this)}> Login </h4>
-          <label className='login'>
-            Username:
-            <br /><input type="text" onChange={this.handleUsername.bind(this)} />
-          </label> <br />
-          <label className='login'>
-            Password:
-            <br /><input type="text" onChange={this.handlePassword.bind(this)} />
-          </label> <br />
-          <button onClick={this.handleSubmit.bind(this)} className='submit'> Submit </button>
+        <label className='login'>
+          Username:
+          <br /><input type="text" onChange={this.handleUsername.bind(this)} />
+        </label> <br />
+        <label className='login'>
+          Password:
+          <br /><input type="text" onChange={this.handlePassword.bind(this)} />
+        </label> <br />
+        <button onClick={this.handleSubmit.bind(this)} className='submit'> Submit </button>
 
-          <form className='edit'>
+        <form className='edit'>
+          <label>
+            Clients:
+            <br /> {this.state.clients}
+          </label> <br />
+          <button onClick={this.handleClients.bind(this)} className='submit'> Clients </button>
           <label>
             Name:
             <br /><input type="text" onChange={this.handleName.bind(this)} />
@@ -182,6 +207,7 @@ class Login extends React.Component {
             <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
           <button onClick={this.handleEdit.bind(this)} className='submit'> Submit </button>
+          
         </form>
       </div>
     )

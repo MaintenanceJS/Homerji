@@ -69,6 +69,7 @@ var selectAllUsernames = function (username, req, res, callback) {
     }
   });
 };
+
 var selectAllMajors = function (major, callback) {
   worker.find({ major: major }, function (err, items) {
     if (err) {
@@ -177,6 +178,17 @@ var updateClient = function(username, newClient, callback) {
   })  
 }
 
+var filterClients = function(username, req, res, callback) {
+  console.log('in filterClients', username)
+  worker.find({ username: username }, function(err, out) {
+    client.find({
+      '_id': { $in: out[0].client}
+    }, function(err, docs){
+      callback(null, docs) 
+    });         
+  }) 
+}
+
 module.exports.worker = worker;
 module.exports.client = client;
 module.exports.selectAll = selectAll;
@@ -192,6 +204,7 @@ module.exports.updatePassword = updatePassword;
 module.exports.updateDescription = updateDescription;
 module.exports.updatePhonenumber = updatePhonenumber;
 module.exports.updateClient = updateClient;
+module.exports.filterClients = filterClients;
 
 
 

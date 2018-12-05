@@ -81,7 +81,7 @@ app.post('/name', function (req, res) {
 
 //add a client to dataBase (not used)
 app.post('/makeclient', function (req, res) {
-  console.log(req.body)
+  console.log('req.body',req.body)
   var newClient = new client({
           name: req.body.name,
           phonenumber: req.body.phonenumber,
@@ -210,16 +210,19 @@ var loginUser = function (req, res) {
 //create a session function
 var createSession = function (req, res, newUser) {
   console.log("before regenerate", 'req.session', req.session)
+  var clients = []
   req.session.regenerate(function (err) {
     if (err) { return err }
     req.session.userID = String(newUser._id); //most important section of this function
     req.session.cookie.expires = new Date(Date.now() + 3600000) //a date for expiration
     req.session.cookie.maxAge = 3600000; //a specific time to destroys
     req.session.save(function(err) {
-      res.status(200).json('') //header is json
+      res.status(200).json('')
+      //header is json
       console.log('after save session', req.session)
     })
   });
+  
 };
 
 
@@ -328,7 +331,7 @@ var edting = function (req, res) {
       return
     })
   })
-  res.status(200).send('')
+  res.status(200).json('')
 }
 
 //adding a new client to database
@@ -349,6 +352,7 @@ var newClient = function (req, res) {
       latitude: latitude,
       longtitude: longtitude
     });
+    console.log('requester', requester)
     requester.save(function (err) { //requester is the client
       if (err) return handleError(err);
       console.log('requester is saved', requester)
@@ -359,8 +363,7 @@ var newClient = function (req, res) {
   res.status(200).send()
 }
 
-//signup 
-//app.get('/signup', signupUserForm);
+///////////////////
 app.post('/signup', signupWorker);
 app.post('/login', loginUser);
 app.post('/logout', logoutUser);
@@ -368,6 +371,18 @@ app.get('/add', manualAddingToDB);
 app.post('/rating', rating);
 app.post('/edit', edting);
 app.post('/newClient', newClient);
+app.post('/showclient', function (req, res) {
+  var workerUsername = req.body.username
+  worker.find({ username: workerUsername }, function(err, out) {
+    client.find({
+      '_id': { $in: out[0].client}
+    }, function(err, docs){
+      console.log('docs', docs)
+      res.status(200).json(docs) 
+      console.log('after')
+    });         
+  })
+});
 
 //to not get 404 error when reload page( redirect to index.html when reload )
 app.get('/*', (req, res) => {
@@ -483,7 +498,14 @@ app.listen(port, function () {
 //cloudinary.uploader.upload("sample.jpg", {"crop":"limit","tags":"samples","width":3000,"height":2000}, function(result) { console.log(result) });
 
 
-
+// db.filterClients(newUser.username, req, res, function (err, data) {
+//       console.log("data in createSession", data)
+//       if (err) {res.sendStatus(500)}
+//       if (data) {
+//         clients = data;
+//       }
+      
+//     })
 
 
 
