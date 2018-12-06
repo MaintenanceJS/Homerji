@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios'; // Promise based HTTP client for the browser and node.js
 import $ from 'jquery';
 import Painting from './components/painting.jsx';
 import Plumb from './components/plumb.jsx';
@@ -12,6 +11,7 @@ import Gardener from "./components/Gardener.jsx";
 import Sign from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import Logout from "./components/logout.jsx";
+import ContactUs from "./components/contactUs.jsx";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { browserHistory } from "react-router";
 
@@ -25,6 +25,11 @@ class App extends React.Component {
     }
   }
 
+  hideLogos() {
+    console.log('hideeee')
+    $('#logos').hide();
+  }
+
   //toggle
   handleWorkersButton() {
     this.setState({
@@ -36,7 +41,7 @@ class App extends React.Component {
     $.ajax({
       type: 'POST',
       url: '/show',
-      data: {username: this.state.username},
+      data: { username: this.state.username },
       contentType: 'application/json',
       success: (data) => {
         console.log('data', data)
@@ -57,7 +62,7 @@ class App extends React.Component {
     $.ajax({
       type: 'POST',
       url: '/show',
-      data: {username: 'g'},
+      data: { username: 'g' },
       success: (data) => {
         console.log(data)
       },
@@ -67,147 +72,99 @@ class App extends React.Component {
     });
   }
 
-
   render() {
     if (this.state.show) { //to see signup and login page
-    return <Router history={browserHistory}>
-        <div style={{cursor: 'auto'}}>
-          <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
+      return <Router history={browserHistory}>
+        <div style={{ cursor: 'auto' }}>
+          <Route path="/" component={() =>
+            <NavBar logos={this.hideLogos.bind(this)} handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
           <div className="col">
             <div className="col-sm-4 col-md-3">
-                <Sign className="show" style={{cursor: 'pointer'}}/>
+              <Sign className="show" style={{ cursor: 'pointer' }} />
             </div>
           </div>
           <div className="col">
             <div className="col-sm-4 col-md-3">
-                <Login className="show" style={{cursor: 'pointer'}}/> 
+              <Login className="show" style={{ cursor: 'pointer' }} />
             </div>
           </div>
           <div className="col">
             <div className="col-sm-3 col-md-3">
-                <Logout className="show"/>
+              <Logout className="show" />
             </div>
           </div>
         </div>
       </Router>;
     } else { //to see categories
       return <Router history={browserHistory}>
-          <div style={{ cursor: "auto" }}>
-            <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
-            <div style={{ maxWidth: "1200px", margin: "auto", padding: "10px" }}>
-              <div className="container-fluid" style={{ marginTop: "40px" }}>
-                <div className="row" style={{ marginTop: "20px" }}>
-                  <Link style={{ textDecoration: "none" }} to="/Electric">
-                    <div className="col-md-4">
-                      <div className="col-lg-10 feature-box">
-                        <span className="yellow glyphicon glyphicon-flash icon" />
-                        <h4>Electric</h4>
-                      </div>
+        <div style={{ cursor: "auto" }}>
+          <Route path="/" component={() => <NavBar logos={this.hideLogos.bind(this)} handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
+          <div id="logos" style={{ maxWidth: "1200px", margin: "auto", padding: "10px" }}>
+            <div className="container-fluid" style={{ marginTop: "40px" }}>
+              <div className="row" style={{ marginTop: "20px" }}>
+                <Link style={{ textDecoration: "none" }} to="/Electric">
+                  <div className="col-md-4">
+                    <div className="col-lg-10 feature-box">
+                      <span className="yellow glyphicon glyphicon-flash icon" />
+                      <h4>Electric</h4>
                     </div>
-                  </Link>
-                  <Link style={{ textDecoration: "none" }} to="/Painting">
-                    <div className="col-md-4">
-                      <div className="col-md-10 feature-box">
-                        <span className="glyphicon glyphicon-cog icon" />
-                        <h4>Painting</h4>
-                      </div>
+                  </div>
+                </Link>
+                <Link style={{ textDecoration: "none" }} to="/Painting">
+                  <div className="col-md-4">
+                    <div className="col-md-10 feature-box">
+                      <span className="glyphicon glyphicon-cog icon" />
+                      <h4>Painting</h4>
                     </div>
-                  </Link>
-                  <Link style={{ textDecoration: "none" }} to="/Plumb">
-                    <div className="col-md-4">
-                      <div className="col-md-10 feature-box">
-                        <span className="glyphicon glyphicon-cog icon" />
-                        <h4>Plumb</h4>
-                      </div>
+                  </div>
+                </Link>
+                <Link style={{ textDecoration: "none" }} to="/Plumb">
+                  <div className="col-md-4">
+                    <div className="col-md-10 feature-box">
+                      <span className="glyphicon glyphicon-cog icon" />
+                      <h4>Plumb</h4>
                     </div>
-                  </Link>
+                  </div>
+                </Link>
 
-                  <Link style={{ textDecoration: "none" }} to="/Carpenter">
-                    <div className="col-md-4">
-                      <div className="col-md-10 feature-box">
-                        <span className="glyphicon glyphicon-cog icon" />
-                        <h4>Carpenter</h4>
-                      </div>
+                <Link style={{ textDecoration: "none" }} to="/Carpenter">
+                  <div className="col-md-4">
+                    <div className="col-md-10 feature-box">
+                      <span className="glyphicon glyphicon-cog icon" />
+                      <h4>Carpenter</h4>
                     </div>
-                  </Link>
-                  <Link style={{ textDecoration: "none" }} to="/Gardener">
-                    <div className="col-md-4">
-                      <div className="col-md-10 feature-box">
-                        <span className="glyphicon glyphicon-tree-deciduous icon" />
-                        <h4>Gardener</h4>
-                      </div>
+                  </div>
+                </Link>
+                <Link style={{ textDecoration: "none" }} to="/Gardener">
+                  <div className="col-md-4">
+                    <div className="col-md-10 feature-box">
+                      <span className="glyphicon glyphicon-tree-deciduous icon" />
+                      <h4>Gardener</h4>
                     </div>
-                  </Link>
-                  <Link style={{ textDecoration: "none" }} to="/Furniture">
-                    <div className="col-md-4">
-                      <div className="col-md-10 feature-box">
-                        <span className="glyphicon glyphicon-cog icon" />
-                        <h4>Furniture</h4>
-                      </div>
+                  </div>
+                </Link>
+                <Link style={{ textDecoration: "none" }} to="/Furniture">
+                  <div className="col-md-4">
+                    <div className="col-md-10 feature-box">
+                      <span className="glyphicon glyphicon-cog icon" />
+                      <h4>Furniture</h4>
                     </div>
-                  </Link>
-                </div>
+                  </div>
+                </Link>
               </div>
             </div>
-
-            <Route path="/Electric" component={Electric} />
-            <Route path="/Painting" component={Painting} />
-            <Route path="/Plumb" component={Plumb} />
-            <Route path="/Carpenter" component={Carpenter} />
-            <Route path="/Gardener" component={Gardener} />
-            <Route path="/Furniture" component={Furniture} />
           </div>
-        </Router>;
+
+          <Route path="/Electric" component={Electric} />
+          <Route path="/Painting" component={Painting} />
+          <Route path="/Plumb" component={Plumb} />
+          <Route path="/Carpenter" component={Carpenter} />
+          <Route path="/Gardener" component={Gardener} />
+          <Route path="/Furniture" component={Furniture} />
+        </div>
+      </Router>;
     }
   }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
-
-
-/*
-
-<input type="file" onChange={this.handleFileUpload} />
-
-         
-            <button onClick={this.imageUploadHandler.bind(this)}> send image</button>
-
-
-  <img src=imageURL />
-<input type='submit' name='image' />
-
-  <input type='file' name='image' onChange={this.imageHandler.bind(this)}/>
-
-  imageHandler(e) {
-    console.log(e.target)
-    this.setState({
-      selectedFile: e.target.files[0]
-    })
-  }
-
-
-  handleFileUpload(e) {
-    console.log(e)
-    const file = e.target.files[0];
-    // this.props.actions.uploadRequest({
-    //    file,
-    //    name: 'Awesome Cat Pic'
-    // })
-    this.setState({
-      selectedFile: file
-    })
-  }
-
-  imageUploadHandler(event) {
-    const data = new FormData();
-    data.append('file', event.target.files[0]);
-    data.append('name', 'some value user types');
-    data.append('description', 'some value user types');
-    // '/files' is your node.js route that triggers our middleware
-    axios.post('/files', data).then((response) => {
-      console.log(response); // do something with the response
-    });
-  }
-
-  */

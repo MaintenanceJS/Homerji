@@ -4,16 +4,16 @@ import SearchByName from "./workers.jsx";
 import axios from "axios";
 import $ from "jquery";
 import {
-    Navbar,
-    Nav,
-    NavItem,
-    FormGroup,
-    FormControl,
-    Button,
-    Glyphicon,
-    fixedTop
+  Navbar,
+  Nav,
+  NavItem,
+  FormGroup,
+  FormControl,
+  Button
 } from "react-bootstrap"; // For Designing
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import ContactUs from "./contactUs.jsx";
+
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -23,11 +23,11 @@ class NavBar extends React.Component {
       workers: [] //searched workers
     };
   }
-  
+
   // For the search
   getWorkersByName() {
     var that = this;
-    axios.post("/name", { name: this.state.name }).then(function(res) {
+    axios.post("/name", { name: this.state.name }).then(function (res) {
       that.setState({
         workers: res.data
       });
@@ -42,54 +42,57 @@ class NavBar extends React.Component {
     });
   }
 
-  handle() {
-    
-  }
-
   render() {
     return <Router>
-        <div>
+      <div>
         <Navbar id="nav" collapseOnSelect>
-              <img style={{marginLeft:'-7%', position: 'absolute'}} src="https://cdn0.iconfinder.com/data/icons/activities-flat-colorful/2048/2135_-_Engineer-512.png" id="back" />
-            <Navbar.Header>
-              <Navbar.Brand>
-                <a href="/">HomerJi</a>
-              </Navbar.Brand>
-            </Navbar.Header>
-            <Navbar.Collapse>
-              <Nav>
-                <NavItem eventKey={1} href="/contactus">
+          <img style={{ marginLeft: '-7%', position: 'absolute' }} src="https://cdn0.iconfinder.com/data/icons/activities-flat-colorful/2048/2135_-_Engineer-512.png" id="back" />
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a href="/">HomerG</a>
+            </Navbar.Brand>
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav>
+              <NavItem eventKey={1} href="/contact">
+                <div onClick={this.props.logos}>
+                  {" "}
                   Contact Us
-                </NavItem>
-                <NavItem eventKey={2} href="/about">
-                  About
-                </NavItem>
-              </Nav>
-              <Navbar.Form pullLeft>
-                <FormGroup>
-                  <FormControl id="textInbox" type="text" placeholder="Worker name" onChange={this.getUserName.bind(this)} />
-                </FormGroup> <Link to="/search">
-                  <Button onClick={this.getWorkersByName.bind(this)}>
-                    Search
+                {" "}
+                </div>
+              </NavItem>
+              <NavItem onClick={this.props.logos} eventKey={2} href="/about">
+                About
+              </NavItem>
+            </Nav>
+            <Navbar.Form pullLeft>
+              <FormGroup>
+                <FormControl id="textInbox" type="text" placeholder="Worker name" onChange={this.getUserName.bind(this)} />
+              </FormGroup> <Link to="/search">
+                <Button onClick={this.getWorkersByName.bind(this)}>
+                  Search
                   </Button>
-                </Link>
-              </Navbar.Form>
-              <Nav pullRight>
-                <NavItem href="#">
-                  <div>
-                    {" "}
-                    <WorkersLogo handleWorkersButton={this.props.handleWorkersButton} />{" "}
-                  </div>
-                </NavItem>
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-          <Route
-            path="/search"
-            component={() => <SearchByName workersList={this.state.workers} />}
-          />
-        </div>
-      </Router>;
+              </Link>
+            </Navbar.Form>
+            <Nav pullRight>
+              <NavItem href="#">
+                <div>
+                  {" "}
+                  <WorkersLogo
+                    handleWorkersButton={this.props.handleWorkersButton}
+                  />{" "}
+                </div>
+              </NavItem>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+        <Route
+          path="/search"
+          component={() => <SearchByName workersList={this.state.workers} />}
+        />
+        <Route path="/contact" component={ContactUs} />
+      </div>
+    </Router>;
   }
 }
 
