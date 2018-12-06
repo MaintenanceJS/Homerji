@@ -1,51 +1,39 @@
 import React from 'react';
 
-
 class ContactUs extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
   render() {
     return (
-      <section id="contact">
-        <div className="container">
-          <h3 className="text-center text-uppercase">contact us</h3>
-          <p className="text-center w-75 m-auto">askdalks asljdl aalu woepq ald qwe aksjd quw aslkdj asu qw asdjl we q-slkd qwp euaslkdj wque slkdj quw p;ald qwpoe adk; aspi ;we pqw;asldk apiwe qwk;asldj poir ;LSDF PAWE RLDKFJ ASLJD ;AK DQ DAPSDJ LASJD  A SDLA lkjd lsjd alsljd owq</p>
-          <div className="row">
-            <div className="col-lg-12 col-lg-6 col-lg-4 my-5">
-              <div className="card border-1">
-                <div className="card-body text-center">
-                  <i className="fa fa-phone fa-5x mb-3" aria-hidden="true"></i>
-                  <h4 className="text-uppercase mb-5">call us</h4>
-                  <p>+962785523225,+962*******</p>
-                </div>
+      <div className="container">
+        <div className="row">
+          <div></div>
+          <img id="postcard" src="https://scontent.famm6-1.fna.fbcdn.net/v/t1.0-9/47400419_1068140440022765_5669654738241585152_n.jpg?_nc_cat=105&_nc_ht=scontent.famm6-1.fna&oh=aa42fc42ae33e049141d4f7941efd5e9&oe=5C99C0CA" alt="postcard" className="img-responsive move" />
+          <div id="content" >
+            <h1> Contact Us </h1>
+
+            <form role="form">
+              <div className="form-group">
+                <label htmlFor="username" className="iconic user" > Name <span className="required">*</span></label>
+                <input type="text" className="form-control" name="username" id="username" required="required" placeholder="Enter Your Name please.." />
               </div>
-            </div>
-            <div className="col-lg-12 col-lg-6 col-lg-4 my-5">
-              <div className="card border-1">
-                <div className="card-body text-center">
-                  <i className="fa fa-map-marker fa-5x mb-3" aria-hidden="true"></i>
-                  <h4 className="text-uppercase mb-10">office loaction</h4>
-                  <address>Khalda, Al-zarkashi St., hacker haus </address>
-                </div>
+              <div className="form-group">
+                <label htmlFor="usermail" className="iconic mail-alt"> E-Mail address <span className="required">*</span></label>
+                <input type="email" className="form-control" name="usermail" id="usermail" placeholder="I promise I hate spam as much as you do" required="required" />
               </div>
-            </div>
-            <div className="col-lg-12 col-lg-6 col-lg-4 my-5">
-              <div className="card border-1">
-                <div className="card-body text-center">
-                  <i className="fa fa-globe fa-5x mb-3" aria-hidden="true"></i>
-                  <h4 className="text-uppercase mb-5">email</h4>
-                  <p>MaintanceJS@gmail.com</p>
-                </div>
+              <div className="form-group">
+                <label htmlFor="subject" className="iconic quote-alt"> Subject </label>
+                <input type="text" className="form-control" name="subject" id="subject" required="required" placeholder="What would you like to talk about?" />
               </div>
-            </div>
+              <div className="form-group">
+                <label htmlFor="message" className="iconic comment"> Message </label>
+                <textarea name="message" id="message" className="form-control" rows="3" placeholder="Don't be shy, live me a friendly message and I'll answer as soon as possible" required="required"></textarea>
+              </div>
+              <input type="submit" value=" ★  Send the mail !" />
+            </form>
           </div>
         </div>
-      </section>
+
+      </div>
     )
   }
-
 }
 export default ContactUs;

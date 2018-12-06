@@ -115,7 +115,7 @@ class Sign extends React.Component {
   render() {
     return (
       <div>
-        <h4 style={{ cursor: 'pointer' }} onClick={this.handleOnClick.bind(this)}> Signup </h4>
+        <h4 style={{cursor: 'pointer'}} onClick={this.handleOnClick.bind(this)}> Signup </h4>
         <form className='form'>
           <label>
             Name:
@@ -158,3 +158,9 @@ class Sign extends React.Component {
 }
 
 export default Sign;
+
+
+
+// <form action='/api/images' method="post" encType="multipart/form-data">
+//   <input type='file' name='image' />
+// </form>

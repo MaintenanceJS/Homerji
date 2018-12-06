@@ -107,12 +107,12 @@ class ListWorkersName extends React.Component {
       longtitude: this.state.longtitude
     })
     .then(function (res) {
-      console.log('working');
+      console.log('working', res);
     })
   }
 
 
-handleClose() {
+  handleClose() {
     this.setState({ show: false });
   }
 
@@ -153,12 +153,12 @@ handleClose() {
                 <div id='confirm'>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Body style={{textAlign:'left', marginLeft: '10px'}}>
-                    Client Name <input style={{height: '28px', width:'50%'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
-                    Client Phonenumber <input style={{height: '28px', width:'50%'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
-                    Client Issue <input style={{height: '60px', width:'50%'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
-                    <button style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
+                    Client Name <input style={{height: '28px', width:'50%', marginBottom: '-10px'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
+                    Client Phonenumber <input style={{height: '28px', width:'50%', marginBottom: '-100px'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
+                    Client Issue <textarea style={{height: '60px', width:'97%', borderColor: 'lightgrey', marginBottom: '-10px'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+                    <center><button style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
                       Submit worker requesting
-                    </button>
+                    </button></center>
                     <Route component={() =>  <Maps lat={this.state.latitude} long={this.state.longtitude} />} />
                   </Modal.Body>
                   <Modal.Footer style={{marginTop: '30px', textAlign:'center'}}>
