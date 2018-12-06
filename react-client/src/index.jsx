@@ -14,7 +14,17 @@ import Login from "./components/Login.jsx";
 import Logout from "./components/logout.jsx";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { browserHistory } from "react-router";
-
+import {
+    Navbar,
+    Nav,
+    NavItem,
+    FormGroup,
+    FormControl,
+    Button,
+    Glyphicon,
+    Tab,
+    Tabs
+} from "react-bootstrap"; // For Designing
 
 class App extends React.Component {
   constructor(props) {
@@ -25,6 +35,17 @@ class App extends React.Component {
     }
   }
 
+  logout() {
+    $.ajax({
+      type: 'POST',
+      url: '/logout',
+      success: () => {        
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
   //toggle
   handleWorkersButton() {
     this.setState({
@@ -68,26 +89,24 @@ class App extends React.Component {
   }
 
 
+
+
   render() {
     if (this.state.show) { //to see signup and login page
     return <Router history={browserHistory}>
         <div style={{cursor: 'auto'}}>
           <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
-          <div className="col" >
-            <div className="col-sm-4 col-md-3">
+          <Tabs defaultActiveKey={1} animation={false} id="HomerG">
+            <Tab eventKey={1} title="Signup" animation>
                 <Sign className="show" style={{cursor: 'pointer'}}/>
-            </div>
-          </div>
-          <div className="col">
-            <div className="col-sm-4 col-md-3">
+            </Tab>
+            <Tab className='container' eventKey={2} title="Login" animation>
                 <Login className="show" style={{cursor: 'pointer'}}/> 
-            </div>
-          </div>
-          <div className="col">
-            <div className="col-sm-3 col-md-3">
+            </Tab>
+            <Tab className='container' eventKey={3} title="Logout" onEnter={this.logout.bind(this)} animation>
                 <Logout className="show"/>
-            </div>
-          </div>
+            </Tab>
+          </Tabs>
         </div>
       </Router>;
     } else { //to see categories
@@ -114,9 +133,6 @@ class App extends React.Component {
             <button className="home btn btn-primary">Furniture</button>
           </Link>
           </div>
-
-<button onClick={this.handleMyClick.bind(this)}> clients </button>
-
 
         <Route path='/Electric' component={Electric} />
         <Route path='/Painting' component={Painting} />

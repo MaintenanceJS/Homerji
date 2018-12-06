@@ -52,7 +52,7 @@ class NavBar extends React.Component {
           <Navbar collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="/" >HomerJi</a>
+                <a href="/" >HomerG</a>
               </Navbar.Brand>
             </Navbar.Header>
             <Navbar.Collapse>

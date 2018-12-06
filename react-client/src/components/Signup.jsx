@@ -2,6 +2,18 @@ import React from 'react';
 //import workersListRender from './workersListRender.jsx';
 import $ from 'jquery';
 import Dropdown from 'react-drop-down'
+import {
+    Navbar,
+    Nav,
+    NavItem,
+    FormGroup,
+    FormControl,
+    Button,
+    Glyphicon,
+    DropdownButton,
+    MenuItem
+} from "react-bootstrap"; // For Designing
+
 
 class Sign extends React.Component {
   constructor(props) {
@@ -9,7 +21,7 @@ class Sign extends React.Component {
     this.state = {
       shown: false,
       name: 'Unknown',
-      major: 'Plumber', //default value (changable)
+      major: 'Choose', //default value (changable)
       rating: 3, //default value (unchangable)
       email: 'Unkown@unkown.com',
       username: 'Unkown',
@@ -21,7 +33,6 @@ class Sign extends React.Component {
   }
 
   componentDidMount() {
-    $('.form').hide()
     this.setState({
       shown: false
     })
@@ -45,8 +56,10 @@ class Sign extends React.Component {
   }
 
   handleMajor(e) {
+    var arr = ['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener', 'Furniture']
+    console.log(arr[e])
     this.setState({
-      major: e
+      major: arr[e]
     })
   }
 
@@ -115,42 +128,43 @@ class Sign extends React.Component {
   render() {
     return (
       <div>
-        <h4 style={{cursor: 'pointer'}} onClick={this.handleOnClick.bind(this)}> Signup </h4>
-        <form className='form'>
+        <form style={{marginTop: '10px'}} className='form'>
           <label>
-            Name:
-            <br /><input type="text" onChange={this.handleName.bind(this)} />
+            <p style={{marginLeft: '60px'}}> Name: <input type="text" onChange={this.handleName.bind(this)} /> </p>
+          </label> <br />
+            <div style={{fontWeight: 'bold', marginLeft: '60px', marginBottom: '15px'}}> <p>Major:
+            <DropdownButton style={{marginLeft: '8px'}}
+              title={this.state.major}
+              //key={i}
+              id={`major`}
+              onSelect={this.handleMajor.bind(this)}
+            > 
+              <MenuItem eventKey="0" active>Electrician</MenuItem>
+              <MenuItem eventKey="1">Plumber</MenuItem>
+              <MenuItem eventKey="2">Painter</MenuItem>
+              <MenuItem eventKey="3">Carpenter</MenuItem>
+              <MenuItem eventKey="4">Gardener</MenuItem>
+              <MenuItem eventKey="5">Furniture</MenuItem>
+
+            </DropdownButton></p>
+            </div> 
+          <label>
+            <p style={{marginLeft: '65px'}}> Email: <input type="email" onChange={this.handleEmail.bind(this)} /></p>
           </label> <br />
           <label>
-            Major: <br />
-            <Dropdown value={this.state.major}
-              onChange={this.handleMajor.bind(this)}
-              options={['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener', 'Furniture']} />
+            <p style={{marginLeft: '34px'}}> Username: <input type="text" onChange={this.handleUsername.bind(this)} /></p>
           </label> <br />
           <label>
-            Email:
-            <br /><input type="text" onChange={this.handleEmail.bind(this)} />
+            <p style={{marginLeft: '36px'}}> Password: <input type="password" onChange={this.handlePassword.bind(this)} /></p>
           </label> <br />
           <label>
-            Username:
-            <br /><input type="text" onChange={this.handleUsername.bind(this)} />
+            <p style={{marginLeft: '26px'}}> Description: <input type="text" onChange={this.handleDescription.bind(this)} /></p>
           </label> <br />
           <label>
-            Password:
-            <br /><input type="text" onChange={this.handlePassword.bind(this)} />
-          </label> <br />
-          <label>
-            Description:
-            <br /><input type="text" onChange={this.handleDescription.bind(this)} />
-          </label> <br />
-          <label>
-            Phonenumber:
-            <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
+            <p style={{marginLeft: '10px'}}> Phonenumber: <input type="number" onChange={this.handlePhonenumber.bind(this)} /></p>
           </label> <br />
 
-
-
-          <button onClick={this.handleSubmit.bind(this)}> Submit </button>
+          <Button bsStyle="success" style={{marginLeft: '10%'}} onClick={this.handleSubmit.bind(this)}> Submit </Button>
         </form>
       </div>
     )
