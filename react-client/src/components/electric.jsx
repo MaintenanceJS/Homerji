@@ -10,7 +10,7 @@ class Electric extends React.Component {
             workers: []
         };
     }
-    
+
     // get All the workers information from the database depending on their major
     componentDidMount() {
         var that = this;
@@ -21,7 +21,7 @@ class Electric extends React.Component {
                 })
             })
     }
-    
+
     render() {
         return (
             <div>

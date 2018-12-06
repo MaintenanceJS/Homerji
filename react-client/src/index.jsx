@@ -25,6 +25,11 @@ class App extends React.Component {
     }
   }
 
+  hideLogos() {
+    console.log('hideeee')
+    $('#logos').hide();
+  }
+
   //toggle
   handleWorkersButton() {
     this.setState({
@@ -67,13 +72,13 @@ class App extends React.Component {
     });
   }
 
-
   render() {
     if (this.state.show) { //to see signup and login page
       return <Router history={browserHistory}>
         <div style={{ cursor: 'auto' }}>
-          <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
-          <div className="col" >
+          <Route path="/" component={() =>
+            <NavBar logos={this.hideLogos.bind(this)} handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
+          <div className="col">
             <div className="col-sm-4 col-md-3">
               <Sign className="show" style={{ cursor: 'pointer' }} />
             </div>
@@ -92,94 +97,74 @@ class App extends React.Component {
       </Router>;
     } else { //to see categories
       return <Router history={browserHistory}>
-        <div style={{ cursor: 'auto' }}>
-          <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
-          <div style={{ "width": "100%" }}>
-            <Link to="/Electric">
-              <button className=" btn btn-primary">Electric</button>
-            </Link>
-            <Link to="/Painting">
-              <button className=" btn btn-primary">Painting</button>
-            </Link>
-            <Link to="/Plumb">
-              <button className=" btn btn-primary">Plumb</button>
-            </Link>
-            <Link to="/Carpenter">
-              <button className=" btn btn-primary">Carpenter</button>
-            </Link>
-            <Link to="/Gardener">
-              <button className=" btn btn-primary">Gardener</button>
-            </Link>
-            <Link to="/Furniture">
-              <button className=" btn btn-primary">Furniture</button>
-            </Link>
+        <div style={{ cursor: "auto" }}>
+          <Route path="/" component={() => <NavBar logos={this.hideLogos.bind(this)} handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
+          <div id="logos" style={{ maxWidth: "1200px", margin: "auto", padding: "10px" }}>
+            <div className="container-fluid" style={{ marginTop: "40px" }}>
+              <div className="row" style={{ marginTop: "20px" }}>
+                <Link style={{ textDecoration: "none" }} to="/Electric">
+                  <div className="col-md-4">
+                    <div className="col-lg-10 feature-box">
+                      <span className="yellow glyphicon glyphicon-flash icon" />
+                      <h4>Electric</h4>
+                    </div>
+                  </div>
+                </Link>
+                <Link style={{ textDecoration: "none" }} to="/Painting">
+                  <div className="col-md-4">
+                    <div className="col-md-10 feature-box">
+                      <span className="glyphicon glyphicon-cog icon" />
+                      <h4>Painting</h4>
+                    </div>
+                  </div>
+                </Link>
+                <Link style={{ textDecoration: "none" }} to="/Plumb">
+                  <div className="col-md-4">
+                    <div className="col-md-10 feature-box">
+                      <span className="glyphicon glyphicon-cog icon" />
+                      <h4>Plumb</h4>
+                    </div>
+                  </div>
+                </Link>
+
+                <Link style={{ textDecoration: "none" }} to="/Carpenter">
+                  <div className="col-md-4">
+                    <div className="col-md-10 feature-box">
+                      <span className="glyphicon glyphicon-cog icon" />
+                      <h4>Carpenter</h4>
+                    </div>
+                  </div>
+                </Link>
+                <Link style={{ textDecoration: "none" }} to="/Gardener">
+                  <div className="col-md-4">
+                    <div className="col-md-10 feature-box">
+                      <span className="glyphicon glyphicon-tree-deciduous icon" />
+                      <h4>Gardener</h4>
+                    </div>
+                  </div>
+                </Link>
+                <Link style={{ textDecoration: "none" }} to="/Furniture">
+                  <div className="col-md-4">
+                    <div className="col-md-10 feature-box">
+                      <span className="glyphicon glyphicon-cog icon" />
+                      <h4>Furniture</h4>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
           </div>
 
-          <Route path='/Electric' component={Electric} />
-          <Route path='/Painting' component={Painting} />
-          <Route path='/Plumb' component={Plumb} />
-          <Route path='/Carpenter' component={Carpenter} />
-          <Route path='/Gardener' component={Gardener} />
-          <Route path='/Furniture' component={Furniture} />
-          <Route path='/contact' component={ContactUs} />
-
+          <Route path="/Electric" component={Electric} />
+          <Route path="/Painting" component={Painting} />
+          <Route path="/Plumb" component={Plumb} />
+          <Route path="/Carpenter" component={Carpenter} />
+          <Route path="/Gardener" component={Gardener} />
+          <Route path="/Furniture" component={Furniture} />
         </div>
-      </Router>
+      </Router>;
     }
   }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
-
-
-/*
-
-<input type="file" onChange={this.handleFileUpload} />
-
-         
-            <button onClick={this.imageUploadHandler.bind(this)}> send image</button>
-
-
-  <img src=imageURL />
-<input type='submit' name='image' />
-
-  <input type='file' name='image' onChange={this.imageHandler.bind(this)}/>
-
-  imageHandler(e) {
-    console.log(e.target)
-    this.setState({
-      selectedFile: e.target.files[0]
-    })
-  }
-
-
-  handleFileUpload(e) {
-    console.log(e)
-    const file = e.target.files[0];
-    // this.props.actions.uploadRequest({
-    //    file,
-    //    name: 'Awesome Cat Pic'
-    // })
-    this.setState({
-      selectedFile: file
-    })
-  }
-
-  imageUploadHandler(event) {
-    const data = new FormData();
-    data.append('file', event.target.files[0]);
-    data.append('name', 'some value user types');
-    data.append('description', 'some value user types');
-    // '/files' is your node.js route that triggers our middleware
-    axios.post('/files', data).then((response) => {
-      console.log(response); // do something with the response
-    });
-  }
-
-  */
-
-
-
-
-
