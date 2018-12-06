@@ -132,7 +132,7 @@ class Sign extends React.Component {
           <label>
             <p style={{marginLeft: '60px'}}> Name: <input type="text" onChange={this.handleName.bind(this)} /> </p>
           </label> <br />
-            <div style={{fontWeight: 'bold', marginLeft: '60px', marginBottom: '15px'}}> <p>Major:
+            <div style={{fontWeight: 'bold', marginLeft: '60px', marginBottom: '15px'}}> Major:
             <DropdownButton style={{marginLeft: '8px'}}
               title={this.state.major}
               //key={i}
@@ -146,7 +146,7 @@ class Sign extends React.Component {
               <MenuItem eventKey="4">Gardener</MenuItem>
               <MenuItem eventKey="5">Furniture</MenuItem>
 
-            </DropdownButton></p>
+            </DropdownButton>
             </div> 
           <label>
             <p style={{marginLeft: '65px'}}> Email: <input type="email" onChange={this.handleEmail.bind(this)} /></p>
