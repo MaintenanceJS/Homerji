@@ -401,9 +401,9 @@ app.post('/clientedit', function (req, res) {
 
 
 //to not get 404 error when reload page( redirect to index.html when reload )
-// app.get('/*', (req, res) => {
-//  res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
-// });
+app.get('/*', (req, res) => {
+ res.sendFile(path.resolve(__dirname, '../react-client/src', 'index.html'));
+});
 
 
 

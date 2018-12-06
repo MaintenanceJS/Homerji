@@ -1,0 +1,6 @@
+#mapBox div:first-child {
+    position: relative !important;
+    height: 300px !important;
+    width: 100% !important;
+
+}
