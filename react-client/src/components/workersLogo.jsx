@@ -1,35 +1,34 @@
 import React from 'react';
+import axios from 'axios';
+import $ from 'jquery';
+import Sign from './Signup.jsx';
+import Login from './Login.jsx';
+import Logout from './logout.jsx';
 import {
-  Nav,
-  NavDropdown,
-  MenuItem
+    Navbar,
+    Nav,
+    NavItem,
+    FormGroup,
+    FormControl,
+    Button,
+    Glyphicon
 } from "react-bootstrap";
 
 class WorkersLogo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false,
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+    }
 
-  render() {
-    return (
-      <div>
-        {/* <button className='glyphicon glyphicon-wrench' onClick={this.props.handleWorkersButton}> Workers </button> */}
-        <Nav pullRight>
-          <NavDropdown eventKey={3} title="Workers" id="basic-nav-dropdown">
-            <MenuItem eventKey={3.1} href='/signup'>Sign up</MenuItem>
-            <MenuItem eventKey={3.2} href='/login'>Login In</MenuItem>
-            <MenuItem divider />
-            <MenuItem eventKey={3.3} href='/logout'>Log out</MenuItem>
-          </NavDropdown>
-        </Nav>
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div>
+                <Button style={{height: '34px', marginTop: '-7.75px'}} className='' onClick={this.props.handleWorkersButton}> Workers </Button>
+            </div>
+        )
+    }
 
 }
 
 export default WorkersLogo;
-

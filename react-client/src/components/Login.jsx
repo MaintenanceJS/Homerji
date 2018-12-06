@@ -1,6 +1,16 @@
 import React from 'react';
 import $ from 'jquery';
 import Dropdown from 'react-drop-down' // Library from npm
+import ClientItems from "./clientItems.jsx";
+import {
+    Navbar,
+    Nav,
+    NavItem,
+    FormGroup,
+    FormControl,
+    Button,
+    Glyphicon
+} from "react-bootstrap"; // For Designing
 
 
 class Login extends React.Component {
@@ -17,18 +27,34 @@ class Login extends React.Component {
       password: '',
       description: '',
       phonenumber: 0,
-      availability: ""
+      clients: []
     };
   }
 
   componentDidMount() {
-    $('.login, .edit, .submit').hide() // To hide any unwanted components
+    $('.login, .edit, .submit, .thing, .maram').hide() // To hide any unwanted components
     if (this.state.loggedin === true) { //to check if the user is logged in
-      $('.edit').show() //show edit inputs
+      $('.edit, maram').show() //show edit inputs
     }
     this.setState({
       shown: false
     })
+  }
+
+  handleMyClick() {
+    $.ajax({
+      type: 'POST',
+      url: '/show',
+      data: {username: this.state.username},
+      success: (data) => {
+        this.setState({
+          clients: data
+        })
+      },
+      error: (err) => {
+        alert('err', err);
+      }
+    });
   }
 
   handleOnClick() { // When click on login word
@@ -52,12 +78,12 @@ class Login extends React.Component {
         this.setState({
           loggedin: true
         })
-        console.log('logged in')
         $('.edit').show()
+        $('.maram').show()
+        $('.login').hide()
       },
       error: (err) => {
         alert('err');
-        console.log(err)
       }
     });
   }
@@ -116,11 +142,6 @@ class Login extends React.Component {
       phonenumber: e.target.value
     })
   }
-  handleAvailability(e) {
-    this.setState({
-      availability: e
-    })
-  }
 
   //new values request
   handleEdit() { // Worker profile editing after login
@@ -134,16 +155,11 @@ class Login extends React.Component {
         email: this.state.email,
         password: this.state.password,
         description: this.state.description,
-        phonenumber: this.state.phonenumber,
-        availability: this.state.availability
+        phonenumber: this.state.phonenumber
       },
       success: (data) => {
-        this.setState({
-          getItems: data
-        })
       },
       error: (err) => {
-        console.log('err', err);
       }
     });
   }
@@ -151,17 +167,22 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <h4 style={{ cursor: 'pointer' }} onClick={this.handleOnClick.bind(this)}> Login </h4>
+        <h4 style={{cursor: 'pointer'}} onClick={this.handleOnClick.bind(this)}> Login </h4>
         <label className='login'>
           Username:
-            <br /><input type="text" onChange={this.handleUsername.bind(this)} />
+          <br /><input type="text" onChange={this.handleUsername.bind(this)} />
         </label> <br />
         <label className='login'>
           Password:
-            <br /><input type="text" onChange={this.handlePassword.bind(this)} />
+          <br /><input type="text" onChange={this.handlePassword.bind(this)} />
         </label> <br />
-        <button onClick={this.handleSubmit.bind(this)} className='submit'> Submit </button>
+        <button onClick={this.handleSubmit.bind(this)} className='submit login'> Submit </button>
 
+        <Button bsStyle="primary" className='edit' onClick={this.handleMyClick.bind(this)} > Click here to see your Clients </Button>
+        <br /><br />
+          {this.state.clients.map(client => <ClientItems key={client._id} worker={this.state.username} items={client}/>)}
+          <br /> 
+        <h5 className='edit'> Change in your profile </h5>
         <form className='edit'>
           <label>
             Name:
@@ -189,17 +210,15 @@ class Login extends React.Component {
             Phonenumber:
             <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
-          <button onClick={this.handleEdit.bind(this)} className='submit'> Submit </button>
-          <label>
-            Availability: <br />
-            <Dropdown value={String(this.state.availability)}
-              onChange={this.handleAvailability.bind(this)}
-              options={['Yes', 'No']} />
-          </label> <br />
-        </form>
+          <Button onClick={this.handleEdit.bind(this)} className='submit'> Submit </Button>
+        </form> <br /> <br />
       </div>
     )
   }
 }
-
 export default Login;
+
+
+
+
+//
