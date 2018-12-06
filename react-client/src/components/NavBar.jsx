@@ -10,7 +10,8 @@ import {
     FormGroup,
     FormControl,
     Button,
-    Glyphicon
+    Glyphicon,
+    fixedTop
 } from "react-bootstrap"; // For Designing
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -46,13 +47,13 @@ class NavBar extends React.Component {
   }
 
   render() {
-    return (
-      <Router>
+    return <Router>
         <div>
-          <Navbar collapseOnSelect>
+        <Navbar id="nav" collapseOnSelect>
+              <img style={{marginLeft:'-7%', position: 'absolute'}} src="https://cdn0.iconfinder.com/data/icons/activities-flat-colorful/2048/2135_-_Engineer-512.png" id="back" />
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="/" >HomerJi</a>
+                <a href="/">HomerJi</a>
               </Navbar.Brand>
             </Navbar.Header>
             <Navbar.Collapse>
@@ -66,14 +67,8 @@ class NavBar extends React.Component {
               </Nav>
               <Navbar.Form pullLeft>
                 <FormGroup>
-                  <FormControl
-                    id='textInbox'
-                    type="text"
-                    placeholder="Worker name"
-                    onChange={this.getUserName.bind(this)}
-                  />
-                </FormGroup>{" "}
-                <Link to="/search">
+                  <FormControl id="textInbox" type="text" placeholder="Worker name" onChange={this.getUserName.bind(this)} />
+                </FormGroup> <Link to="/search">
                   <Button onClick={this.getWorkersByName.bind(this)}>
                     Search
                   </Button>
@@ -83,9 +78,7 @@ class NavBar extends React.Component {
                 <NavItem href="#">
                   <div>
                     {" "}
-                    <WorkersLogo
-                      handleWorkersButton={this.props.handleWorkersButton}
-                    />{" "}
+                    <WorkersLogo handleWorkersButton={this.props.handleWorkersButton} />{" "}
                   </div>
                 </NavItem>
               </Nav>
@@ -96,8 +89,7 @@ class NavBar extends React.Component {
             component={() => <SearchByName workersList={this.state.workers} />}
           />
         </div>
-      </Router>
-    );
+      </Router>;
   }
 }
 

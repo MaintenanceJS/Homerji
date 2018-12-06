@@ -73,7 +73,7 @@ class App extends React.Component {
     return <Router history={browserHistory}>
         <div style={{cursor: 'auto'}}>
           <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
-          <div className="col" >
+          <div className="col">
             <div className="col-sm-4 col-md-3">
                 <Sign className="show" style={{cursor: 'pointer'}}/>
             </div>
@@ -92,40 +92,72 @@ class App extends React.Component {
       </Router>;
     } else { //to see categories
       return <Router history={browserHistory}>
-        <div style={{cursor: 'auto'}}>
-          <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
-          <div style={{"width": "100%"}}>
-          <Link to="/Electric">
-            <button className="home btn btn-primary">Electric</button>
-          </Link>
-          <Link to="/Painting">
-            <button className="home btn btn-primary">Painting</button>
-          </Link>
-          <Link to="/Plumb">
-            <button className="home btn btn-primary">Plumb</button>
-          </Link>
-          <Link to="/Carpenter">
-            <button className="home btn btn-primary">Carpenter</button>
-          </Link>
-          <Link to="/Gardener">
-            <button className="home btn btn-primary">Gardener</button>
-          </Link>
-          <Link to="/Furniture">
-            <button className="home btn btn-primary">Furniture</button>
-          </Link>
+          <div style={{ cursor: "auto" }}>
+            <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
+            <div style={{ maxWidth: "1200px", margin: "auto", padding: "10px" }}>
+              <div className="container-fluid" style={{ marginTop: "40px" }}>
+                <div className="row" style={{ marginTop: "20px" }}>
+                  <Link style={{ textDecoration: "none" }} to="/Electric">
+                    <div className="col-md-4">
+                      <div className="col-lg-10 feature-box">
+                        <span className="yellow glyphicon glyphicon-flash icon" />
+                        <h4>Electric</h4>
+                      </div>
+                    </div>
+                  </Link>
+                  <Link style={{ textDecoration: "none" }} to="/Painting">
+                    <div className="col-md-4">
+                      <div className="col-md-10 feature-box">
+                        <span className="glyphicon glyphicon-cog icon" />
+                        <h4>Painting</h4>
+                      </div>
+                    </div>
+                  </Link>
+                  <Link style={{ textDecoration: "none" }} to="/Plumb">
+                    <div className="col-md-4">
+                      <div className="col-md-10 feature-box">
+                        <span className="glyphicon glyphicon-cog icon" />
+                        <h4>Plumb</h4>
+                      </div>
+                    </div>
+                  </Link>
+
+                  <Link style={{ textDecoration: "none" }} to="/Carpenter">
+                    <div className="col-md-4">
+                      <div className="col-md-10 feature-box">
+                        <span className="glyphicon glyphicon-cog icon" />
+                        <h4>Carpenter</h4>
+                      </div>
+                    </div>
+                  </Link>
+                  <Link style={{ textDecoration: "none" }} to="/Gardener">
+                    <div className="col-md-4">
+                      <div className="col-md-10 feature-box">
+                        <span className="glyphicon glyphicon-tree-deciduous icon" />
+                        <h4>Gardener</h4>
+                      </div>
+                    </div>
+                  </Link>
+                  <Link style={{ textDecoration: "none" }} to="/Furniture">
+                    <div className="col-md-4">
+                      <div className="col-md-10 feature-box">
+                        <span className="glyphicon glyphicon-cog icon" />
+                        <h4>Furniture</h4>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <Route path="/Electric" component={Electric} />
+            <Route path="/Painting" component={Painting} />
+            <Route path="/Plumb" component={Plumb} />
+            <Route path="/Carpenter" component={Carpenter} />
+            <Route path="/Gardener" component={Gardener} />
+            <Route path="/Furniture" component={Furniture} />
           </div>
-
-<button onClick={this.handleMyClick.bind(this)}> clients </button>
-
-
-        <Route path='/Electric' component={Electric} />
-        <Route path='/Painting' component={Painting} />
-        <Route path='/Plumb' component={Plumb} />
-        <Route path='/Carpenter' component={Carpenter} />
-        <Route path='/Gardener' component={Gardener} />
-        <Route path='/Furniture' component={Furniture} />
-      </div>
-      </Router>
+        </Router>;
     }
   }
 }
@@ -179,8 +211,3 @@ ReactDOM.render(<App />, document.getElementById('app'));
   }
 
   */
-
-
-
-
-
