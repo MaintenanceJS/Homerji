@@ -26,7 +26,6 @@ class Logout extends React.Component {
   render() {
     return (
       <div style={{cursor: 'pointer'}}>
-        <h4 onClick={this.output.bind(this)} onClick={this.refresh.bind(this)}> Logout </h4>
       </div>
     )
   }

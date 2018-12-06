@@ -43,23 +43,19 @@ class NavBar extends React.Component {
   }
 
   render() {
-    return <Router>
-      <div>
-        <Navbar id="nav" collapseOnSelect>
-          <img style={{ marginLeft: '-7%', position: 'absolute' }} src="https://cdn0.iconfinder.com/data/icons/activities-flat-colorful/2048/2135_-_Engineer-512.png" id="back" />
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="/">HomerG</a>
-            </Navbar.Brand>
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav>
-              <NavItem eventKey={1} href="/contact">
-                <div onClick={this.props.logos}>
-                  {" "}
+    return (
+      <Router>
+        <div>
+          <Navbar collapseOnSelect>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <a href="/" >HomerG</a>
+              </Navbar.Brand>
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav>
+                <NavItem eventKey={1} href="/contactus">
                   Contact Us
-                {" "}
-                </div>
               </NavItem>
               <NavItem onClick={this.props.logos} eventKey={2} href="/about">
                 About
@@ -92,7 +88,7 @@ class NavBar extends React.Component {
         />
         <Route path="/contact" component={ContactUs} />
       </div>
-    </Router>;
+    </Router>)
   }
 }
 

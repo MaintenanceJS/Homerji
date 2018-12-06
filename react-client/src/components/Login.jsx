@@ -9,7 +9,9 @@ import {
     FormGroup,
     FormControl,
     Button,
-    Glyphicon
+    Glyphicon,
+    DropdownButton,
+    MenuItem
 } from "react-bootstrap"; // For Designing
 
 
@@ -21,7 +23,7 @@ class Login extends React.Component {
       username: '',
       password: '',
       loggedin: false,
-      major: 'Plumber',
+      major: 'Choose',
       name: '',
       email: '',
       password: '',
@@ -32,7 +34,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    $('.login, .edit, .submit, .thing, .maram').hide() // To hide any unwanted components
+    $('.edit, .submit, .thing, .maram').hide() // To hide any unwanted components
     if (this.state.loggedin === true) { //to check if the user is logged in
       $('.edit, maram').show() //show edit inputs
     }
@@ -108,8 +110,10 @@ class Login extends React.Component {
   }
 
   handleMajor(e) {
+    var arr = ['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener', 'Furniture']
+    console.log(arr[e])
     this.setState({
-      major: e
+      major: arr[e]
     })
   }
 
@@ -167,50 +171,56 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <h4 style={{cursor: 'pointer'}} onClick={this.handleOnClick.bind(this)}> Login </h4>
-        <label className='login'>
-          Username:
-          <br /><input type="text" onChange={this.handleUsername.bind(this)} />
+        <label style={{marginTop: '10px'}} className='login'>
+          <p style={{marginLeft: '-27px'}}> Username: <input type="text" onChange={this.handleUsername.bind(this)} /> </p>
         </label> <br />
         <label className='login'>
-          Password:
-          <br /><input type="text" onChange={this.handlePassword.bind(this)} />
+          <p style={{marginLeft: '-24px'}}> Password: <input type="password" onChange={this.handlePassword.bind(this)} /> </p>
         </label> <br />
-        <button onClick={this.handleSubmit.bind(this)} className='submit login'> Submit </button>
+        <Button bsStyle="success" style={{marginLeft: '8%'}} onClick={this.handleSubmit.bind(this)} className='login'> Submit </Button>
 
-        <Button bsStyle="primary" className='edit' onClick={this.handleMyClick.bind(this)} > Click here to see your Clients </Button>
+        <Button style={{marginLeft: '15px'}} bsStyle="primary" className='edit' onClick={this.handleMyClick.bind(this)} > Click here to see your Clients </Button>
         <br /><br />
-          {this.state.clients.map(client => <ClientItems key={client._id} worker={this.state.username} items={client}/>)}
-          <br /> 
-        <h5 className='edit'> Change in your profile </h5>
+        <div className='container' >
+          {this.state.clients.map(client => <ClientItems className="row" key={client._id} worker={this.state.username} items={client}/>)}
+        </div>
+          <br />
+          <hr />
+        <h4 className='edit'> Change in your profile </h4>
         <form className='edit'>
-          <label>
-            Name:
-            <br /><input type="text" onChange={this.handleName.bind(this)} />
+          <label style={{marginLeft: '60px'}}>
+            Name: <input style={{marginLeft: '10px'}} type="text" onChange={this.handleName.bind(this)} />
           </label> <br />
-          <label>
-            Major: <br />
-            <Dropdown value={this.state.major}
-              onChange={this.handleMajor.bind(this)}
-              options={['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener']} />
+          <label style={{marginLeft: '60px'}}>
+            Major: 
+            <DropdownButton style={{marginLeft: '16px'}}
+              title={this.state.major}
+              //key={i}
+              id={this.state.major}
+              onSelect={this.handleMajor.bind(this)}
+            > 
+              <MenuItem eventKey="0" active>Electrician</MenuItem>
+              <MenuItem eventKey="1">Plumber</MenuItem>
+              <MenuItem eventKey="2">Painter</MenuItem>
+              <MenuItem eventKey="3">Carpenter</MenuItem>
+              <MenuItem eventKey="4">Gardener</MenuItem>
+              <MenuItem eventKey="5">Furniture</MenuItem>
+
+            </DropdownButton>
           </label> <br />
-          <label>
-            Email:
-            <br /><input type="text" onChange={this.handleEmail.bind(this)} />
+          <label style={{marginLeft: '65px'}}>
+            Email: <input style={{marginLeft: '10px'}} type="email" onChange={this.handleEmail.bind(this)} />
           </label> <br />
-          <label>
-            Password:
-            <br /><input type="text" onChange={this.handlePassword.bind(this)} />
+          <label style={{marginLeft: '36px'}}>
+            Password: <input style={{marginLeft: '10px'}} type="password" onChange={this.handlePassword.bind(this)} />
           </label> <br />
-          <label>
-            Description:
-            <br /><input type="text" onChange={this.handleDescription.bind(this)} />
+          <label style={{marginLeft: '26px'}}>
+            Description: <input style={{marginLeft: '10px'}} type="text" onChange={this.handleDescription.bind(this)} />
           </label> <br />
-          <label>
-            Phonenumber:
-            <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
+          <label style={{marginLeft: '10px'}}>
+            Phonenumber: <input style={{marginLeft: '10px'}} type="number" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
-          <Button onClick={this.handleEdit.bind(this)} className='submit'> Submit </Button>
+          <Button bsStyle="success" style={{marginLeft: '12%'}} onClick={this.handleEdit.bind(this)} className='edit'> Submit </Button>
         </form> <br /> <br />
       </div>
     )

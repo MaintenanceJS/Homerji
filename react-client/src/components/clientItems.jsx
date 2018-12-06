@@ -60,7 +60,7 @@ class Clientitems extends React.Component {
 
   render() {
     return (
-      <div className='thumbnail' style={{borderSize: "5px", position: 'relative'}}>
+      <div className='col-md-4 col-md-4 thumbnail' style={{marginRight:"5px", borderSize: "5px", position: 'relative'}}>
         Client Name: {this.props.items.name} <Button  bsStyle="danger" className='glyphicon glyphicon-trash' onClick={this.handleTrash.bind(this)} style={{position: 'absolute', top: '3px', right: '3px'}}> 
         </Button>
         <br /><br />

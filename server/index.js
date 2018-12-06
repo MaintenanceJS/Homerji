@@ -133,6 +133,7 @@ var manualAddingToDB = function () {
 
 //signup function
 var signupWorker = function (req, res) {
+  console.log('in singups')
   var name = req.body.name;
   var major = req.body.major;
   var rating = req.body.rating;
@@ -167,6 +168,7 @@ var signupWorker = function (req, res) {
         })
         newWorker.save() //save to database
         .then(function() {
+          console.log('saved!')
           res.setHeader('Content-Type', 'application/json'); //res should be json
           console.log('new worker')
           createSession(req, res, newWorker) //res is from the session function

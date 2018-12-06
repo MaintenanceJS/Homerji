@@ -1,3 +1,4 @@
+
 var request = require('supertest');
 var db = require('../database-mongo/index.js');
 var assert = require('assert');
@@ -65,7 +66,5 @@ describe('save records to the db', function(){
         });
     });
 });
-
-
 
 
