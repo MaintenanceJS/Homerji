@@ -164,7 +164,7 @@ class Sign extends React.Component {
             <p style={{marginLeft: '10px'}}> Phonenumber: <input type="number" onChange={this.handlePhonenumber.bind(this)} /></p>
           </label> <br />
 
-          <Button bsStyle="success" style={{marginLeft: '10%'}} onClick={this.handleSubmit.bind(this)}> Submit </Button>
+          <Button bsStyle="success" style={{marginLeft: '12%'}} onClick={this.handleSubmit.bind(this)}> Submit </Button>
         </form>
       </div>
     )
