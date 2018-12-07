@@ -13,6 +13,8 @@ import {
 } from "react-bootstrap"; // For Designing
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ContactUs from "./contactUs.jsx";
+import About from "./About.jsx";
+
 
 
 class NavBar extends React.Component {
@@ -36,15 +38,11 @@ class NavBar extends React.Component {
     });
   }
 
+  //get the value of the search bar
   getUserName(e) {
     this.setState({
       name: e.target.value //search bar value
     });
-  }
-
-  hideCategories() {
-    console.log('here')
-    $('#logos').hide() //categories buttons on index file
   }
 
   render() {
@@ -58,44 +56,12 @@ class NavBar extends React.Component {
               </Navbar.Brand>
             </Navbar.Header>
             <Navbar.Collapse>
-              <Navbar.Form pullLeft>
-                <FormGroup>
-                  <FormControl
-                  onKeyUp={function(event) {
-                  event.preventDefault();
-                  if (event.keyCode === 13) {
-                  $("#myBtn").click();
-                  }
-                  }}
-                    id='textInbox'
-                    type="text"
-                    placeholder="Worker name"
-                    onChange={this.getUserName.bind(this)}
-                  />
-                </FormGroup>{" "}
-                <Link to="/search">
-                  <Button onClick={this.getWorkersByName.bind(this)}>
-                    Search
-                  </Button>
-                </Link>
-              </Navbar.Form>
-              <Nav pullRight>
-                <NavItem href="#">
-                  <div>
-                    {" "}
-                    <WorkersLogo
-                      handleWorkersButton={this.props.handleWorkersButton}
-                    />{" "}
-                  </div>
-                  </NavItem>
-                  </Nav>
               <Nav>
-                <NavItem onClick={this.hideCategories.bind(this)} eventKey={1} href="/contact">
+                <NavItem eventKey={1} href="/contact">
                   Contact Us
                 </NavItem>
-                <NavItem onClick={this.hideCategories.bind(this)} eventKey={2} href="/about">
+                <NavItem eventKey={2} href="/about">
                   About
-
                 </NavItem>
               </Nav>
             <Navbar.Form pullLeft>
@@ -124,6 +90,7 @@ class NavBar extends React.Component {
           component={() => <SearchByName workersList={this.state.workers} />}
         />
         <Route path="/contact" component={ContactUs}/>
+        <Route path="/about" component={About}/>
       </div>
     </Router>)
   }

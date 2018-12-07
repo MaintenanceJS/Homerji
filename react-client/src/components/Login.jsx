@@ -36,14 +36,15 @@ class Login extends React.Component {
   componentDidMount() {
     $('.edit, .submit').hide() // To hide any unwanted components
     if (this.state.loggedin === true) { //to check if the user is logged in
-      $('.edit, maram').show() //show edit inputs
+      $('.edit').show() //show edit inputs
     }
     this.setState({
       shown: false
     })
   }
 
-  handleClients() {
+  //get the clients from database
+  handleClients() { 
     $.ajax({
       type: 'POST',
       url: '/show',
@@ -59,7 +60,8 @@ class Login extends React.Component {
     });
   }
 
-  handleOnClick() { // When click on login word
+  // When click on login word
+  handleOnClick() { 
     this.setState({
       shown: !this.state.shown
     })
@@ -91,7 +93,7 @@ class Login extends React.Component {
         $('.login').hide()
       },
       error: (err) => {
-        alert('err');
+        alert('wrong password or username');
       }
     });
   }

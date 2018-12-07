@@ -24,7 +24,6 @@ class ListWorkersName extends React.Component {
     this.handleClose = this.handleClose.bind(this);
 
     this.state = {
-      worker: [],
       rate: Math.ceil(this.props.item.rating),
       rating: 0,
       name: 'Default',
@@ -32,7 +31,7 @@ class ListWorkersName extends React.Component {
       issue: 'Default',
       latitude: 0,
       longtitude: 0,
-      show: false
+      show: false //for the Modal
     };
   }
 
@@ -42,7 +41,6 @@ class ListWorkersName extends React.Component {
       rating: e
     })
   }
-
   handleRateClick() {
     $.ajax({
       type: 'POST',
@@ -74,7 +72,7 @@ class ListWorkersName extends React.Component {
     this.getLocation(); //client location for map
   }
 
-  //showing client functions
+  //showing clients functions
   handleName(e) {
     this.setState({
       name: e.target.value
@@ -96,7 +94,7 @@ class ListWorkersName extends React.Component {
     })
   }
 
-  //handle worker requesting
+  //handle worker requesting from the client modal
   handleSubmit() {
     var scope = this;
     axios.post('/newClient', {
@@ -112,7 +110,7 @@ class ListWorkersName extends React.Component {
     })
   }
 
-
+  //modal functions
   handleClose() {
     this.setState({ show: false });
   }
@@ -139,7 +137,8 @@ class ListWorkersName extends React.Component {
                 Rating: {Math.ceil(this.props.item.rating)} <br/>
                 Email: {this.props.item.email} <br/>
                 Description: {this.props.item.description} <br/>
-                Phonenumber: {this.props.item.phonenumber}
+                Phonenumber: {this.props.item.phonenumber} <br/>
+                Availability: {this.props.item.availability} <br/>
                 <p><Dropdown value={String(this.state.rating)}
                   onChange={this.handleRate.bind(this)}
                   options={[ '0', '1', '2', '3', '4', '5']} />
@@ -194,27 +193,4 @@ class ListWorkersName extends React.Component {
   }
 }
 
-//                   
-
-
 export default ListWorkersName;
-
-// Client Name <input onKeyUp={function(event) {
-//                   event.preventDefault();
-//                   if (event.keyCode === 13) {
-//                   $("#myBtn1").click();
-//                   }
-//                   }} style={{height: '28px', width:'50%'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
-//                     Client Phonenumber <input onKeyUp={function(event) {
-//                   event.preventDefault();
-//                   if (event.keyCode === 13) {
-//                   $("#myBtn1").click();
-//                   }
-//                   }} style={{height: '28px', width:'50%'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
-//                     Client Issue <input onKeyUp={function(event) {
-//                   event.preventDefault();
-//                   if (event.keyCode === 13) {
-//                   $("#myBtn1").click();
-//                   }
-//                   }} style={{height: '60px', width:'50%'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
-//                     <button id="myBtn1" style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
