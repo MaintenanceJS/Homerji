@@ -153,10 +153,25 @@ handleClose() {
                 <div id='confirm'>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Body style={{textAlign:'left', marginLeft: '10px'}}>
-                    Client Name <input style={{height: '28px', width:'50%'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
-                    Client Phonenumber <input style={{height: '28px', width:'50%'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
-                    Client Issue <input style={{height: '60px', width:'50%'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
-                    <button style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
+                    Client Name <input onKeyUp={function(event) {
+                  event.preventDefault();
+                  if (event.keyCode === 13) {
+                  $("#myBtn1").click();
+                  }
+                  }} style={{height: '28px', width:'50%'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
+                    Client Phonenumber <input onKeyUp={function(event) {
+                  event.preventDefault();
+                  if (event.keyCode === 13) {
+                  $("#myBtn1").click();
+                  }
+                  }} style={{height: '28px', width:'50%'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
+                    Client Issue <input onKeyUp={function(event) {
+                  event.preventDefault();
+                  if (event.keyCode === 13) {
+                  $("#myBtn1").click();
+                  }
+                  }} style={{height: '60px', width:'50%'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+                    <button id="myBtn1" style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
                       Submit worker requesting
                     </button>
                     <Route component={() =>  <Maps lat={this.state.latitude} long={this.state.longtitude} />} />

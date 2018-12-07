@@ -59,6 +59,12 @@ class NavBar extends React.Component {
               <Navbar.Form pullLeft>
                 <FormGroup>
                   <FormControl
+                  onKeyUp={function(event) {
+                  event.preventDefault();
+                  if (event.keyCode === 13) {
+                  $("#myBtn").click();
+                  }
+                  }}
                     id='textInbox'
                     type="text"
                     placeholder="Worker name"
@@ -66,7 +72,7 @@ class NavBar extends React.Component {
                   />
                 </FormGroup>{" "}
                 <Link to="/search">
-                  <Button onClick={this.getWorkersByName.bind(this)}>
+                  <Button id="myBtn" onClick={this.getWorkersByName.bind(this)} >
                     Search
                   </Button>
                 </Link>
