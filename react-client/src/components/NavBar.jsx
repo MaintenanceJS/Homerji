@@ -95,6 +95,7 @@ class NavBar extends React.Component {
                 </NavItem>
                 <NavItem onClick={this.hideCategories.bind(this)} eventKey={2} href="/about">
                   About
+
                 </NavItem>
               </Nav>
             <Navbar.Form pullLeft>
