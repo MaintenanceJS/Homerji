@@ -19,12 +19,19 @@ Workers are almost far away from technology, while clients always trying to sear
 
 ## Usage
 
-> Some usage instructions
+> Clients are guests, can do whatever without making accounts
+> Workers need to have account to see their requesting clients
+> Workers are splitted into categories
+> Workers can be searched by name
+> Clients can declare their position in map
 
 ## Requirements
 
 - Node 0.10.x
 - React
+- Express
+- Mongo DB (mongoose)
+- React bootstrap
 
 ## Development
 
@@ -42,6 +49,7 @@ Workers are almost far away from technology, while clients always trying to sear
 - Design worker tickets and it's page (2 pts) 5 hours
 - Design formers (1 pts) 3 hours
 - Contact us (1 pts) 1 hour
+- MANY OTHER while working
 
 ### Installing Dependencies
 
@@ -61,6 +69,11 @@ npm run server-dev
 ### Roadmap
 
 View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+Issues:
+> Rating after search.
+> Routing is not fully responsive
+> Workers are not sorted by rating (I may do it, still not sure)
+> Images uploading feature could imporove this project
 
 ## Contributing
 

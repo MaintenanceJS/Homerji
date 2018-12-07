@@ -27,7 +27,7 @@ class Sign extends React.Component {
       username: 'Unkown',
       password: 'Unkown',
       description: 'Unkown',
-      availability: 'yes', //default value (unchangable)
+      availability: 'Yes', //default value (unchangable)
       phonenumber: 0 //default value (changable)
     };
   }
@@ -57,7 +57,6 @@ class Sign extends React.Component {
 
   handleMajor(e) {
     var arr = ['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener', 'Furniture']
-    console.log(arr[e])
     this.setState({
       major: arr[e]
     })
@@ -118,6 +117,7 @@ class Sign extends React.Component {
         this.setState({
           getItems: data
         })
+        $('input').val('');
       },
       error: (err) => {
         console.log('err', err);

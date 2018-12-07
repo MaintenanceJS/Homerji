@@ -219,7 +219,7 @@ var createSession = function (req, res, newUser) {
     req.session.cookie.expires = new Date(Date.now() + 3600000) //a date for expiration
     req.session.cookie.maxAge = 3600000; //a specific time to destroys
     req.session.save(function(err) {
-      res.status(200).json('')
+      res.status(200).json(newUser)
       //header is json
       console.log('after save session', req.session)
     })
@@ -310,6 +310,7 @@ var edting = function (req, res) {
   var password = req.body.password
   var description = req.body.description
   var phonenumber = Number(req.body.phonenumber)
+  var availability = req.body.availability
   var hash = bcrypt.hashSync(password);
 
   db.selectAllUsernames(username, req, res, function(err, found) {
@@ -332,6 +333,9 @@ var edting = function (req, res) {
     db.updatePhonenumber(username, phonenumber, function () {
       return
     })
+    db.updateWorkerAvailability(username, availability, function () {
+      return
+    })  
   })
   res.status(200).json('')
 }
@@ -395,7 +399,6 @@ app.post('/clientedit', function (req, res) {
     }
   })
 });
-
 
 
 
