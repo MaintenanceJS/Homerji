@@ -7,22 +7,35 @@
     "start": "node server/index.js",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
-    "test": "mocha",
+    "test": "jest --env=jsdom",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base --history-api-fallback ./"
   },
   "author": "Beth Johnson",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "^6.23.1",
+    "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
     "babel-loader": "^6.3.2",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.22.0",
-    "babel-preset-react": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "chai": "^4.2.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0",
+    "enzyme-to-json": "^3.3.5",
+    "jest": "^23.6.0",
+    "jsdom": "13.0.0",
+    "jsdom-global": "3.0.2",
+    "mocha": "^5.2.0",
+    "react-test-renderer": "^16.6.3",
+    "regenerator-runtime": "^0.13.1",
+    "supertest": "^3.3.0",
     "webpack": "^2.2.1"
   },
   "dependencies": {
     "angular": "^1.6.3",
     "axios": "^0.18.0",
+    "babel": "^6.23.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
     "cloudinary": "^1.13.2",
@@ -49,5 +62,22 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "request": "^2.88.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "./react-client/src/setupTests.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "bower_components",
+      "shared"
+    ]
   }
 }

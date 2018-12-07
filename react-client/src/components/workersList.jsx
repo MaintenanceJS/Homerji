@@ -154,10 +154,25 @@ class ListWorkersName extends React.Component {
                 <div id='confirm'>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Body style={{textAlign:'left', marginLeft: '10px'}}>
-                    <div style={{marginLeft: '51px'}}>Client Name <input style={{height: '28px', width:'50%', marginBottom: '-10px'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/></div> <br/>
-                    Client Phonenumber <input style={{height: '28px', width:'50%', marginBottom: '-100px'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
-                    Client Issue <textarea style={{height: '60px', width:'97%', borderColor: 'lightgrey', marginBottom: '-10px'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
-                    <center><Button bsStyle="success" style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
+                    <div style={{marginLeft: '51px'}}>Client Name <input onKeyUp={function(event) {
+                  event.preventDefault();
+                  if (event.keyCode === 13) {
+                  $("#myBtn1").click();
+                  }
+                  }} style={{height: '28px', width:'50%', marginBottom: '-10px'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/></div> <br/>
+                    Client Phonenumber <input onKeyUp={function(event) {
+                  event.preventDefault();
+                  if (event.keyCode === 13) {
+                  $("#myBtn1").click();
+                  }
+                  }} style={{height: '28px', width:'50%', marginBottom: '-100px'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
+                    Client Issue <textarea onKeyUp={function(event) {
+                  event.preventDefault();
+                  if (event.keyCode === 13) {
+                  $("#myBtn1").click();
+                  }
+                  }} style={{height: '60px', width:'97%', borderColor: 'lightgrey', marginBottom: '-10px'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+                    <center><Button  id="myBtn1" bsStyle="success" style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
                       Submit worker requesting
                     </Button></center>
                     <Route component={() =>  <Maps lat={this.state.latitude} long={this.state.longtitude} />} />
@@ -184,3 +199,22 @@ class ListWorkersName extends React.Component {
 
 export default ListWorkersName;
 
+// Client Name <input onKeyUp={function(event) {
+//                   event.preventDefault();
+//                   if (event.keyCode === 13) {
+//                   $("#myBtn1").click();
+//                   }
+//                   }} style={{height: '28px', width:'50%'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
+//                     Client Phonenumber <input onKeyUp={function(event) {
+//                   event.preventDefault();
+//                   if (event.keyCode === 13) {
+//                   $("#myBtn1").click();
+//                   }
+//                   }} style={{height: '28px', width:'50%'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
+//                     Client Issue <input onKeyUp={function(event) {
+//                   event.preventDefault();
+//                   if (event.keyCode === 13) {
+//                   $("#myBtn1").click();
+//                   }
+//                   }} style={{height: '60px', width:'50%'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+//                     <button id="myBtn1" style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>

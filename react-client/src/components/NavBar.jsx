@@ -58,12 +58,44 @@ class NavBar extends React.Component {
               </Navbar.Brand>
             </Navbar.Header>
             <Navbar.Collapse>
+              <Navbar.Form pullLeft>
+                <FormGroup>
+                  <FormControl
+                  onKeyUp={function(event) {
+                  event.preventDefault();
+                  if (event.keyCode === 13) {
+                  $("#myBtn").click();
+                  }
+                  }}
+                    id='textInbox'
+                    type="text"
+                    placeholder="Worker name"
+                    onChange={this.getUserName.bind(this)}
+                  />
+                </FormGroup>{" "}
+                <Link to="/search">
+                  <Button onClick={this.getWorkersByName.bind(this)}>
+                    Search
+                  </Button>
+                </Link>
+              </Navbar.Form>
+              <Nav pullRight>
+                <NavItem href="#">
+                  <div>
+                    {" "}
+                    <WorkersLogo
+                      handleWorkersButton={this.props.handleWorkersButton}
+                    />{" "}
+                  </div>
+                  </NavItem>
+                  </Nav>
               <Nav>
                 <NavItem onClick={this.hideCategories.bind(this)} eventKey={1} href="/contact">
                   Contact Us
                 </NavItem>
                 <NavItem onClick={this.hideCategories.bind(this)} eventKey={2} href="/about">
                   About
+
                 </NavItem>
               </Nav>
             <Navbar.Form pullLeft>
