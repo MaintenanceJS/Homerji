@@ -98,6 +98,7 @@ class ListWorkersName extends React.Component {
 
   //handle worker requesting
   handleSubmit() {
+    var scope = this;
     axios.post('/newClient', {
       workerUsername: this.props.item.username,
       clientName: this.state.name,
@@ -107,7 +108,7 @@ class ListWorkersName extends React.Component {
       longtitude: this.state.longtitude
     })
     .then(function (res) {
-      console.log('working', res);
+      scope.handleClose()
     })
   }
 
@@ -156,9 +157,9 @@ class ListWorkersName extends React.Component {
                     <div style={{marginLeft: '51px'}}>Client Name <input style={{height: '28px', width:'50%', marginBottom: '-10px'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/></div> <br/>
                     Client Phonenumber <input style={{height: '28px', width:'50%', marginBottom: '-100px'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
                     Client Issue <textarea style={{height: '60px', width:'97%', borderColor: 'lightgrey', marginBottom: '-10px'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
-                    <center><button style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
+                    <center><Button bsStyle="success" style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
                       Submit worker requesting
-                    </button></center>
+                    </Button></center>
                     <Route component={() =>  <Maps lat={this.state.latitude} long={this.state.longtitude} />} />
                   </Modal.Body>
                   <Modal.Footer style={{marginTop: '30px', textAlign:'center'}}>

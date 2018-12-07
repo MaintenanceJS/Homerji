@@ -41,7 +41,6 @@ class Clientitems extends React.Component {
   }
 
   handleTrash() {
-    console.log(this.props.items)
     $.ajax({
       type: 'POST',
       url: '/clientedit',
@@ -50,7 +49,7 @@ class Clientitems extends React.Component {
         id: this.props.items._id
       },
       success: (data) => {
-        
+        alert("removed successfully")
       },
       error: (err) => {
         alert('err')

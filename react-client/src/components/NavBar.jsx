@@ -32,7 +32,7 @@ class NavBar extends React.Component {
         workers: res.data
       });
       $('#textInbox').val('') //to empty the input box
-      $('.home').hide() //categories buttons on index file
+      $('#logos').hide() //categories buttons on index file
     });
   }
 
@@ -42,11 +42,16 @@ class NavBar extends React.Component {
     });
   }
 
+  hideCategories() {
+    console.log('here')
+    $('#logos').hide() //categories buttons on index file
+  }
+
   render() {
     return (
       <Router>
         <div>
-          <Navbar collapseOnSelect>
+          <Navbar id='nav' collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
                 <a href="/" >HomerG</a>
@@ -54,13 +59,13 @@ class NavBar extends React.Component {
             </Navbar.Header>
             <Navbar.Collapse>
               <Nav>
-                <NavItem eventKey={1} href="/contactus">
+                <NavItem onClick={this.hideCategories.bind(this)} eventKey={1} href="/contact">
                   Contact Us
-              </NavItem>
-              <NavItem onClick={this.props.logos} eventKey={2} href="/about">
-                About
-              </NavItem>
-            </Nav>
+                </NavItem>
+                <NavItem onClick={this.hideCategories.bind(this)} eventKey={2} href="/about">
+                  About
+                </NavItem>
+              </Nav>
             <Navbar.Form pullLeft>
               <FormGroup>
                 <FormControl id="textInbox" type="text" placeholder="Worker name" onChange={this.getUserName.bind(this)} />
@@ -86,7 +91,7 @@ class NavBar extends React.Component {
           path="/search"
           component={() => <SearchByName workersList={this.state.workers} />}
         />
-        <Route path="/contact" component={ContactUs} />
+        <Route path="/contact" component={ContactUs}/>
       </div>
     </Router>)
   }
