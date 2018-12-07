@@ -34,7 +34,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    $('.edit, .submit, .thing, .maram').hide() // To hide any unwanted components
+    $('.edit, .submit').hide() // To hide any unwanted components
     if (this.state.loggedin === true) { //to check if the user is logged in
       $('.edit, maram').show() //show edit inputs
     }
@@ -88,9 +88,7 @@ class Login extends React.Component {
           availability: data.availability
         })
         $('.edit').show()
-        $('.maram').show()
         $('.login').hide()
-        console.log(this.state)
       },
       error: (err) => {
         alert('err');
@@ -119,7 +117,6 @@ class Login extends React.Component {
 
   handleMajor(e) {
     var arr = ['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener', 'Furniture']
-    console.log(arr[e])
     this.setState({
       major: arr[e]
     })

@@ -57,7 +57,6 @@ class Sign extends React.Component {
 
   handleMajor(e) {
     var arr = ['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener', 'Furniture']
-    console.log(arr[e])
     this.setState({
       major: arr[e]
     })
@@ -118,6 +117,7 @@ class Sign extends React.Component {
         this.setState({
           getItems: data
         })
+        $('input').val('');
       },
       error: (err) => {
         console.log('err', err);
