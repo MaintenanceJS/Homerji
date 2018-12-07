@@ -137,7 +137,8 @@ class ListWorkersName extends React.Component {
                 Rating: {Math.ceil(this.props.item.rating)} <br/>
                 Email: {this.props.item.email} <br/>
                 Description: {this.props.item.description} <br/>
-                Phonenumber: {this.props.item.phonenumber}
+                Phonenumber: {this.props.item.phonenumber} <br/>
+                Availability: {this.props.item.availability} <br/>
                 <p><Dropdown value={String(this.state.rating)}
                   onChange={this.handleRate.bind(this)}
                   options={[ '0', '1', '2', '3', '4', '5']} />

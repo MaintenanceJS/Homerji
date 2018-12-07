@@ -22,8 +22,7 @@ var itemSchema = mongoose.Schema({
   availability: String,
   phonenumber: Number,
   ratingCount: Number,
-  client: [{ type: mongoose.Schema.Types.ObjectId, ref: 'client' }],
-  //image: { data: Buffer, contentType: String }
+  client: [{ type: mongoose.Schema.Types.ObjectId, ref: 'client' }]
 });
 
 var clientSchema = mongoose.Schema({
@@ -38,7 +37,7 @@ var clientSchema = mongoose.Schema({
 var worker = mongoose.model('worker', itemSchema);
 var client = mongoose.model('client', clientSchema);
 
-
+//select all workers
 var selectAll = function (callback) {
   worker.find({}, function (err, items) {
     if (err) {
@@ -49,6 +48,7 @@ var selectAll = function (callback) {
   });
 };
 
+//select all workers with the same name
 var selectAllNames = function (name, callback) {
   worker.find({ name: name }, null, {sort: {rating: -1}}, function (err, items) {
     if (err) {
@@ -59,6 +59,7 @@ var selectAllNames = function (name, callback) {
   });
 };
 
+//select all workers with the same username (it must be unique)
 var selectAllUsernames = function (username, req, res, callback) {
   worker.find({ username: username }, null, {sort: {rating: -1}}, function (err, items) {
     if (err) {
@@ -69,6 +70,7 @@ var selectAllUsernames = function (username, req, res, callback) {
   });
 };
 
+//select all worker depending on thier major
 var selectAllMajors = function (major, callback) {
   worker.find({ major: major }, null, {sort: {rating: -1}}, function (err, items) {
     if (err) {
@@ -79,6 +81,7 @@ var selectAllMajors = function (major, callback) {
   });
 };
 
+//update worker rating
 var updateRating = function(username, newRating, callback) {
   worker.updateOne({ username: username }, { rating: newRating }, function(err, res) {
     if(err) {
@@ -89,6 +92,8 @@ var updateRating = function(username, newRating, callback) {
   })
 }
 
+//update profile fields//
+
 var updateName = function(username, newName, callback) {
   worker.updateOne({ username: username }, { name: newName }, function(err, res) {
     if(err) {
@@ -98,7 +103,6 @@ var updateName = function(username, newName, callback) {
     }
   })
 }
-
 var updateMajor = function(username, newMajor, callback) {
   worker.updateOne({ username: username }, { major: newMajor }, function(err, res) {
     if(err) {
@@ -108,7 +112,6 @@ var updateMajor = function(username, newMajor, callback) {
     }
   })
 }
-
 var updateEmail = function(username, newEmail, callback) {
   worker.updateOne({ username: username }, { email: newEmail }, function(err, res) {
     if(err) {
@@ -118,7 +121,6 @@ var updateEmail = function(username, newEmail, callback) {
     }
   })
 }
-
 var updatePassword = function(username, newPassword, callback) {
   worker.updateOne({ username: username }, { password: newPassword }, function(err, res) {
     if(err) {
@@ -128,7 +130,6 @@ var updatePassword = function(username, newPassword, callback) {
     }
   })
 }
-
 var updateDescription = function(username, newDescription, callback) {
   worker.updateOne({ username: username }, { description: newDescription }, function(err, res) {
     if(err) {
@@ -138,7 +139,6 @@ var updateDescription = function(username, newDescription, callback) {
     }
   })
 }
-
 var updatePhonenumber = function(username, newPhonenumber, callback) {
   worker.updateOne({ username: username }, { phonenumber: newPhonenumber }, function(err, res) {
     if(err) {
@@ -148,7 +148,6 @@ var updatePhonenumber = function(username, newPhonenumber, callback) {
     }
   })
 }
-
 var updateRatingCount = function(username, newCount, callback) {
   worker.updateOne({ username: username }, { ratingCount: newCount }, function(err, res) {
     if(err) {
@@ -159,6 +158,7 @@ var updateRatingCount = function(username, newCount, callback) {
   })
 }
 
+//to add a new client to worker
 var updateClient = function(username, newClient, callback) {
   worker.find({ username: username }, function(err, res) {
     if(err) {
@@ -177,6 +177,7 @@ var updateClient = function(username, newClient, callback) {
   })  
 }
 
+//find clients depending on their id (used in worker profile)
 var filterClients = function(user, callback) {
   console.log('in filterClients', user)
   worker.find({ username: user }, function(err, out) {
@@ -194,6 +195,7 @@ var filterClients = function(user, callback) {
   }) 
 }
 
+//when remove a client
 var updateClientsArr = function(username, id, callback) {
   console.log('username', username, 'id', id)
   worker.find({ username: username }, function(err, res) {
@@ -222,6 +224,7 @@ var updateClientsArr = function(username, id, callback) {
   }) 
 }
 
+//if the worker is not available anymore
 var updateWorkerAvailability = function(username, newAvailability, callback) {
   worker.updateOne({ username: username }, { availability: newAvailability }, function(err, res) {
     if(err) {

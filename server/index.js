@@ -163,14 +163,13 @@ var signupWorker = function (req, res) {
           description: description,
           availability: availability,
           phonenumber: phonenumber,
-          ratingCount: 1,
+          ratingCount: 1, //keep it 1 for rating equation
           client: []
         })
         newWorker.save() //save to database
         .then(function() {
           console.log('saved!')
           res.setHeader('Content-Type', 'application/json'); //res should be json
-          console.log('new worker')
           createSession(req, res, newWorker) //res is from the session function
         })
       }
@@ -197,7 +196,6 @@ var loginUser = function (req, res) {
           if (match) {
             res.setHeader('Content-Type', 'application/json'); //res should be json
             createSession(req, res, found[0])
-            console.log("session is done")
           } else {
             console.log('wrong password or username')
             res.status(404).json();
@@ -375,8 +373,10 @@ app.post('/login', loginUser);
 app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB);
 app.post('/rating', rating);
-app.post('/edit', edting);
+app.post('/edit', edting); //edit worker profile
 app.post('/newClient', newClient);
+
+//show clients in worker profile
 app.post('/show', function (req, res) {
   var arr = [];
   db.filterClients(req.body.username, function(err, data){
@@ -390,6 +390,8 @@ app.post('/show', function (req, res) {
     }
   })
 });
+
+//to remove client from the worker profile
 app.post('/clientedit', function (req, res) {
   db.updateClientsArr(req.body.username, req.body.id, function(err, data) {
     if (err) {
@@ -400,14 +402,10 @@ app.post('/clientedit', function (req, res) {
   })
 });
 
-
-
-
 //to not get 404 error when reload page( redirect to index.html when reload )
 app.get('/*', (req, res) => {
  res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
 });
-
 
 
 //listen to local host
