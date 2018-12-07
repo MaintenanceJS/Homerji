@@ -14,7 +14,6 @@ class Carpenter extends React.Component {
     
     // get All the workers information from the database depending on their major
     componentDidMount() {
-        
         var that = this;
         axios.post('/majors', { major: 'Carpenter' })
             .then(function (res) {
