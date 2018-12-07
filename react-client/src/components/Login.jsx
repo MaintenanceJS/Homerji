@@ -26,9 +26,9 @@ class Login extends React.Component {
       major: 'Choose',
       name: '',
       email: '',
-      password: '',
       description: '',
       phonenumber: 0,
+      availability: 'Choose',
       clients: []
     };
   }
@@ -78,11 +78,20 @@ class Login extends React.Component {
       data: { username: this.state.username, password: this.state.password },
       success: (data) => {
         this.setState({
-          loggedin: true
+          loggedin: true,
+          username: data.username,
+          password: data.password,
+          major: data.major,
+          name: data.name,
+          email: data.email,
+          description: data.description,
+          phonenumber: data.phonenumber,
+          availability: data.availability
         })
         $('.edit').show()
         $('.maram').show()
         $('.login').hide()
+        console.log(this.state)
       },
       error: (err) => {
         alert('err');
@@ -147,6 +156,14 @@ class Login extends React.Component {
     })
   }
 
+
+  handleAvailability(e) {
+    var arr = ['Yes', 'No']
+    this.setState({
+      availability: arr[e]
+    })
+  }
+
   //new values request
   handleEdit() { // Worker profile editing after login
     $.ajax({
@@ -159,7 +176,8 @@ class Login extends React.Component {
         email: this.state.email,
         password: this.state.password,
         description: this.state.description,
-        phonenumber: this.state.phonenumber
+        phonenumber: this.state.phonenumber,
+        availability: this.state.availability,
       },
       success: (data) => {
       },
@@ -208,6 +226,20 @@ class Login extends React.Component {
 
             </DropdownButton>
           </label> <br />
+
+          <label style={{marginLeft: '22px'}}>
+            Availability: 
+            <DropdownButton style={{marginLeft: '16px'}}
+              title={this.state.availability}
+              //key={i}
+              id={this.state.major}
+              onSelect={this.handleAvailability.bind(this)}
+            > 
+              <MenuItem eventKey="0" active>Yes</MenuItem>
+              <MenuItem eventKey="1">No</MenuItem>
+            </DropdownButton>
+          </label> <br />
+
           <label style={{marginLeft: '65px'}}>
             Email: <input style={{marginLeft: '10px'}} type="email" onChange={this.handleEmail.bind(this)} />
           </label> <br />
