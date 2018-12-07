@@ -26,9 +26,7 @@ class Carpenter extends React.Component {
     render() {
         return (
             <div>
-            
                 <Workers workersList={this.state.workers} />
-            
             </div>
         )
     }

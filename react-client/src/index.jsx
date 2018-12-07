@@ -10,7 +10,6 @@ import NavBar from "./components/NavBar.jsx";
 import Gardener from "./components/Gardener.jsx";
 import Sign from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
-import Logout from "./components/logout.jsx";
 import ContactUs from "./components/contactUs.jsx";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { browserHistory } from "react-router";
@@ -37,6 +36,7 @@ class App extends React.Component {
     }
   }
 
+  //logout function
   logout() {
     $.ajax({
       type: 'POST',
@@ -50,7 +50,7 @@ class App extends React.Component {
     });
   }
 
-  //toggle
+  //toggle worker button
   handleWorkersButton() {
     this.setState({
       show: !this.state.show
@@ -66,12 +66,10 @@ class App extends React.Component {
             <Tab eventKey={1} title="Signup" animation>
                 <Sign className="show" style={{cursor: 'pointer'}}/>
             </Tab>
-            <Tab className='container' eventKey={2} title="Login" animation>
+            <Tab eventKey={2} title="Login" animation>
                 <Login className="show" style={{cursor: 'pointer'}}/> 
             </Tab>
-            <Tab className='container' eventKey={3} title="Logout" onEnter={this.logout.bind(this)} animation>
-                <Logout className="show"/>
-            </Tab>
+            <Tab eventKey={3} title="Logout" onEnter={this.logout.bind(this)} animation> </Tab>
           </Tabs>
         </div>
       </Router>;

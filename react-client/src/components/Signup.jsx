@@ -19,35 +19,19 @@ class Sign extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shown: false,
-      name: 'Unknown',
+      name: 'Unknown',  //default value (changable)
       major: 'Choose', //default value (changable)
       rating: 3, //default value (unchangable)
       email: 'Unkown@unkown.com',
-      username: 'Unkown',
-      password: 'Unkown',
-      description: 'Unkown',
+      username: 'Unkown',  //default value (changable)
+      password: 'Unkown',  //default value (changable)
+      description: 'Unkown',  //default value (changable)
       availability: 'Yes', //default value (unchangable)
       phonenumber: 0 //default value (changable)
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      shown: false
-    })
-  }
-
-  handleOnClick() {
-    this.setState({
-      shown: !this.state.shown
-    })
-    if (!this.state.shown) {
-      $('.form').show()
-    } else {
-      $('.form').hide()
-    }
-  }
+//handle sign up inputs
 
   handleName(e) {
     this.setState({
@@ -98,6 +82,7 @@ class Sign extends React.Component {
     })
   }
 
+  //submit sign up
   handleSubmit() {
     $.ajax({
       type: 'POST',
@@ -117,7 +102,7 @@ class Sign extends React.Component {
         this.setState({
           getItems: data
         })
-        $('input').val('');
+        $('input').val(''); //inputs values will be empty
       },
       error: (err) => {
         console.log('err', err);
@@ -172,9 +157,3 @@ class Sign extends React.Component {
 }
 
 export default Sign;
-
-
-
-// <form action='/api/images' method="post" encType="multipart/form-data">
-//   <input type='file' name='image' />
-// </form>

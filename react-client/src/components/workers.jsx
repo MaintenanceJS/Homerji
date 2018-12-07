@@ -5,9 +5,6 @@ import SearchedNames from './workersList.jsx';
 class SearchByName extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-       worker: []
-    };
   }
 
   render() {
