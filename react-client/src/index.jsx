@@ -32,7 +32,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       show: false, //to see categories or signup and login page
-      selectedFile: null
+      selectedFile: null,
+      categories: false
     }
   }
 
@@ -53,41 +54,6 @@ class App extends React.Component {
     this.setState({
       show: !this.state.show
     })
-  }
-
-  handleClients() { // Worker profile editing after login
-    $.ajax({
-      type: 'POST',
-      url: '/show',
-      data: { username: this.state.username },
-      contentType: 'application/json',
-      success: (data) => {
-        console.log('data', data)
-        alert(data)
-        // this.setState({
-        //   clients: data
-        // })
-      },
-      error: (err) => {
-        console.log('err', err);
-        alert('err')
-      }
-    });
-
-  }
-
-  handleMyClick() {
-    $.ajax({
-      type: 'POST',
-      url: '/show',
-      data: { username: 'g' },
-      success: (data) => {
-        console.log(data)
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
   }
 
   render() {

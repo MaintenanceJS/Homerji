@@ -98,6 +98,7 @@ class ListWorkersName extends React.Component {
 
   //handle worker requesting
   handleSubmit() {
+    var scope = this;
     axios.post('/newClient', {
       workerUsername: this.props.item.username,
       clientName: this.state.name,
@@ -107,7 +108,7 @@ class ListWorkersName extends React.Component {
       longtitude: this.state.longtitude
     })
     .then(function (res) {
-      console.log('working', res);
+      scope.handleClose()
     })
   }
 

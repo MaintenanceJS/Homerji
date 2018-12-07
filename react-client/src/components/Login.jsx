@@ -43,7 +43,7 @@ class Login extends React.Component {
     })
   }
 
-  handleMyClick() {
+  handleClients() {
     $.ajax({
       type: 'POST',
       url: '/show',
@@ -172,14 +172,14 @@ class Login extends React.Component {
     return (
       <div>
         <label style={{marginTop: '10px'}} className='login'>
-          <p style={{marginLeft: '-27px'}}> Username: <input type="text" onChange={this.handleUsername.bind(this)} /> </p>
+          <p style={{marginLeft: '5px'}}> Username: <input type="text" onChange={this.handleUsername.bind(this)} /> </p>
         </label> <br />
         <label className='login'>
-          <p style={{marginLeft: '-24px'}}> Password: <input type="password" onChange={this.handlePassword.bind(this)} /> </p>
+          <p style={{marginLeft: '7px'}}> Password: <input type="password" onChange={this.handlePassword.bind(this)} /> </p>
         </label> <br />
         <Button bsStyle="success" style={{marginLeft: '8%'}} onClick={this.handleSubmit.bind(this)} className='login'> Submit </Button>
 
-        <Button style={{marginLeft: '15px'}} bsStyle="primary" className='edit' onClick={this.handleMyClick.bind(this)} > Click here to see your Clients </Button>
+        <Button style={{marginLeft: '15px'}} bsStyle="primary" className='edit' onClick={this.handleClients.bind(this)} > Click here to see your Clients </Button>
         <br /><br />
         <div className='container' >
           {this.state.clients.map(client => <ClientItems className="row" key={client._id} worker={this.state.username} items={client}/>)}

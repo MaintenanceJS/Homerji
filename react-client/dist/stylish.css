@@ -115,3 +115,8 @@
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+
+.modal-dialog {
+  left: 0;
+  margin-top: 0;
+}

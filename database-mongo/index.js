@@ -198,13 +198,18 @@ var filterClients = function(user, callback) {
 var updateClientsArr = function(username, id, callback) {
   console.log('username', username, 'id', id)
   worker.find({ username: username }, function(err, res) {
+    console.log('worker find')
     if(err) {
       callback(err, null);
     } else {
       var clientArr = res[0].client
+      console.log('clientArr', clientArr)
       for (var i = 0; i < clientArr.length; i++) {
-        if (clientArr[i].$oid = id) {
+        console.log(String(clientArr[i]), id, clientArr[i] == id)
+        if ( clientArr[i] == String(id) ) {
+          console.log("will be removed", clientArr[i])
           clientArr.splice(i, 1)
+          console.log("after", clientArr)
         }
       }
       worker.updateOne({ username: username }, { client: clientArr }, function(err, data) {
