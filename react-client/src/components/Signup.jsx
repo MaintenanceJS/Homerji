@@ -27,7 +27,7 @@ class Sign extends React.Component {
       username: 'Unkown',
       password: 'Unkown',
       description: 'Unkown',
-      availability: 'yes', //default value (unchangable)
+      availability: 'Yes', //default value (unchangable)
       phonenumber: 0 //default value (changable)
     };
   }

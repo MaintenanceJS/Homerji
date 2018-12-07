@@ -80,7 +80,6 @@ class Login extends React.Component {
         this.setState({
           loggedin: true,
           username: data.username,
-          password: data.password,
           major: data.major,
           name: data.name,
           email: data.email,
@@ -244,7 +243,7 @@ class Login extends React.Component {
             Email: <input style={{marginLeft: '10px'}} type="email" onChange={this.handleEmail.bind(this)} />
           </label> <br />
           <label style={{marginLeft: '36px'}}>
-            Password: <input style={{marginLeft: '10px'}} type="password" onChange={this.handlePassword.bind(this)} />
+            Password: <input style={{marginLeft: '10px'}} type="password" onChange={this.handlePassword.bind(this)} required/>
           </label> <br />
           <label style={{marginLeft: '26px'}}>
             Description: <input style={{marginLeft: '10px'}} type="text" onChange={this.handleDescription.bind(this)} />
