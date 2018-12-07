@@ -15,6 +15,7 @@ class Gardener extends React.Component {
         var that = this;
         axios.post('/majors', { major: 'Gardener' })
             .then(function (res) {
+                console.log(res.data)
                 that.setState({
                     workers: res.data
                 })

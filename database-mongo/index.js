@@ -50,7 +50,7 @@ var selectAll = function (callback) {
 };
 
 var selectAllNames = function (name, callback) {
-  worker.find({ name: name }, function (err, items) {
+  worker.find({ name: name }, null, {sort: {rating: -1}}, function (err, items) {
     if (err) {
       callback(err, null);
     } else {
@@ -60,8 +60,7 @@ var selectAllNames = function (name, callback) {
 };
 
 var selectAllUsernames = function (username, req, res, callback) {
-  console.log(callback)
-  worker.find({ username: username }, function (err, items) {
+  worker.find({ username: username }, null, {sort: {rating: -1}}, function (err, items) {
     if (err) {
       callback(err, null);
     } else {
@@ -71,7 +70,7 @@ var selectAllUsernames = function (username, req, res, callback) {
 };
 
 var selectAllMajors = function (major, callback) {
-  worker.find({ major: major }, function (err, items) {
+  worker.find({ major: major }, null, {sort: {rating: -1}}, function (err, items) {
     if (err) {
       callback(err, null);
     } else {
