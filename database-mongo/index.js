@@ -223,6 +223,16 @@ var updateClientsArr = function(username, id, callback) {
   }) 
 }
 
+var updateWorkerAvailability = function(username, newAvailability, callback) {
+  worker.updateOne({ username: username }, { availability: newAvailability }, function(err, res) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
 module.exports.worker = worker;
 module.exports.client = client;
 module.exports.selectAll = selectAll;
@@ -240,7 +250,7 @@ module.exports.updatePhonenumber = updatePhonenumber;
 module.exports.updateClient = updateClient;
 module.exports.filterClients = filterClients;
 module.exports.updateClientsArr = updateClientsArr;
-
+module.exports.updateWorkerAvailability = updateWorkerAvailability;
 
 
 

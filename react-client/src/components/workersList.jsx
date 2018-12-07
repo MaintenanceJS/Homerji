@@ -131,7 +131,7 @@ class ListWorkersName extends React.Component {
         <div className="col">
           <div className="col-sm-5 col-md-4">
             <div className="thumbnail">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTey3twEwY6j_wjrv6BhcjKFLKx9NWZhg3kxIuNXTwEMNC5_JUOUw" alt="..." />
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTey3twEwY6j_wjrv6BhcjKFLKx9NWZhg3kxIuNXTwEMNC5_JUOUw" alt="..." />
               <div className="caption">
                 <h3>{this.props.item.username}</h3>
                 Name: {this.props.item.name} <br/>
@@ -143,7 +143,7 @@ class ListWorkersName extends React.Component {
                 <p><Dropdown value={String(this.state.rating)}
                   onChange={this.handleRate.bind(this)}
                   options={[ '0', '1', '2', '3', '4', '5']} />
-                  <a href="#" className="btn btn-primary" role="button" onClick={this.handleRateClick.bind(this)}>
+                  <a className="btn btn-primary" role="button" onClick={this.handleRateClick.bind(this)}>
                     Rate
                   </a>  
                 </p> 

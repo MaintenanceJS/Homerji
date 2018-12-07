@@ -26,15 +26,15 @@ class Login extends React.Component {
       major: 'Choose',
       name: '',
       email: '',
-      password: '',
       description: '',
       phonenumber: 0,
+      availability: 'Choose',
       clients: []
     };
   }
 
   componentDidMount() {
-    $('.edit, .submit, .thing, .maram').hide() // To hide any unwanted components
+    $('.edit, .submit').hide() // To hide any unwanted components
     if (this.state.loggedin === true) { //to check if the user is logged in
       $('.edit, maram').show() //show edit inputs
     }
@@ -78,10 +78,16 @@ class Login extends React.Component {
       data: { username: this.state.username, password: this.state.password },
       success: (data) => {
         this.setState({
-          loggedin: true
+          loggedin: true,
+          username: data.username,
+          major: data.major,
+          name: data.name,
+          email: data.email,
+          description: data.description,
+          phonenumber: data.phonenumber,
+          availability: data.availability
         })
         $('.edit').show()
-        $('.maram').show()
         $('.login').hide()
       },
       error: (err) => {
@@ -111,7 +117,6 @@ class Login extends React.Component {
 
   handleMajor(e) {
     var arr = ['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener', 'Furniture']
-    console.log(arr[e])
     this.setState({
       major: arr[e]
     })
@@ -147,6 +152,14 @@ class Login extends React.Component {
     })
   }
 
+
+  handleAvailability(e) {
+    var arr = ['Yes', 'No']
+    this.setState({
+      availability: arr[e]
+    })
+  }
+
   //new values request
   handleEdit() { // Worker profile editing after login
     $.ajax({
@@ -159,7 +172,8 @@ class Login extends React.Component {
         email: this.state.email,
         password: this.state.password,
         description: this.state.description,
-        phonenumber: this.state.phonenumber
+        phonenumber: this.state.phonenumber,
+        availability: this.state.availability,
       },
       success: (data) => {
       },
@@ -208,11 +222,25 @@ class Login extends React.Component {
 
             </DropdownButton>
           </label> <br />
+
+          <label style={{marginLeft: '22px'}}>
+            Availability: 
+            <DropdownButton style={{marginLeft: '16px'}}
+              title={this.state.availability}
+              //key={i}
+              id={this.state.major}
+              onSelect={this.handleAvailability.bind(this)}
+            > 
+              <MenuItem eventKey="0" active>Yes</MenuItem>
+              <MenuItem eventKey="1">No</MenuItem>
+            </DropdownButton>
+          </label> <br />
+
           <label style={{marginLeft: '65px'}}>
             Email: <input style={{marginLeft: '10px'}} type="email" onChange={this.handleEmail.bind(this)} />
           </label> <br />
           <label style={{marginLeft: '36px'}}>
-            Password: <input style={{marginLeft: '10px'}} type="password" onChange={this.handlePassword.bind(this)} />
+            Password: <input style={{marginLeft: '10px'}} type="password" onChange={this.handlePassword.bind(this)} required/>
           </label> <br />
           <label style={{marginLeft: '26px'}}>
             Description: <input style={{marginLeft: '10px'}} type="text" onChange={this.handleDescription.bind(this)} />
