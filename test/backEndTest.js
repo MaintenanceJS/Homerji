@@ -1,7 +1,8 @@
 
 var request = require('supertest');
 var db = require('../database-mongo/index.js');
-var mocha = 
+var assert = require('assert');
+var mocha = reuire('mocha');
 
 describe('Server Test', function () {
 
@@ -11,10 +12,9 @@ describe('Server Test', function () {
         })
         it('should resived error from the server with wrong path ', function (done) {
             request('http://127.0.0.1:3000').get('/wrong').expect(404, done)
-        })
-
-    })
-})
+        });
+    });
+});
 
 describe('POST', function () {
 
@@ -33,7 +33,6 @@ describe('POST', function () {
         })
     })
 })
-
 describe('POST', function () {
 
     it('users login', function (done) {
@@ -47,7 +46,25 @@ describe('POST', function () {
           .end(function(err, res) {
             done();
           });
-    })
-})
+    });
+});
+
+describe('save records to the db', function(){
+    it('saves a record to the database',function(done){
+        var workers = new db.worker({
+            name: 'DANA',
+            major: 'Carpenter',
+            rating: 5,
+            email: 'd@gmail.com',
+            username: 'Da',
+            password: 12345,
+        });
+        workers.save().then(function(){
+            assert(workers.isNew === false);
+            done();
+
+        });
+    });
+});
 
 

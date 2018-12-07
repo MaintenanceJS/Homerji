@@ -14,6 +14,7 @@ export class MapContainer extends Component {
   }
 
   render() {
+    if (!this.props.signin) {
     return (
     <div id="mapBox">
       <Map style={{zIndex: 0}} google={this.props.google} style= {{marginBottom:'0', marginTop:'-65%', width: '85%', height: '30%'}}  initialCenter={this.state} zoom={14}>
@@ -28,12 +29,28 @@ export class MapContainer extends Component {
         </InfoWindow>
       </Map>
     </div>
-    );
+    )} else {
+      return (
+      <div id="mapBox">
+        <Map style={{zIndex: 0}} google={this.props.google} style= {{width: '85%', height: '30%'}}  initialCenter={this.state} zoom={14}>
+          
+          <Marker onClick={this.onMarkerClick}
+                  name={'Current location'} />
+   
+          <InfoWindow onClose={this.onInfoWindowClose}>
+            <div>
+              
+            </div>
+          </InfoWindow>
+        </Map>
+      </div>
+      )
+    };
   }
 }
 
 //API key
 export default GoogleApiWrapper({
-  apiKey: ('AIzaSyCmsc0QpnUMshiGBiTrO4y68j6Jmoy41Xs')
+  apiKey: ('AIzaSyBvfa5G7e7vtSMtbgYuL5IEjNMRWNDH20k')
 })(MapContainer)
 

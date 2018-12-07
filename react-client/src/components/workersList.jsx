@@ -98,6 +98,7 @@ class ListWorkersName extends React.Component {
 
   //handle worker requesting
   handleSubmit() {
+    var scope = this;
     axios.post('/newClient', {
       workerUsername: this.props.item.username,
       clientName: this.state.name,
@@ -107,12 +108,12 @@ class ListWorkersName extends React.Component {
       longtitude: this.state.longtitude
     })
     .then(function (res) {
-      console.log('working');
+      scope.handleClose()
     })
   }
 
 
-handleClose() {
+  handleClose() {
     this.setState({ show: false });
   }
 
@@ -130,7 +131,7 @@ handleClose() {
         <div className="col">
           <div className="col-sm-5 col-md-4">
             <div className="thumbnail">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnWwwZo27QSdHZL6ogED-K7qn6hzgGItV9JanqTzFdNbKZUA1v" alt="..." />
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTey3twEwY6j_wjrv6BhcjKFLKx9NWZhg3kxIuNXTwEMNC5_JUOUw" alt="..." />
               <div className="caption">
                 <h3>{this.props.item.username}</h3>
                 Name: {this.props.item.name} <br/>
@@ -153,27 +154,27 @@ handleClose() {
                 <div id='confirm'>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Body style={{textAlign:'left', marginLeft: '10px'}}>
-                    Client Name <input onKeyUp={function(event) {
+                    <div style={{marginLeft: '51px'}}>Client Name <input onKeyUp={function(event) {
                   event.preventDefault();
                   if (event.keyCode === 13) {
                   $("#myBtn1").click();
                   }
-                  }} style={{height: '28px', width:'50%'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
+                  }} style={{height: '28px', width:'50%', marginBottom: '-10px'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/></div> <br/>
                     Client Phonenumber <input onKeyUp={function(event) {
                   event.preventDefault();
                   if (event.keyCode === 13) {
                   $("#myBtn1").click();
                   }
-                  }} style={{height: '28px', width:'50%'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
-                    Client Issue <input onKeyUp={function(event) {
+                  }} style={{height: '28px', width:'50%', marginBottom: '-100px'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
+                    Client Issue <textarea onKeyUp={function(event) {
                   event.preventDefault();
                   if (event.keyCode === 13) {
                   $("#myBtn1").click();
                   }
-                  }} style={{height: '60px', width:'50%'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
-                    <button id="myBtn1" style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
+                  }} style={{height: '60px', width:'97%', borderColor: 'lightgrey', marginBottom: '-10px'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+                    <center><Button  id="myBtn1" bsStyle="success" style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
                       Submit worker requesting
-                    </button>
+                    </Button></center>
                     <Route component={() =>  <Maps lat={this.state.latitude} long={this.state.longtitude} />} />
                   </Modal.Body>
                   <Modal.Footer style={{marginTop: '30px', textAlign:'center'}}>
@@ -198,3 +199,22 @@ handleClose() {
 
 export default ListWorkersName;
 
+// Client Name <input onKeyUp={function(event) {
+//                   event.preventDefault();
+//                   if (event.keyCode === 13) {
+//                   $("#myBtn1").click();
+//                   }
+//                   }} style={{height: '28px', width:'50%'}} type='text' placeholder="Full Name" onChange={this.handleName.bind(this)}/> <br/><br/>
+//                     Client Phonenumber <input onKeyUp={function(event) {
+//                   event.preventDefault();
+//                   if (event.keyCode === 13) {
+//                   $("#myBtn1").click();
+//                   }
+//                   }} style={{height: '28px', width:'50%'}} type='number' placeholder="Phonenumber" onChange={this.handlephonenumber.bind(this)}/> <br/><br/>
+//                     Client Issue <input onKeyUp={function(event) {
+//                   event.preventDefault();
+//                   if (event.keyCode === 13) {
+//                   $("#myBtn1").click();
+//                   }
+//                   }} style={{height: '60px', width:'50%'}} type='text' placeholder="Enter your issue" onChange={this.handleissue.bind(this)}/> <br/><br/>
+//                     <button id="myBtn1" style={{marginBottom: '70%'}} className="btn btn-default" onClick={this.handleSubmit.bind(this)}>

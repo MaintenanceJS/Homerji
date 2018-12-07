@@ -27,7 +27,7 @@ class WorkersLogo extends React.Component {
                 <Button style={{height: '34px', marginTop: '-7.75px'}} className='' onClick={this.props.handleWorkersButton}> Workers </Button>
             </div>
         )
-  }
+    }
 
 }
 

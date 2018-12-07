@@ -69,6 +69,7 @@ var selectAllUsernames = function (username, req, res, callback) {
     }
   });
 };
+
 var selectAllMajors = function (major, callback) {
   worker.find({ major: major }, function (err, items) {
     if (err) {
@@ -177,6 +178,51 @@ var updateClient = function(username, newClient, callback) {
   })  
 }
 
+var filterClients = function(user, callback) {
+  console.log('in filterClients', user)
+  worker.find({ username: user }, function(err, out) {
+    if (err) {
+      callback(err, null)
+    } else {
+      client.find({'_id': { $in: out[0].client}}, function(err, docs){
+        if (err) {
+          callback(err, null)
+        } else {
+          callback(null, docs)
+        } 
+      });
+    }         
+  }) 
+}
+
+var updateClientsArr = function(username, id, callback) {
+  console.log('username', username, 'id', id)
+  worker.find({ username: username }, function(err, res) {
+    console.log('worker find')
+    if(err) {
+      callback(err, null);
+    } else {
+      var clientArr = res[0].client
+      console.log('clientArr', clientArr)
+      for (var i = 0; i < clientArr.length; i++) {
+        console.log(String(clientArr[i]), id, clientArr[i] == id)
+        if ( clientArr[i] == String(id) ) {
+          console.log("will be removed", clientArr[i])
+          clientArr.splice(i, 1)
+          console.log("after", clientArr)
+        }
+      }
+      worker.updateOne({ username: username }, { client: clientArr }, function(err, data) {
+        if(err) {
+          callback(err, null);
+        } else {
+          callback(null, data);
+        }
+      })
+    }
+  }) 
+}
+
 module.exports.worker = worker;
 module.exports.client = client;
 module.exports.selectAll = selectAll;
@@ -192,6 +238,8 @@ module.exports.updatePassword = updatePassword;
 module.exports.updateDescription = updateDescription;
 module.exports.updatePhonenumber = updatePhonenumber;
 module.exports.updateClient = updateClient;
+module.exports.filterClients = filterClients;
+module.exports.updateClientsArr = updateClientsArr;
 
 
 

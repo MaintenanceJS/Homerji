@@ -1,6 +1,18 @@
 import React from 'react';
 import $ from 'jquery';
 import Dropdown from 'react-drop-down' // Library from npm
+import ClientItems from "./clientItems.jsx";
+import {
+    Navbar,
+    Nav,
+    NavItem,
+    FormGroup,
+    FormControl,
+    Button,
+    Glyphicon,
+    DropdownButton,
+    MenuItem
+} from "react-bootstrap"; // For Designing
 
 
 class Login extends React.Component {
@@ -11,23 +23,40 @@ class Login extends React.Component {
       username: '',
       password: '',
       loggedin: false,
-      major: 'Plumber',
+      major: 'Choose',
       name: '',
       email: '',
       password: '',
       description: '',
-      phonenumber: 0
+      phonenumber: 0,
+      clients: []
     };
   }
 
   componentDidMount() {
-    $('.login, .edit, .submit').hide() // To hide any unwanted components
+    $('.edit, .submit, .thing, .maram').hide() // To hide any unwanted components
     if (this.state.loggedin === true) { //to check if the user is logged in
-      $('.edit').show() //show edit inputs
+      $('.edit, maram').show() //show edit inputs
     }
     this.setState({
       shown: false
     })
+  }
+
+  handleClients() {
+    $.ajax({
+      type: 'POST',
+      url: '/show',
+      data: {username: this.state.username},
+      success: (data) => {
+        this.setState({
+          clients: data
+        })
+      },
+      error: (err) => {
+        alert('err', err);
+      }
+    });
   }
 
   handleOnClick() { // When click on login word
@@ -52,10 +81,11 @@ class Login extends React.Component {
           loggedin: true
         })
         $('.edit').show()
+        $('.maram').show()
+        $('.login').hide()
       },
       error: (err) => {
         alert('err');
-        console.log(err)
       }
     });
   }
@@ -80,8 +110,10 @@ class Login extends React.Component {
   }
 
   handleMajor(e) {
+    var arr = ['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener', 'Furniture']
+    console.log(arr[e])
     this.setState({
-      major: e
+      major: arr[e]
     })
   }
 
@@ -130,12 +162,8 @@ class Login extends React.Component {
         phonenumber: this.state.phonenumber
       },
       success: (data) => {
-        this.setState({
-          getItems: data
-        })
       },
       error: (err) => {
-        console.log('err', err);
       }
     });
   }
@@ -143,49 +171,64 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <h4 style={{cursor: 'pointer'}} onClick={this.handleOnClick.bind(this)}> Login </h4>
-          <label className='login'>
-            Username:
-            <br /><input type="text" onChange={this.handleUsername.bind(this)} />
-          </label> <br />
-          <label className='login'>
-            Password:
-            <br /><input type="text" onChange={this.handlePassword.bind(this)} />
-          </label> <br />
-          <button onClick={this.handleSubmit.bind(this)} className='submit'> Submit </button>
+        <label style={{marginTop: '10px'}} className='login'>
+          <p style={{marginLeft: '5px'}}> Username: <input type="text" onChange={this.handleUsername.bind(this)} /> </p>
+        </label> <br />
+        <label className='login'>
+          <p style={{marginLeft: '7px'}}> Password: <input type="password" onChange={this.handlePassword.bind(this)} /> </p>
+        </label> <br />
+        <Button bsStyle="success" style={{marginLeft: '8%'}} onClick={this.handleSubmit.bind(this)} className='login'> Submit </Button>
 
-          <form className='edit'>
-          <label>
-            Name:
-            <br /><input type="text" onChange={this.handleName.bind(this)} />
+        <Button style={{marginLeft: '15px'}} bsStyle="primary" className='edit' onClick={this.handleClients.bind(this)} > Click here to see your Clients </Button>
+        <br /><br />
+        <div className='container' >
+          {this.state.clients.map(client => <ClientItems className="row" key={client._id} worker={this.state.username} items={client}/>)}
+        </div>
+          <br />
+          <hr />
+        <h4 className='edit'> Change in your profile </h4>
+        <form className='edit'>
+          <label style={{marginLeft: '60px'}}>
+            Name: <input style={{marginLeft: '10px'}} type="text" onChange={this.handleName.bind(this)} />
           </label> <br />
-          <label>
-            Major: <br />
-            <Dropdown value={this.state.major}
-              onChange={this.handleMajor.bind(this)}
-              options={['Electrician', 'Plumber', 'Painter', 'Carpenter', 'Gardener']} />
+          <label style={{marginLeft: '60px'}}>
+            Major: 
+            <DropdownButton style={{marginLeft: '16px'}}
+              title={this.state.major}
+              //key={i}
+              id={this.state.major}
+              onSelect={this.handleMajor.bind(this)}
+            > 
+              <MenuItem eventKey="0" active>Electrician</MenuItem>
+              <MenuItem eventKey="1">Plumber</MenuItem>
+              <MenuItem eventKey="2">Painter</MenuItem>
+              <MenuItem eventKey="3">Carpenter</MenuItem>
+              <MenuItem eventKey="4">Gardener</MenuItem>
+              <MenuItem eventKey="5">Furniture</MenuItem>
+
+            </DropdownButton>
           </label> <br />
-          <label>
-            Email:
-            <br /><input type="text" onChange={this.handleEmail.bind(this)} />
+          <label style={{marginLeft: '65px'}}>
+            Email: <input style={{marginLeft: '10px'}} type="email" onChange={this.handleEmail.bind(this)} />
           </label> <br />
-          <label>
-            Password:
-            <br /><input type="text" onChange={this.handlePassword.bind(this)} />
+          <label style={{marginLeft: '36px'}}>
+            Password: <input style={{marginLeft: '10px'}} type="password" onChange={this.handlePassword.bind(this)} />
           </label> <br />
-          <label>
-            Description:
-            <br /><input type="text" onChange={this.handleDescription.bind(this)} />
+          <label style={{marginLeft: '26px'}}>
+            Description: <input style={{marginLeft: '10px'}} type="text" onChange={this.handleDescription.bind(this)} />
           </label> <br />
-          <label>
-            Phonenumber:
-            <br /><input type="text" onChange={this.handlePhonenumber.bind(this)} />
+          <label style={{marginLeft: '10px'}}>
+            Phonenumber: <input style={{marginLeft: '10px'}} type="number" onChange={this.handlePhonenumber.bind(this)} />
           </label> <br />
-          <button onClick={this.handleEdit.bind(this)} className='submit'> Submit </button>
-        </form>
+          <Button bsStyle="success" style={{marginLeft: '12%'}} onClick={this.handleEdit.bind(this)} className='edit'> Submit </Button>
+        </form> <br /> <br />
       </div>
     )
   }
 }
-
 export default Login;
+
+
+
+
+//

@@ -11,7 +11,8 @@ class Logout extends React.Component {
     $.ajax({
       type: 'POST',
       url: '/logout',
-      success: (data) => {
+      success: () => {
+        window.location.reload();        
       },
       error: (err) => {
         console.log('err', err);
@@ -19,10 +20,13 @@ class Logout extends React.Component {
     });
   }
 
+  refresh() {
+    window.location.reload();
+  }
+
   render() {
     return (
       <div style={{cursor: 'pointer'}}>
-        <h4 onClick={this.output.bind(this)}> Logout </h4>
       </div>
     )
   }
