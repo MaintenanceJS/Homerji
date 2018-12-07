@@ -11,7 +11,8 @@ class Logout extends React.Component {
     $.ajax({
       type: 'POST',
       url: '/logout',
-      success: () => {        
+      success: () => {
+        window.location.reload();        
       },
       error: (err) => {
         console.log('err', err);
