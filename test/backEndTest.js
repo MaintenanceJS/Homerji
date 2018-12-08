@@ -33,21 +33,7 @@ describe('POST', function () {
         })
     })
 })
-describe('POST', function () {
 
-    it('users login', function (done) {
-        request("http://127.0.0.1:3000")
-          .post("/login")
-          .expect(200)
-          .send({
-            username: "dana",
-            password: "1232"
-          })
-          .end(function(err, res) {
-            done();
-          });
-    });
-});
 
 describe('save records to the db', function(){
     it('saves a record to the database',function(done){

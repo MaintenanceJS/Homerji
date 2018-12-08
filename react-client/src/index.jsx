@@ -99,7 +99,7 @@ class App extends React.Component {
                 <Link style={{ textDecoration: "none" }} to="/Painting">
                   <div className="col-md-4">
                     <div className="col-md-10 feature-box">
-                      <span className="glyphicon glyphicon-cog icon"/>
+                      <span className=" glyphicon glyphicon-picture icon"/>
                       <h4>Painting</h4>
                     </div>
                   </div>
@@ -109,7 +109,7 @@ class App extends React.Component {
                 <Link style={{ textDecoration: "none" }} to="/Plumb">
                   <div className="col-md-4">
                     <div className="col-md-10 feature-box">
-                      <span className="glyphicon glyphicon-cog icon" />
+                      <span className="glyphicon glyphicon-tint icon" />
                       <h4>Plumbers</h4>
                     </div>
                   </div>
@@ -119,7 +119,7 @@ class App extends React.Component {
                 <Link style={{ textDecoration: "none" }} to="/Carpenter">
                   <div className="col-md-4">
                     <div className="col-md-10 feature-box">
-                      <span className="glyphicon glyphicon-cog icon" />
+                      <span className="glyphicon glyphicon-tree-conifer icon" />
 
                       <h4>Carpenters</h4>
                     </div>
@@ -130,7 +130,7 @@ class App extends React.Component {
                 <Link style={{ textDecoration: "none" }} to="/Gardener">
                   <div className="col-md-4">
                     <div className="col-md-10 feature-box">
-                      <span className="green glyphicon glyphicon-tree-deciduous icon" />
+                      <span className="green glyphicon glyphicon-leaf icon" />
                       <h4>Gardeners</h4>
                     </div>
                   </div>
