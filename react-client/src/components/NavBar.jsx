@@ -4,12 +4,12 @@ import SearchByName from "./workers.jsx";
 import axios from "axios";
 import $ from "jquery";
 import {
-  Navbar,
-  Nav,
-  NavItem,
-  FormGroup,
-  FormControl,
-  Button
+ Navbar,
+ Nav,
+ NavItem,
+ FormGroup,
+ FormControl,
+ Button
 } from "react-bootstrap"; // For Designing
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ContactUs from "./contactUs.jsx";
@@ -18,25 +18,25 @@ import About from "./About.jsx";
 
 
 class NavBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "", //search bar
-      workers: [] //searched workers
-    };
-  }
+ constructor(props) {
+   super(props);
+   this.state = {
+     name: "", //search bar
+     workers: [] //searched workers
+   };
+ }
 
-  // For the search
-  getWorkersByName() {
-    var that = this;
-    axios.post("/name", { name: this.state.name }).then(function (res) {
-      that.setState({
-        workers: res.data
-      });
-      $('#textInbox').val('') //to empty the input box
-      $('#logos').hide() //categories buttons on index file
-    });
-  }
+ // For the search
+ getWorkersByName() {
+   var that = this;
+   axios.post("/name", { name: this.state.name }).then(function (res) {
+     that.setState({
+       workers: res.data
+     });
+     $('#textInbox').val('') //to empty the input box
+     $('#logos').hide() //categories buttons on index file
+   });
+ }
 
   //get the value of the search bar
   getUserName(e) {
@@ -45,6 +45,11 @@ class NavBar extends React.Component {
     });
   }
 
+  hideCategories() {
+    console.log('here')
+    $('#logos').hide() //categories buttons on index file
+  }
+  
   render() {
     return (
       <Router>
@@ -66,9 +71,14 @@ class NavBar extends React.Component {
               </Nav>
             <Navbar.Form pullLeft>
               <FormGroup>
-                <FormControl id="textInbox" type="text" placeholder="Worker name" onChange={this.getUserName.bind(this)} />
+                <FormControl onKeyUp={function(event) {
+                  event.preventDefault();
+                  if (event.keyCode === 13) {
+                  $("#myBtn").click();
+                  }
+                  }} id="textInbox" type="text" placeholder="Worker name" onChange={this.getUserName.bind(this)} />
               </FormGroup> <Link to="/search">
-                <Button onClick={this.getWorkersByName.bind(this)}>
+                <Button  id="myBtn" onClick={this.getWorkersByName.bind(this)}>
                   Search
                   </Button>
               </Link>

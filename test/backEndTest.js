@@ -2,7 +2,7 @@
 var request = require('supertest');
 var db = require('../database-mongo/index.js');
 var assert = require('assert');
-var mocha = reuire('mocha');
+var mocha = require('mocha');
 
 describe('Server Test', function () {
 
