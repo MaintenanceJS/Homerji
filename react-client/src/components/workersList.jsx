@@ -125,7 +125,7 @@ class ListWorkersName extends React.Component {
   render() {
     return (
       <Router history={browserHistory}>
-      <div style={{marginTop: '10px', textAlign:'center'}} >
+      <div  style={{marginTop: '10px', textAlign:'center'}} >
         <div className="col">
           <div className="col-sm-5 col-md-4">
             <div className="thumbnail">
@@ -181,12 +181,10 @@ class ListWorkersName extends React.Component {
                   </Modal.Footer>
                 </Modal>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
-
       </div>
       </Router>
     )

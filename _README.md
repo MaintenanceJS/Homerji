@@ -3,7 +3,7 @@ Workers are almost far away from technology, while clients always trying to sear
 
 ## Team
 
-  - __Product Owner__: All team members
+  - __Product Owner__: Dana
   - __Scrum Master__: Issa
   - __Development Team Members__: Firas, Amjad
 
@@ -27,7 +27,7 @@ Workers are almost far away from technology, while clients always trying to sear
 
 ## Requirements
 
-- Node 0.10.x
+- Node
 - React
 - Express
 - Mongo DB (mongoose)

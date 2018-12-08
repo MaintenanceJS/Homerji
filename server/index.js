@@ -54,7 +54,7 @@ app.get('/workers', function (req, res) {
 });
 
 
-//Get all worker depending on major
+//Get all worker depending on major (categories)
 app.post('/majors', function (req, res) {
   db.selectAllMajors(req.body.major, function (err, data) {
     if (err) {
@@ -66,7 +66,7 @@ app.post('/majors', function (req, res) {
 });
 
 
-//Get all worker depending on name
+//Get all worker depending on name (search bar)
 app.post('/name', function (req, res) {
   var name = req.body.name;
   db.selectAllNames(name, function (err, data) {
@@ -83,18 +83,18 @@ app.post('/name', function (req, res) {
 app.post('/makeclient', function (req, res) {
   console.log('req.body',req.body)
   var newClient = new client({
-          name: req.body.name,
-          phonenumber: req.body.phonenumber,
-          issue: req.body.issue,
-          //for the map location
-          latitude: req.body.latitude,
-          longtitude: req.body.latitude
-        })
-        newClient.save()
-        .then(function() {
-          console.log('saved')
-          res.status(200).send()
-        })
+    name: req.body.name,
+    phonenumber: req.body.phonenumber,
+    issue: req.body.issue,
+    //for the map location
+    latitude: req.body.latitude,
+    longtitude: req.body.latitude
+  })
+  newClient.save()
+  .then(function() {
+    console.log('saved')
+    res.status(200).send()
+  })
 });
 
 
@@ -150,7 +150,7 @@ var signupWorker = function (req, res) {
 
     if (found) {
       if (found.length > 0) { //account is not new
-        res.send('Account already exists, please try another username');
+        res.status(403).send('Account already exists, please try another username');
       } else {
         console.log("empty found array")
         var newWorker = new worker({
@@ -226,7 +226,7 @@ var createSession = function (req, res, newUser) {
 };
 
 
-//For authentication
+//For authentication (not used)
 var isLoggedIn = function (username, req, res, callback) {
   db.selectAllUsernames(username, req, res, function(err, found) {
     if (err) { //only for unpredictable errors
@@ -371,7 +371,7 @@ var newClient = function (req, res) {
 app.post('/signup', signupWorker);
 app.post('/login', loginUser);
 app.post('/logout', logoutUser);
-app.get('/add', manualAddingToDB);
+app.get('/add', manualAddingToDB); //(not used)
 app.post('/rating', rating);
 app.post('/edit', edting); //edit worker profile
 app.post('/newClient', newClient);
