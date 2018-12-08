@@ -3,6 +3,9 @@ import {
  Button,
  Modal,
 } from "react-bootstrap";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import index from "../index.jsx";
+
 
 class About extends React.Component {
 
@@ -21,6 +24,7 @@ class About extends React.Component {
 
  render() {
    return (
+    <Router>
      <div>
        <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
          <Modal.Body style={{width: '100%',textAlign: 'left',color: '#323232',fontFamily: "Monospace",fontSize: '20px'}}>
@@ -32,10 +36,17 @@ class About extends React.Component {
             home maintenance and renovation is now easier than ever with HomerG.
          </Modal.Body>
          <Modal.Footer style={{ marginTop: '10px', textAlign: 'center' }}>
-           <Button onClick={this.handleClose.bind(this)}>Close</Button>
+          <Link to="/index">
+           <Button onClick={this.handleClose.bind(this)}>
+           Close
+           </Button>
+          </Link>
          </Modal.Footer>
+         
+         <Route path="/index" component={index} />
        </Modal>
      </div>
+     </Router>
    );
  }
 }
