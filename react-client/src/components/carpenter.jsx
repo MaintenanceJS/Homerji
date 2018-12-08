@@ -5,7 +5,6 @@ import $ from 'jquery';
 
 class Carpenter extends React.Component {
     constructor(props) {
-        //window.location.reload()
         super(props);
         this.state = {
             workers: []

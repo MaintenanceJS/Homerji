@@ -27,7 +27,7 @@ Workers are almost far away from technology, while clients always trying to sear
 
 ## Requirements
 
-- Node 0.10.x
+- Node
 - React
 - Express
 - Mongo DB (mongoose)

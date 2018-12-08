@@ -46,12 +46,6 @@ class Sign extends React.Component {
     })
   }
 
-  handleRating(e) {
-    this.setState({
-      rating: e.target.value
-    })
-  }
-
   handleEmail(e) {
     this.setState({
       email: e.target.value
@@ -99,12 +93,11 @@ class Sign extends React.Component {
         phonenumber: this.state.phonenumber
       },
       success: (data) => {
-        this.setState({
-          getItems: data
-        })
+        alert('signed up')
         $('input').val(''); //inputs values will be empty
       },
       error: (err) => {
+        alert('username is already existed');
         console.log('err', err);
       }
     });

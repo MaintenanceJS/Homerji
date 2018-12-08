@@ -20,6 +20,11 @@ input:required:focus {
   border: 1px solid red;
   outline: none;
 }
+/*
+div#HomerG {
+    position: relative;
+    text-align: center;
+}*/
 
 .site-heading h3{
     font-size : 40px;
@@ -443,12 +448,6 @@ input[type=submit]:active, input[type=submit]:focus {
     }
 }
 
-/* style categories*/
-#back {
-  opacity: 0.5;
-  filter: alpha(opacity=50); /* For IE8 and earlier */
-  height: 100%;
-}
 
 .site-heading h3{
   font-size : 40px;
@@ -467,10 +466,13 @@ input[type=submit]:active, input[type=submit]:focus {
 }
 
 #nav {
-  position: sticky;
+  position: fixed;
   width: 100%;
   margin: 0;
+  background-color: black !important;
 }
+
+
 
 
 

@@ -49,7 +49,7 @@ class NavBar extends React.Component {
     return (
       <Router>
         <div>
-          <Navbar id='nav' collapseOnSelect>
+          <Navbar inverse collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
                 <a href="/" >HomerG</a>
