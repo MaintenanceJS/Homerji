@@ -3,7 +3,6 @@ import axios from 'axios';
 import $ from 'jquery';
 import Sign from './Signup.jsx';
 import Login from './Login.jsx';
-import Logout from './logout.jsx';
 import {
     Navbar,
     Nav,
@@ -17,8 +16,6 @@ import {
 class WorkersLogo extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        };
     }
 
     render() {

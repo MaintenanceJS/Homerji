@@ -7,7 +7,7 @@ export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //Maps dont read but strings
+      //Maps dont read except for strings
       lat: String(this.props.lat), 
       lng: String(this.props.long)
     }

@@ -163,14 +163,13 @@ var signupWorker = function (req, res) {
           description: description,
           availability: availability,
           phonenumber: phonenumber,
-          ratingCount: 1,
+          ratingCount: 1, //keep it 1 for rating equation
           client: []
         })
         newWorker.save() //save to database
         .then(function() {
           console.log('saved!')
           res.setHeader('Content-Type', 'application/json'); //res should be json
-          console.log('new worker')
           createSession(req, res, newWorker) //res is from the session function
         })
       }
@@ -197,7 +196,6 @@ var loginUser = function (req, res) {
           if (match) {
             res.setHeader('Content-Type', 'application/json'); //res should be json
             createSession(req, res, found[0])
-            console.log("session is done")
           } else {
             console.log('wrong password or username')
             res.status(404).json();
@@ -375,8 +373,10 @@ app.post('/login', loginUser);
 app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB);
 app.post('/rating', rating);
-app.post('/edit', edting);
+app.post('/edit', edting); //edit worker profile
 app.post('/newClient', newClient);
+
+//show clients in worker profile
 app.post('/show', function (req, res) {
   var arr = [];
   db.filterClients(req.body.username, function(err, data){
@@ -390,6 +390,8 @@ app.post('/show', function (req, res) {
     }
   })
 });
+
+//to remove client from the worker profile
 app.post('/clientedit', function (req, res) {
   db.updateClientsArr(req.body.username, req.body.id, function(err, data) {
     if (err) {
@@ -400,110 +402,10 @@ app.post('/clientedit', function (req, res) {
   })
 });
 
-
-
-
 //to not get 404 error when reload page( redirect to index.html when reload )
 app.get('/*', (req, res) => {
  res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
 });
-
-
-
-
-
-
-// function fileUploadMiddleware(req, res) {
-//   cloudinary.uploader.upload_stream((result) => {
-//     axios({
-//       url: '/api/upload', //API endpoint that needs file URL from CDN
-//       method: 'post',
-//       data: {
-//         url: result.secure_url,
-//         name: req.body.name,
-//         description: req.body.description,
-//       },
-//     }).then((response) => {
-//       res.status(200).json(response.data.data);
-//     }).catch((error) => {
-//       res.status(500).json(error.response.data);
-//     });
-//   }).end(req.file.buffer);
-// }
-
-// cloudinary.config({
-//   cloud_name: 'dlrmithhm',
-//   api_key: '487477829567923',
-//   api_secret: '41HzsLtymXy7oxwygs3NhZ8BpIM',
-// });
-
-// /**
-//   * Multer config for file upload
-// */
-
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage });
-// app.post('/files', upload.single('file'), fileUploadMiddleware);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// app.get('/Gardener', function(req, res) {
-//   console.log('isa')
-//   res.json('')
-// });
-// app.get('/:majors(Gardener|Carpenter|article3)?', function(req, res) {
-//   console.log('isa')
-//   res.json('')
-// });
-
-
-// cloudinary.config({
-// cloud_name: 'dlrmithhm',
-// api_key: 487477829567923,
-// api_secret: '41HzsLtymXy7oxwygs3NhZ8BpIM'
-// });
-// const storage = cloudinaryStorage({
-// cloudinary: cloudinary,
-// folder: "demo",
-// allowedFormats: ["jpg", "png"],
-// transformation: [{ width: 500, height: 500, crop: "limit" }]
-// });
-// const parser = multer({ storage: storage });
-
-// app.post('/api/images', parser.single("image"), (req, res) => {
-//   console.log('hon',req.file.url) // to see what is returned to you
-//   const fileGettingUploaded = req.body.fileUrl;
-//   console.log('hnaak',fileGettingUploaded)
-
-// cloudinary.uploader.upload(fileGettingUploaded, {"crop":"limit","tags":"samples","width":3000,"height":2000}, function(result) { 
-//   console.log(result)
-//   json(result) 
-// });
-
-//   // const image = {};
-//   // image.url = req.file.url;
-//   // image.id = req.file.public_id;
-//   // Image.create(image) // save image information in database
-//   //   .then(newImage => {
-//   //     console.log(newImage)
-//   //     res.json(newImage)
-//   //   })
-//   //   .catch(err => console.log('err', err));
-// });
-
 
 
 //listen to local host
@@ -512,19 +414,6 @@ app.listen(port, function () {
   console.log('listening on port 3000!');
 });
 
-
-
-//cloudinary.uploader.upload("sample.jpg", {"crop":"limit","tags":"samples","width":3000,"height":2000}, function(result) { console.log(result) });
-
-
-// db.filterClients(newUser.username, req, res, function (err, data) {
-//       console.log("data in createSession", data)
-//       if (err) {res.sendStatus(500)}
-//       if (data) {
-//         clients = data;
-//       }
-      
-//     })
 
 
 
