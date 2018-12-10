@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://issa:isa123@ds119374.mlab.com:19374/homerji');
+mongoose.connect('mongodb://zaid:zaid1234@ds129914.mlab.com:29914/home');
 
 var db = mongoose.connection;
 
@@ -12,17 +12,53 @@ db.once('open', function () {
 });
 
 var itemSchema = mongoose.Schema({
-  name: String,
-  major: String,
-  rating: Number,
-  email: String,
-  username: String,
-  password: String,
-  description: String,
-  availability: String,
-  phonenumber: Number,
-  ratingCount: Number,
-  client: [{ type: mongoose.Schema.Types.ObjectId, ref: 'client' }]
+
+  isWorker: {
+    type: String,
+    default: ''
+  },
+  name: {
+    type: String,
+    default: ''
+  },
+  major: {
+    type: String,
+    default: ''
+  },
+  rating: {
+    type: Number
+  },
+  email: {
+    type: String,
+    default: ''
+  },
+  username: {
+    type: String,
+    default: ''
+  },
+  password: {
+    type: String,
+    default: ''
+  },
+  description: {
+    type: String,
+    default: ''
+  },
+  availability: {
+    type: String,
+    default: ''
+  },
+  phonenumber: {
+    type: Number
+  },
+  ratingCount: {
+    type: Number
+  },
+  location: {
+    type: String,
+    default: ''
+  },
+  client: []
 });
 
 var clientSchema = mongoose.Schema({
