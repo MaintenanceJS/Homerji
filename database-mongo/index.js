@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://issa:isa123@ds119374.mlab.com:19374/homerji');
+mongoose.connect('mongodb://gele:y12345@ds125821.mlab.com:25821/bloggerdatabase');
 
 var db = mongoose.connection;
 
@@ -22,7 +22,8 @@ var itemSchema = mongoose.Schema({
   availability: String,
   phonenumber: Number,
   ratingCount: Number,
-  client: [{ type: mongoose.Schema.Types.ObjectId, ref: 'client' }]
+  client: [{ type: mongoose.Schema.Types.ObjectId, ref: 'client' }],
+  ProfilePicture:String
 });
 
 var clientSchema = mongoose.Schema({
@@ -76,6 +77,7 @@ var selectAllMajors = function (major, callback) {
     if (err) {
       callback(err, null);
     } else {
+      console.log('iiiitems',items)
       callback(null, items);
     }
   });

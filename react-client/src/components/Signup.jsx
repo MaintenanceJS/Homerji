@@ -27,7 +27,8 @@ class Sign extends React.Component {
       password: 'Unkown',  //default value (changable)
       description: 'Unkown',  //default value (changable)
       availability: 'Yes', //default value (unchangable)
-      phonenumber: 0 //default value (changable)
+      phonenumber: 0 ,//default value (changable)
+      ProfilePicture:null
     };
   }
 
@@ -76,6 +77,13 @@ class Sign extends React.Component {
     })
   }
 
+  handleProfilePicture(e) {
+    console.log(e)
+    this.setState({
+      ProfilePicture: e.target.value
+    })
+  }
+
   //submit sign up
   handleSubmit() {
     $.ajax({
@@ -90,17 +98,21 @@ class Sign extends React.Component {
         password: this.state.password,
         description: this.state.description,
         availability: this.state.availability,
-        phonenumber: this.state.phonenumber
+        phonenumber: this.state.phonenumber,
+        ProfilePicture: this.state.ProfilePicture
+        
       },
       success: (data) => {
         alert('signed up')
         $('input').val(''); //inputs values will be empty
+        console.log('yyah',data)
       },
       error: (err) => {
         alert('username is already existed');
         console.log('err', err);
       }
     });
+    console.log('dataa',data)
   }
 
   render() {
@@ -140,6 +152,7 @@ class Sign extends React.Component {
           </label> <br />
           <label>
             <p style={{marginLeft: '10px'}}> Phonenumber: <input type="number" onChange={this.handlePhonenumber.bind(this)} /></p>
+            <p style={{marginLeft: '10px'}}> ProfilePicture: <input type="text" onChange={this.handleProfilePicture.bind(this)} /></p>
           </label> <br />
 
           <Button bsStyle="success" style={{marginLeft: '12%'}} onClick={this.handleSubmit.bind(this)}> Submit </Button>

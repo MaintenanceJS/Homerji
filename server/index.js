@@ -144,6 +144,8 @@ var signupWorker = function (req, res) {
   var availability = req.body.availability;
   var phonenumber = req.body.phonenumber;
   var hash = bcrypt.hashSync(password);
+  var ProfilePicture = req.body.ProfilePicture;
+  console.log('profilepicture',ProfilePicture)
 
   db.selectAllUsernames(username, req, res, function(err, found) {
     if (err) {res.sendStatus(500)}; //only for unpredictable errors
@@ -164,7 +166,9 @@ var signupWorker = function (req, res) {
           availability: availability,
           phonenumber: phonenumber,
           ratingCount: 1, //keep it 1 for rating equation
-          client: []
+          client: [],
+          ProfilePicture:ProfilePicture 
+
         })
         newWorker.save() //save to database
         .then(function() {
