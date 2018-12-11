@@ -133,7 +133,8 @@ var manualAddingToDB = function () {
 
 //signup function
 var signupWorker = function (req, res) {
-  console.log('in singups')
+  console.log('in singups', req.body)
+  console.log('Is NAME', req.body)
   var name = req.body.name;
   var major = req.body.major;
   var rating = req.body.rating;
@@ -143,6 +144,7 @@ var signupWorker = function (req, res) {
   var description = req.body.description;
   var availability = req.body.availability;
   var phonenumber = req.body.phonenumber;
+  var isWorker = req.body.isWorker;
   var hash = bcrypt.hashSync(password);
 
   db.selectAllUsernames(username, req, res, function(err, found) {
@@ -164,7 +166,8 @@ var signupWorker = function (req, res) {
           availability: availability,
           phonenumber: phonenumber,
           ratingCount: 1, //keep it 1 for rating equation
-          client: []
+          client: [],
+          isWorker: isWorker
         })
         newWorker.save() //save to database
         .then(function() {

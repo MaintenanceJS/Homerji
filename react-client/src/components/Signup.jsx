@@ -49,17 +49,6 @@ class Sign extends React.Component {
     })
   }
 
-  // componentWillMount() {
-  //   if (this.state.select == 'user'){
-  //     this.setState({
-  //       worker: 'user'
-  //     })
-  //   } else {
-  //     this.setState({
-  //       worker: 'worker'
-  //     })
-  //   }
-  // }
 
   handleUserClick(e) {
     let arr1 = ['User', 'Worker']
@@ -73,22 +62,25 @@ class Sign extends React.Component {
     //   worker: arr1[e]
     // })
     // console.log('worker 2', this.state.worker)
-    
-    if (e === '0'){
-      this.setState({
-        worker: 'User',
-        select: 'User'
-      })
-      console.log(this.state)
-    } else if (e === '1'){
+    setTimeout(() => {
+      if (e === '0'){
         this.setState({
-          worker: 'Worker',
-          select: 'Worker'
+          worker: 'User',
+          select: 'User'
         })
         console.log(this.state)
-    } 
-    console.log('------')
+      } else if (e === '1'){
+          this.setState({
+            worker: 'Worker',
+            select: 'Worker'
+          })
+          
+      } 
+      
+      console.log('------')
+    }, 100)
   }
+    
 
   handleEmail(e) {
     this.setState({
@@ -126,33 +118,41 @@ class Sign extends React.Component {
     })
   }
 
+
+  renderUserClick(){
+    return(
+      <p>ututfytg</p>
+
+    )
+  }
+
   //submit sign up
   handleSubmit() {
-    $.ajax({
-      type: 'POST',
-      url: '/signup',
-      data: {
-        name: this.state.name,
-        major: this.state.major,
-        rating: this.state.rating,
-        email: this.state.email,
-        username: this.state.username,
-        password: this.state.password,
-        description: this.state.description,
-        availability: this.state.availability,
-        phonenumber: this.state.phonenumber,
-        isWorker: this.state.worker,
-        location: this.state.location
-      },
-      success: (data) => {
-        alert('signed up')
-        $('input').val(''); //inputs values will be empty
-      },
-      error: (err) => {
-        alert('username is already existed');
-        console.log('err', err);
-      }
-    });
+      $.ajax({
+        type: 'POST',
+        url: '/signup',
+        data: {
+          name: this.state.name,
+          major: this.state.major,
+          rating: this.state.rating,
+          email: this.state.email,
+          username: this.state.username,
+          password: this.state.password,
+          description: this.state.description,
+          availability: this.state.availability,
+          phonenumber: this.state.phonenumber,
+          isWorker: this.state.worker,
+          location: this.state.location
+        },
+        success: (data) => {
+          alert('signed up')
+          $('input').val(''); //inputs values will be empty
+        },
+        error: (err) => {
+          alert('username is already existed');
+          console.log('err', err);
+        }
+      });
   }
 
   render() {
@@ -162,7 +162,7 @@ class Sign extends React.Component {
             <DropdownButton style={{marginLeft: '8px'}}
               title={this.state.select}
               //key={i}
-              id={"ll"}
+              id={`worker`}
               onSelect={this.handleUserClick.bind(this)}
             > 
               <MenuItem eventKey="0" active>User</MenuItem>
