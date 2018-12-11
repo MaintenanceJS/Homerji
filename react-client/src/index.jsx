@@ -11,6 +11,7 @@ import Gardener from "./components/Gardener.jsx";
 import Sign from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import ContactUs from "./components/contactUs.jsx";
+import toolbar from './components/Home.jsx'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { browserHistory } from "react-router";
 import {
@@ -149,6 +150,7 @@ class App extends React.Component {
               </div>
             </div>
           </div>
+          <Route path="/Home" component={toolbar} />
           <Route path="/Electric" component={Electric} />
           <Route path="/Painting" component={Painting} />
           <Route path="/Plumb" component={Plumb} />

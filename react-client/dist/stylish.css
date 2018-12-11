@@ -1,3 +1,4 @@
+
 #back {
   opacity: 0.5;
   filter: alpha(opacity=50); /* For IE8 and earlier */
@@ -474,7 +475,89 @@ input[type=submit]:active, input[type=submit]:focus {
 
 
 
+/*==========NavBar========*/
+.toolbar {
+    position: fixed;
+    top : 0;
+    left :0;
+    width: 100%;
+    background : black; 
+    height: 56px;
+}
 
+.toolbar-nav {
+    display : flex;
+    height: 100%;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.toolbar-logo {
+    margin-left: 1rem
+}
+
+.toolbar-logo a{
+    color: white;
+    text-decoration: none;
+    font-size : 1.5rem;
+}
+
+.toolbar-nav-items ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.toolbar-nav-items li {
+    padding: 0 0.5rem;
+}
+
+
+.toolbar-nav-items a{
+    color : white;
+    text-decoration: none;
+}
+
+
+.toolbar-nav-items a:hover,
+
+.toolbar-nav-items a:active{
+    color : pink;
+    text-decoration: none;
+}
+
+.toolbar {
+    flex :1;
+    background-color: red;
+}
+.toolbar-logo ul li a  {
+    background-color: red !important;
+    font-size: 25px;
+    color: red;
+}
+
+.toolbar-logo {
+    margin-left : 0.5rem;
+}
+.ashraf{
+    color:red;
+    background-color: red;
+}
+
+
+@media (max-width : 768px) {
+    .toolbar-nav-items {
+        display: none;
+    }
+}
+
+
+@media(min-width : 769px){
+    .toolbar-toggle-button {
+        display: none;
+    }
+}
 
 
 
