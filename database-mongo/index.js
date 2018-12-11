@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 mongoose.connect('mongodb://zaid:zaid1234@ds129914.mlab.com:29914/home');
 
 var db = mongoose.connection;
@@ -72,6 +74,16 @@ var clientSchema = mongoose.Schema({
 
 var worker = mongoose.model('worker', itemSchema);
 var client = mongoose.model('client', clientSchema);
+
+//generate json webtoken
+var generateJwt = function() {
+  return jwt.sign({
+    id: itemSchema._id,
+    email: itemSchema.email,
+    name: itemSchema.name,
+    isWorker: itemSchema.isWorker,
+  }, config.jwtSecret);
+}
 
 //select all workers
 var selectAll = function (callback) {
@@ -289,6 +301,7 @@ module.exports.updateClient = updateClient;
 module.exports.filterClients = filterClients;
 module.exports.updateClientsArr = updateClientsArr;
 module.exports.updateWorkerAvailability = updateWorkerAvailability;
+module.exports.generateJwt = generateJwt;
 
 
 

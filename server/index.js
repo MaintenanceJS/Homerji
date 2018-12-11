@@ -195,10 +195,13 @@ var loginUser = function (req, res) {
         res.status(404).json('');
       } else {
         var hashed = found[0].password //hashed password in database
+        
         comparePassword(password, hashed, function(match) {
           if (match) {
-            res.setHeader('Content-Type', 'application/json'); //res should be json
+            var token = db.generateJwt(); //generate jwt token
+            res.setHeader('Content-Type', 'application/json', {token: token}); //res should be json
             createSession(req, res, found[0])
+            // res.json({token: token})
           } else {
             console.log('wrong password or username')
             res.status(404).json();
