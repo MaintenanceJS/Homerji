@@ -30,7 +30,8 @@ class Sign extends React.Component {
       phonenumber: 0, //default value (changable)
       select: 'Choose',
       worker: '',
-      location: ''
+      location: '',
+      ProfilePicture:null
     };
   }
 
@@ -118,12 +119,11 @@ class Sign extends React.Component {
     })
   }
 
-
-  renderUserClick(){
-    return(
-      <p>ututfytg</p>
-
-    )
+  handleProfilePicture(e) {
+    console.log(e)
+    this.setState({
+      ProfilePicture: e.target.value
+    })
   }
 
   //submit sign up
@@ -142,7 +142,9 @@ class Sign extends React.Component {
           availability: this.state.availability,
           phonenumber: this.state.phonenumber,
           isWorker: this.state.worker,
-          location: this.state.location
+          location: this.state.location,
+          ProfilePicture: this.state.ProfilePicture
+
         },
         success: (data) => {
           alert('signed up')
@@ -207,6 +209,8 @@ class Sign extends React.Component {
           </label> <br />
           <label>
             <p style={{marginLeft: '36px'}}> Location: <input type="password" onChange={this.handlePassword.bind(this)} /></p>
+            <p style={{marginLeft: '10px'}}> Phonenumber: <input type="number" onChange={this.handlePhonenumber.bind(this)} /></p>
+            <p style={{marginLeft: '10px'}}> ProfilePicture: <input type="text" onChange={this.handleProfilePicture.bind(this)} /></p>
           </label> <br />
           <Button bsStyle="success" style={{marginLeft: '12%'}} onClick={this.handleSubmit.bind(this)}> Submit </Button>
         </form>

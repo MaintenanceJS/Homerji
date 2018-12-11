@@ -60,7 +60,10 @@ var itemSchema = mongoose.Schema({
     type: String,
     default: ''
   },
-  client: []
+  client: [],
+  ProfilePicture: {
+    type: String
+  }
 });
 
 var clientSchema = mongoose.Schema({
@@ -124,6 +127,7 @@ var selectAllMajors = function (major, callback) {
     if (err) {
       callback(err, null);
     } else {
+      console.log('iiiitems',items)
       callback(null, items);
     }
   });

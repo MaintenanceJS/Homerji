@@ -65,6 +65,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scroll-into-view": "^1.5.0",
+    "react-star-ratings": "^2.3.0",
     "react-stay-scrolled": "^3.0.0",
     "request": "^2.88.0"
   },
