@@ -123,7 +123,6 @@ class ListWorkersName extends React.Component {
   
 
   render() {
-    console.log('profilepic',this.props.item)
     return (
       <Router history={browserHistory}>
       <div  style={{marginTop: '10px', textAlign:'center'}} >
