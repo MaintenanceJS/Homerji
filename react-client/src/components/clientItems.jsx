@@ -70,19 +70,11 @@ class Clientitems extends React.Component {
         <Button bsStyle="info" onClick={this.handleShow.bind(this)}>
           Client location
         </Button>
-<<<<<<< HEAD
-        <Button bsStyle="danger" onClick={this.handleShow.bind(this)}>
-          reject
-        </Button>
-        <Button bsStyle="success" onClick={this.handleShow.bind(this)}>
-          approved
-=======
         <Button bsStyle="success">
           Approve
         </Button>
         <Button bsStyle="danger" >
          Reject
->>>>>>> 9e96b80c92f2016d71fa78f0e973af2f4702850f
         </Button>
         
         <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
