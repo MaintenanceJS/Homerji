@@ -662,7 +662,65 @@ body {
   }
 
 
-  
+  /*============THIS IS FOR THE HOME TOOLBAR=======*/
+  /*===============================================*/
+  .toolbar {
+    position: fixed;
+    top : 0;
+    left :0;
+    width: 100%;
+    background : black; 
+    height: 56px;
+}
+
+.toolbar-nav {
+    display : flex;
+    height: 100%;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.toolbar-logo {
+    margin-left: 1rem
+}
+
+.toolbar-logo a{
+    color: white;
+    text-decoration: none;
+    font-size : 2rem;
+}
+
+.toolbar-nav-items ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.toolbar-nav-items li a{
+    padding: 0 0.5rem;
+    color: white;
+    font-size: 2rem
+}
+
+
+.toolbar-nav-items a{
+    color :white;
+    text-decoration: none;
+}
+
+
+.toolbar-nav-items a:hover,
+.toolbar-nav-items a:active{
+    color : pink;
+    text-decoration: none;
+}
+
+.spacer {
+    flex :1;
+}
+
+
 
 
 

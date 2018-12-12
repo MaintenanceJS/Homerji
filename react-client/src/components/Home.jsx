@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Toolbar from './Toolbar';
+import Footer from "./Footer";
+import Slider from './Slider';
 
-const toolbar = props => (
-    <div className="ashraf">
-    <header className='toolbar'>
-        <nav className='toolbar-nav'>
-            <div className='toolbar-logo'><a href='/'>HOMERJI</a></div>
-            <div className= 'toolbar-nav-items'>
-                <ul>
-                    <li className="danger"><a href='/'>Workers</a></li>
-                    <li><a href='/'>Users</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    </div>
-)
+class Home extends Component {
+  render() {
 
+    return (
+      <div style={{ height: '100%' }}>
+        <Toolbar />
+        <main style={{ marginTop: '55px' }}>
+          <div><Slider /></div>
+        </main>
+        <div style={{ marginTop: '-60px' }}>
+        <Footer />
+        </div>
+       
+      </div>
+    );
+  }
+}
 
-export default toolbar;
+export default Home;
