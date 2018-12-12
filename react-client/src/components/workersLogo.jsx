@@ -21,7 +21,9 @@ class WorkersLogo extends React.Component {
     render() {
         return (
             <div>
+                <a href ="Sign">
                 <Button style={{height: '34px', marginTop: '-7.75px'}} className='' onClick={this.props.handleWorkersButton}> Workers </Button>
+                </a>
             </div>
         )
     }

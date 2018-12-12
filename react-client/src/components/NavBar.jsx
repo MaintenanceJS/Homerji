@@ -14,6 +14,7 @@ import {
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ContactUs from "./contactUs.jsx";
 import About from "./About.jsx";
+import Sign from "./Signup.jsx";
 
 
 
@@ -54,54 +55,13 @@ class NavBar extends React.Component {
     return (
       <Router>
         <div>
-          <Navbar inverse collapseOnSelect>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <a href="/" >HomerG</a>
-              </Navbar.Brand>
-            </Navbar.Header>
-            <Navbar.Collapse>
-              <Nav>
-                <NavItem  href="/contact">
-                  Contact Us
-                </NavItem>
-                <NavItem  href="/about">
-                  About
-                </NavItem>
-              </Nav>
-            <Navbar.Form pullLeft>
-              <FormGroup>
-                <FormControl onKeyUp={function(event) {
-                  event.preventDefault();
-                  if (event.keyCode === 13) {
-                  $("#myBtn").click();
-                  }
-                  }} id="textInbox" type="text" placeholder="Worker name" onChange={this.getUserName.bind(this)} />
-              </FormGroup> <Link to="/search">
-                <Button  id="myBtn" onClick={this.getWorkersByName.bind(this)}>
-                  Search
-                  </Button>
-              </Link>
-            </Navbar.Form>
-            <Nav pullRight>
-              <NavItem href="#">
-                <div>
-                
+          
+          
                   <WorkersLogo
                     handleWorkersButton={this.props.handleWorkersButton}
                   />
                 </div>
-              </NavItem>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-        <Route
-          path="/search"
-          component={() => <SearchByName workersList={this.state.workers} />}
-        />
-        <Route path="/contact" component={ContactUs}/>
-        <Route path="/about" component={About}/>
-      </div>
+            
     </Router>)
   }
 }
