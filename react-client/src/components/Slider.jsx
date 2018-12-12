@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-class Slider extends Component {
+class Slider extends React.Component {
     render() {
 
         return (

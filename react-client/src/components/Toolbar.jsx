@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Toolbar extends Component {
+class Toolbar extends React.Component {
     render() {
 
         return (

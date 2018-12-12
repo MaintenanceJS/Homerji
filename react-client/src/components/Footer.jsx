@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-class Footer extends Component {
+class Footer extends React.Component {
     render() {
   
       return (

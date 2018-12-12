@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Toolbar from './Toolbar';
-import Footer from "./Footer";
-import Slider from './Slider';
+import Toolbar from './Toolbar.jsx';
+import Footer from './Footer.jsx';
+import Slider from './Slider.jsx';
 
-class Home extends Component {
+class Home extends React.Component {
   render() {
 
     return (
