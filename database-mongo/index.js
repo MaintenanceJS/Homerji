@@ -60,10 +60,13 @@ var itemSchema = mongoose.Schema({
     type: String,
     default: ''
   },
-  client: [],
   ProfilePicture: {
     type: String
-  }
+  },
+  client: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'client' 
+  }],
 });
 
 var clientSchema = mongoose.Schema({
