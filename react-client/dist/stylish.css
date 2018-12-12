@@ -1,27 +1,27 @@
-
 #back {
-  opacity: 0.5;
-  filter: alpha(opacity=50); /* For IE8 and earlier */
-  height: 100%;
-}
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+    height: 100%;
+  }
 
-input[type=text] {
-  font-weight: 100;
-}
+  input[type=text] {
+    font-weight: 100;
+  }
+  
+  input[type=email] {
+    font-weight: 100;
+  }
+  
+  input[type=number] {
+    font-weight: 100;
+  }
+  
+  input:required:focus {
+    border: 1px solid red;
+    outline: none;
+  }
 
-input[type=email] {
-  font-weight: 100;
-}
-
-input[type=number] {
-  font-weight: 100;
-}
-
-input:required:focus {
-  border: 1px solid red;
-  outline: none;
-}
-/*
+  /*
 div#HomerG {
     position: relative;
     text-align: center;
@@ -64,7 +64,6 @@ div#HomerG {
     /*color : rgb(74, 212, 0);*/
     color : white;
 }
-
 .feature-box {
     text-align: center;
     padding: 15px;
@@ -109,46 +108,47 @@ div#HomerG {
 }
 
 .material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 75px;  /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 75px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
 
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
 
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
-}
-
-.modal-dialog {
-  left: 0;
-  margin-top: 0;
-}
-
+  .modal-dialog {
+    left: 0;
+    margin-top: 0;
+  }
+  
 
 /* generic  */
 
-body {
+/* body {
     font-family: 'Droid Sans',Tahoma,Arial,Verdana sans-serif;
     height: 100%; 
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
 }
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, section { display: block }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, section { display: block } */
 
 @font-face {
     font-family: 'IconicStroke';
@@ -158,10 +158,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, secti
     font-style: normal;
 }
 
+
 /* * have a nice ampersand *
    ================================================== */
 
-h1:after {
+   /* h1:after {
     font-size: 25px;
     color: #D6CFCB;
     content: '&';
@@ -170,7 +171,7 @@ h1:after {
     width: 100%;
     font-family: 'Alice', Verdana, serif;
     text-shadow: 0px 1px 0px #fff;
-}
+} */
 
 /* * create the gradient bottom *
    ================================================== */
@@ -391,43 +392,14 @@ input[type=submit]:active, input[type=submit]:focus {
     /*75% {left: 700px; top: -200px; transform: scale(0.8) rotate(45deg); z-index:1;}*/
     to {left: 71%; transform: scale(.9)  rotate(90deg); z-index:1;}
 }
+ 
 
-@keyframes animTabletHor
-{
-    from {left: 0px; transform: scale(0) rotate(90deg); z-index:102;  }
-/*    50%  {left: 950px; top: -200px; transform: scale(0.8) rotate(45deg); z-index:102; }
-*/
-    /*75% {left: 700px; top: -200px; transform: scale(0.8) rotate(45deg); z-index:1;}*/
-    to {left: 71%; transform: scale(.9)  rotate(90deg); z-index:1;}
-}
 
-@keyframes animTablet
-{
-    from {left: 0px; transform: scale(0) rotate(90deg); z-index:102;  }
-/*    50%  {left: 950px; top: -200px; transform: scale(0.8) rotate(45deg); z-index:102; }
-*/
-    /*75% {left: 700px; top: -200px; transform: scale(0.8) rotate(45deg); z-index:1;}*/
-    to {left: 71%; transform: scale(.9)  rotate(90deg); z-index:1;}
-
-@keyframes animPhone
-{
-    from {left: 0px; transform: scale(0) rotate(90deg); z-index:102;  }
-/*    50%  {left: 950px; top: -200px; transform: scale(0.8) rotate(45deg); z-index:102; }
-*/
-    /*75% {left: 700px; top: -200px; transform: scale(0.8) rotate(45deg); z-index:1;}*/
-    to {left: 71%; transform: scale(.9)  rotate(90deg); z-index:1;}
-}
-
-@media (min-width: 981px) and (max-width : 1280px) {
-    #postcard{
-        left: 450px;
-    }
-    
-    .move {
+ .move {
         animation-name: animTabletHor;
     }
-}
-
+} 
+ 
 @media (min-width: 768px) and (max-width : 980px) {
     #postcard{
         transform: scale(1.2) rotate(28deg);
@@ -447,7 +419,7 @@ input[type=submit]:active, input[type=submit]:focus {
     .move {
         animation-name: animPhone;
     }
-}
+} 
 
 
 .site-heading h3{
@@ -465,7 +437,7 @@ input[type=submit]:active, input[type=submit]:focus {
   margin-bottom: 45px;
   float:left;
 }
-
+ 
 #nav {
   position: fixed;
   width: 100%;
@@ -474,44 +446,6 @@ input[type=submit]:active, input[type=submit]:focus {
 }
 
 
-
-/*==========NavBar========*/
-.toolbar {
-    position: fixed;
-    top : 0;
-    left :0;
-    width: 100%;
-    background : black; 
-    height: 56px;
-}
-
-.toolbar-nav {
-    display : flex;
-    height: 100%;
-    align-items: center;
-    padding: 0 1rem;
-}
-
-.toolbar-logo {
-    margin-left: 1rem
-}
-
-.toolbar-logo a{
-    color: white;
-    text-decoration: none;
-    font-size : 1.5rem;
-}
-
-.toolbar-nav-items ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-.toolbar-nav-items li {
-    padding: 0 0.5rem;
-}
 
 
 /*=================FOR THE FOOTER================*/
@@ -665,55 +599,55 @@ body {
   /*============THIS IS FOR THE HOME TOOLBAR=======*/
   /*===============================================*/
   .toolbar {
-    position: fixed;
-    top : 0;
-    left :0;
-    width: 100%;
-    background : black; 
-    height: 56px;
+    position: fixed  !important;
+    top : 0 !important;
+    left :0 !important;
+    width: 100% !important;
+    background : black !important; 
+    height: 56px !important;
 }
 
 .toolbar-nav {
-    display : flex;
-    height: 100%;
-    align-items: center;
-    padding: 0 1rem;
+    display : flex !important;
+    height: 100% !important;
+    align-items: center !important;
+    padding: 0 1rem !important;
 }
 
 .toolbar-logo {
-    margin-left: 1rem
+    margin-left: 1rem !important;
 }
 
 .toolbar-logo a{
-    color: white;
-    text-decoration: none;
-    font-size : 2rem;
+    color: white !important;
+    text-decoration: none !important;
+    font-size : 2rem !important;
 }
 
 .toolbar-nav-items ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
 }
 
 .toolbar-nav-items li a{
-    padding: 0 0.5rem;
-    color: white;
-    font-size: 2rem
+    padding: 0 0.5rem !important;
+    color: white !important;
+    font-size: 2rem !important
 }
 
 
 .toolbar-nav-items a{
-    color :white;
-    text-decoration: none;
+    color :white !important;
+    text-decoration: none !important;
 }
 
 
 .toolbar-nav-items a:hover,
 .toolbar-nav-items a:active{
-    color : pink;
-    text-decoration: none;
+    color : pink !important;
+    text-decoration: none !important;
 }
 
 .spacer {

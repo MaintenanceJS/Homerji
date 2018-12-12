@@ -29,6 +29,7 @@ import {
   Tab,
   Tabs
 } from "react-bootstrap"; // For Designing
+import Toolbar from './components/Toolbar.jsx';
 
 
 
@@ -78,7 +79,7 @@ class App extends React.Component {
     if (this.state.show) { //to see signup and login page
       return <BrowserRouter history={browserHistory}>
         <div style={{ cursor: 'auto' }}>
-          <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
+          {/* <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} /> */}
           <Tabs defaultActiveKey={1} animation={false} id="HomerG">
             <Tab eventKey={1} title="Signup" animation>
               <Sign className="show" style={{ cursor: 'pointer' }} />
@@ -98,13 +99,13 @@ class App extends React.Component {
         <BrowserRouter>
 
           <div className="App">
-         <NavBar  handleWorkersButton={this.handleWorkersButton.bind(this)} />
+         {/* <NavBar  handleWorkersButton={this.handleWorkersButton.bind(this)} /> */}
+   
          
             <Switch>
 
               )}}
             
-              
               <Route exact path ='/' component={Home}/>
               <Route exact path ='/HomeLinks' component={HomeLinks}/>
               <Route path='/electric' component={Electric} exact />
@@ -113,13 +114,8 @@ class App extends React.Component {
               <Route path='/pulmbers' component={Plumb} />
               <Route path='/carpenters' component={Carpenter} exact />
               <Route path='/furniture' component={Furniture} />
-             
-
             </Switch>
-
-
           </div>
-
         </BrowserRouter>
       )
     }
