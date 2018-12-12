@@ -63,10 +63,10 @@ class NavBar extends React.Component {
             </Navbar.Header>
             <Navbar.Collapse>
               <Nav>
-                <NavItem eventKey={1} href="/contact">
+                <NavItem  href="/contact">
                   Contact Us
                 </NavItem>
-                <NavItem eventKey={2} href="/about">
+                <NavItem  href="/about">
                   About
                 </NavItem>
               </Nav>
@@ -87,10 +87,10 @@ class NavBar extends React.Component {
             <Nav pullRight>
               <NavItem href="#">
                 <div>
-                  {" "}
+                
                   <WorkersLogo
                     handleWorkersButton={this.props.handleWorkersButton}
-                  />{" "}
+                  />
                 </div>
               </NavItem>
             </Nav>
