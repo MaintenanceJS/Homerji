@@ -89,6 +89,7 @@ class Login extends React.Component {
           phonenumber: data.phonenumber,
           availability: data.availability
         })
+        localStorage.setItem('token', data.token)
         $('.edit').show()
         $('.login').hide()
       },

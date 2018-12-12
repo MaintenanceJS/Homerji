@@ -129,7 +129,7 @@ class ListWorkersName extends React.Component {
         <div className="col">
           <div className="col-sm-5 col-md-4">
             <div className="thumbnail">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTey3twEwY6j_wjrv6BhcjKFLKx9NWZhg3kxIuNXTwEMNC5_JUOUw" alt="..." />
+              <img src={this.props.item.ProfilePicture} alt="..." />
               <div className="caption">
                 <h3>{this.props.item.username}</h3>
                 Name: {this.props.item.name} <br/>
