@@ -12,9 +12,13 @@ import Sign from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import workerProfile from "./components/workerProfile.jsx"
 import ContactUs from "./components/contactUs.jsx";
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Router } from 'react-router-dom'
 import { browserHistory } from "react-router";
 import HomeLinks from "./components/HomeLinks.jsx"
+import Image from "./components/Image.jsx"
+import Home from './components/Home.jsx';
+
+
 import {
   Navbar,
   Nav,
@@ -26,7 +30,6 @@ import {
   Tab,
   Tabs
 } from "react-bootstrap"; // For Designing
-
 
 
 
@@ -56,8 +59,10 @@ class App extends React.Component {
 
   //toggle worker button
   handleWorkersButton() {
+    console.log("ashraf")
     this.setState({
       show: !this.state.show
+
     })
   }
 
@@ -72,7 +77,7 @@ class App extends React.Component {
   render() {
 
     if (this.state.show) { //to see signup and login page
-      return <Router history={browserHistory}>
+      return <BrowserRouter history={browserHistory}>
         <div style={{ cursor: 'auto' }}>
           <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
           <Tabs defaultActiveKey={1} animation={false} id="HomerG">
@@ -85,7 +90,7 @@ class App extends React.Component {
             <Tab eventKey={3} title="Logout" onEnter={this.logout.bind(this)} animation> </Tab>
           </Tabs>
         </div>
-      </Router>;
+      </BrowserRouter>;
     } else { //to see categories
       return (
 
@@ -94,19 +99,23 @@ class App extends React.Component {
         <BrowserRouter>
 
           <div className="App">
-
-            <NavBar />
+         <NavBar  handleWorkersButton={this.handleWorkersButton.bind(this)} />
+         
             <Switch>
 
               )}}
-            />
-              <Route exact path ='/' component={HomeLinks}/>
+            
+              
+              <Route exact path ='/' component={Home}/>
+              <Route exact path ='/HomeLinks' component={HomeLinks}/>
               <Route path='/electric' component={Electric} exact />
               <Route path='/gardens' component={Gardener} />
               <Route path='/paintinig' component={Painting} exact />
               <Route path='/pulmbers' component={Plumb} />
               <Route path='/carpenters' component={Carpenter} exact />
               <Route path='/furniture' component={Furniture} />
+              <Route exact path='/y' component={Image} />
+             
 
             </Switch>
 
