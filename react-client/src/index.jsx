@@ -15,6 +15,7 @@ import ContactUs from "./components/contactUs.jsx";
 import { BrowserRouter, Route, Switch, Router } from 'react-router-dom'
 import { browserHistory } from "react-router";
 import HomeLinks from "./components/HomeLinks.jsx"
+import Image from "./components/Image.jsx"
 import Home from './components/Home.jsx';
 
 
@@ -113,6 +114,7 @@ class App extends React.Component {
               <Route path='/pulmbers' component={Plumb} />
               <Route path='/carpenters' component={Carpenter} exact />
               <Route path='/furniture' component={Furniture} />
+              <Route exact path='/y' component={Image} />
              
 
             </Switch>

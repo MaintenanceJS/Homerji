@@ -446,7 +446,7 @@ var newClient = function (req, res) {
 
 ///////////////////
 app.post('/signup', signupWorker);
-//app.post('/login', loginUser);
+// app.post('/login', loginUser);
 app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB); //(not used)
 app.post('/rating', rating);

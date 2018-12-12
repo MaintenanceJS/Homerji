@@ -13,6 +13,7 @@ import {
     DropdownButton,
     MenuItem
 } from "react-bootstrap"; // For Designing
+import { storage } from '../firebase/index.jsx'
 
 
 class Sign extends React.Component {
@@ -31,7 +32,8 @@ class Sign extends React.Component {
       select: 'Choose',
       worker: '',
       location: '',
-      ProfilePicture:null
+      ProfilePicture:null,
+      image:null
     };
   }
 
@@ -122,39 +124,63 @@ class Sign extends React.Component {
   handleProfilePicture(e) {
     console.log(e)
     this.setState({
-      ProfilePicture: e.target.value
+      image: e.target.files[0]
     })
   }
 
   //submit sign up
   handleSubmit() {
-      $.ajax({
-        type: 'POST',
-        url: '/signup',
-        data: {
-          name: this.state.name,
-          major: this.state.major,
-          rating: this.state.rating,
-          email: this.state.email,
-          username: this.state.username,
-          password: this.state.password,
-          description: this.state.description,
-          availability: this.state.availability,
-          phonenumber: this.state.phonenumber,
-          isWorker: this.state.worker,
-          location: this.state.location,
-          ProfilePicture: this.state.ProfilePicture
 
-        },
-        success: (data) => {
-          alert('signed up')
-          $('input').val(''); //inputs values will be empty
-        },
-        error: (err) => {
-          alert('username is already existed');
-          console.log('err', err);
-        }
-      });
+///////////////////
+
+const image = this.state.image;
+const uploadTask = storage.ref(`images/${image.name}`).put(image)
+uploadTask.on('state_changed', (snapshot) => {
+
+}, (error) => {
+    console.log(error)
+}, () => {
+    storage.ref('images').child(image.name).getDownloadURL().then(url => {
+        console.log('url',url)
+        this.setState({
+          ProfilePicture:url
+        })
+        $.ajax({
+          type: 'POST',
+          url: '/signup',
+          data: {
+            name: this.state.name,
+            major: this.state.major,
+            rating: this.state.rating,
+            email: this.state.email,
+            username: this.state.username,
+            password: this.state.password,
+            description: this.state.description,
+            availability: this.state.availability,
+            phonenumber: this.state.phonenumber,
+            isWorker: this.state.worker,
+            location: this.state.location,
+            ProfilePicture: this.state.ProfilePicture
+  
+          },
+          success: (data) => {
+            alert('signed up')
+            $('input').val(''); //inputs values will be empty
+          },
+          error: (err) => {
+            alert('username is already existed');
+            console.log('err', err);
+          }
+        });
+    })
+});
+
+
+
+
+
+//////////////////
+ 
   }
 
   render() {
@@ -210,7 +236,7 @@ class Sign extends React.Component {
           <label>
             <p style={{marginLeft: '36px'}}> Location: <input type="password" onChange={this.handlePassword.bind(this)} /></p>
             <p style={{marginLeft: '10px'}}> Phonenumber: <input type="number" onChange={this.handlePhonenumber.bind(this)} /></p>
-            <p style={{marginLeft: '10px'}}> ProfilePicture: <input type="text" onChange={this.handleProfilePicture.bind(this)} /></p>
+            <p style={{marginLeft: '10px'}}> ProfilePicture: <input type="file" onChange={this.handleProfilePicture.bind(this)} /></p>
           </label> <br />
           <Button bsStyle="success" style={{marginLeft: '12%'}} onClick={this.handleSubmit.bind(this)}> Submit </Button>
         </form>
