@@ -12,6 +12,7 @@ import Sign from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import ContactUs from "./components/contactUs.jsx";
 import toolbar from './components/Home.jsx'
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { browserHistory } from "react-router";
 import {
@@ -26,7 +27,6 @@ import {
     Tabs
 } from "react-bootstrap"; // For Designing
 import ScrollIntoView from 'react-scroll-into-view'
-
 
 class App extends React.Component {
   constructor(props) {
@@ -150,13 +150,13 @@ class App extends React.Component {
               </div>
             </div>
           </div>
-          <Route path="/Home" component={toolbar} />
           <Route path="/Electric" component={Electric} />
           <Route path="/Painting" component={Painting} />
           <Route path="/Plumb" component={Plumb} />
           <Route path="/Carpenter" component={Carpenter} />
           <Route path="/Gardener" component={Gardener} />
           <Route path="/Furniture" component={Furniture} />
+          <Route path= '/Home' component={toolbar}/> 
           <div id='major'>
           </div>
         </div>
