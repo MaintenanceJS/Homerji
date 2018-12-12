@@ -14,6 +14,7 @@ import {
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ContactUs from "./contactUs.jsx";
 import About from "./About.jsx";
+import Sign from "./Signup.jsx";
 
 
 
@@ -101,6 +102,7 @@ class NavBar extends React.Component {
         />
         <Route path="/contact" component={ContactUs}/>
         <Route path="/about" component={About}/>
+        
       </div>
     </Router>)
   }
