@@ -15,6 +15,7 @@ import ContactUs from "./components/contactUs.jsx";
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { browserHistory } from "react-router";
 import HomeLinks from "./components/HomeLinks.jsx"
+import Image from "./components/Image.jsx"
 import {
   Navbar,
   Nav,
@@ -101,12 +102,13 @@ class App extends React.Component {
               )}}
             />
               <Route exact path ='/' component={HomeLinks}/>
-              <Route path='/electric' component={Electric} exact />
-              <Route path='/gardens' component={Gardener} />
-              <Route path='/paintinig' component={Painting} exact />
-              <Route path='/pulmbers' component={Plumb} />
-              <Route path='/carpenters' component={Carpenter} exact />
-              <Route path='/furniture' component={Furniture} />
+              <Route exact path='/electric' component={Electric} exact />
+              <Route exact path='/gardens' component={Gardener} />
+              <Route exact path='/paintinig' component={Painting} exact />
+              <Route exact path='/pulmbers' component={Plumb} />
+              <Route exact path='/carpenters' component={Carpenter} exact />
+              <Route exact path='/furniture' component={Furniture} />
+              <Route exact path='/y' component={Image} />
 
             </Switch>
 
