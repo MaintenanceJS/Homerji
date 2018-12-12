@@ -14,6 +14,7 @@ import {
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ContactUs from "./contactUs.jsx";
 import About from "./About.jsx";
+import Sign from "./Signup.jsx";
 
 
 
@@ -62,10 +63,10 @@ class NavBar extends React.Component {
             </Navbar.Header>
             <Navbar.Collapse>
               <Nav>
-                <NavItem eventKey={1} href="/contact">
+                <NavItem  href="/contact">
                   Contact Us
                 </NavItem>
-                <NavItem eventKey={2} href="/about">
+                <NavItem  href="/about">
                   About
                 </NavItem>
               </Nav>
@@ -86,10 +87,10 @@ class NavBar extends React.Component {
             <Nav pullRight>
               <NavItem href="#">
                 <div>
-                  {" "}
+                
                   <WorkersLogo
                     handleWorkersButton={this.props.handleWorkersButton}
-                  />{" "}
+                  />
                 </div>
               </NavItem>
             </Nav>
@@ -101,6 +102,7 @@ class NavBar extends React.Component {
         />
         <Route path="/contact" component={ContactUs}/>
         <Route path="/about" component={About}/>
+        
       </div>
     </Router>)
   }
