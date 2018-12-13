@@ -15,6 +15,9 @@ import ContactUs from "./components/contactUs.jsx";
 import { BrowserRouter, Route, Switch, Router } from 'react-router-dom'
 import { browserHistory } from "react-router";
 import HomeLinks from "./components/HomeLinks.jsx"
+import Image from "./components/Image.jsx"
+import Home from './components/Home.jsx';
+
 
 import {
   Navbar,
@@ -27,7 +30,6 @@ import {
   Tab,
   Tabs
 } from "react-bootstrap"; // For Designing
-
 
 
 
@@ -46,7 +48,11 @@ class App extends React.Component {
     $.ajax({
       type: 'POST',
       url: '/logout',
+      headers: {
+        Authorization: localStorage.getItem('Authorization')
+      },
       success: () => {
+        localStorage.removeItem('Authorization');
         window.location.reload();
       },
       error: (err) => {
@@ -97,20 +103,23 @@ class App extends React.Component {
         <BrowserRouter>
 
           <div className="App">
-         <NavBar  handleWorkersButton={this.handleWorkersButton.bind(this)} />} 
+         <NavBar  handleWorkersButton={this.handleWorkersButton.bind(this)} />
          
             <Switch>
 
               )}}
-            />
-        
-              <Route exact path ='/' component={HomeLinks} />
+            
+              
+              <Route exact path ='/' component={Home} exact/>
+              <Route exact path ='/HomeLinks' component={HomeLinks} exact/>
               <Route path='/electric' component={Electric} exact />
               <Route path='/gardens' component={Gardener} />
               <Route path='/paintinig' component={Painting} exact />
               <Route path='/pulmbers' component={Plumb} />
               <Route path='/carpenters' component={Carpenter} exact />
               <Route path='/furniture' component={Furniture} />
+             
+             
 
             </Switch>
 

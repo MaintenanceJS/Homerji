@@ -54,7 +54,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <Router>
-        <div>
+        <div >
           <Navbar inverse collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
@@ -62,16 +62,14 @@ class NavBar extends React.Component {
               </Navbar.Brand>
             </Navbar.Header>
             <Navbar.Collapse>
-              <Nav>
-                <NavItem eventKey={1} href="/contact">
+              <Nav style={{ height: '5px' }}>
+                <NavItem  href="/contact">
                   Contact Us
                 </NavItem>
-                <NavItem eventKey={2} href="/about">
-                  About
-                </NavItem>
+             
               </Nav>
-            <Navbar.Form pullLeft>
-              <FormGroup>
+            <Navbar.Form pullLeft style={{ marginRight: '50px' }}>
+              <FormGroup >
                 <FormControl onKeyUp={function(event) {
                   event.preventDefault();
                   if (event.keyCode === 13) {
@@ -87,10 +85,10 @@ class NavBar extends React.Component {
             <Nav pullRight>
               <NavItem href="#">
                 <div>
-                  {" "}
+                
                   <WorkersLogo
                     handleWorkersButton={this.props.handleWorkersButton}
-                  />{" "}
+                  />
                 </div>
               </NavItem>
             </Nav>

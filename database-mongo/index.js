@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-mongoose.connect('mongodb://zaid:zaid1234@ds129914.mlab.com:29914/home');
+mongoose.connect('mongodb://gele:y12345@ds125821.mlab.com:25821/bloggerdatabase');
 
 var db = mongoose.connection;
 
@@ -60,14 +60,13 @@ var itemSchema = mongoose.Schema({
     type: String,
     default: ''
   },
-  price: {
-    type: Number,
-    default: ''
-  },
-  client: [],
   ProfilePicture: {
     type: String
-  }
+  },
+  client: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'client' 
+  }],
 });
 
 var clientSchema = mongoose.Schema({
