@@ -48,7 +48,11 @@ class App extends React.Component {
     $.ajax({
       type: 'POST',
       url: '/logout',
+      headers: {
+        Authorization: localStorage.getItem('Authorization')
+      },
       success: () => {
+        localStorage.removeItem('Authorization');
         window.location.reload();
       },
       error: (err) => {
