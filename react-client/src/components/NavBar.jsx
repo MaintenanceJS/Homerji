@@ -101,9 +101,8 @@ class NavBar extends React.Component {
         <Route path="/contact" component={ContactUs}/>
         <Route path="/about" component={About}/>
         
-      </div>
-    </Router>)
+    </div>
+  </Router>)
   }
 }
-
-export default NavBar;
+ export default NavBar;
