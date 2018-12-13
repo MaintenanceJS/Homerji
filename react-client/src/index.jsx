@@ -16,6 +16,7 @@ import { BrowserRouter, Route, Switch, Router } from 'react-router-dom'
 import { browserHistory } from "react-router";
 import HomeLinks from "./components/HomeLinks.jsx"
 import Home from './components/Home.jsx';
+import Toolbar from './components/Toolbar.jsx';
 
 
 import {
@@ -29,7 +30,6 @@ import {
   Tab,
   Tabs
 } from "react-bootstrap"; // For Designing
-import Toolbar from './components/Toolbar.jsx';
 
 
 
@@ -48,7 +48,11 @@ class App extends React.Component {
     $.ajax({
       type: 'POST',
       url: '/logout',
+      headers: {
+        Authorization: localStorage.getItem('Authorization')
+      },
       success: () => {
+        localStorage.removeItem('Authorization');
         window.location.reload();
       },
       error: (err) => {
@@ -79,7 +83,7 @@ class App extends React.Component {
     if (this.state.show) { //to see signup and login page
       return <BrowserRouter history={browserHistory}>
         <div style={{ cursor: 'auto' }}>
-          {/* <Route path="/" component={() => <NavBar handleWorkersButton={this.handleWorkersButton.bind(this)} />} /> */}
+          <Route path="/" component={() => <Toolbar handleWorkersButton={this.handleWorkersButton.bind(this)} />} />
           <Tabs defaultActiveKey={1} animation={false} id="HomerG">
             <Tab eventKey={1} title="Signup" animation>
               <Sign className="show" style={{ cursor: 'pointer' }} />
@@ -99,7 +103,7 @@ class App extends React.Component {
         <BrowserRouter>
 
           <div className="App">
-         {/* <NavBar  handleWorkersButton={this.handleWorkersButton.bind(this)} /> */}
+         <Toolbar  handleWorkersButton={this.handleWorkersButton.bind(this)} />
    
          
             <Switch>

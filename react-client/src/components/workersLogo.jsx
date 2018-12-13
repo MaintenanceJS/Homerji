@@ -22,7 +22,7 @@ class WorkersLogo extends React.Component {
         return (
             <div>
                 <a href ="Sign">
-                <Button style={{height: '34px', marginTop: '-7.75px'}} className='' onClick={this.props.handleWorkersButton}> Workers </Button>
+                <Button style={{height: '34px', marginTop: '-7.75px'}} className='' onClick={this.props.handleWorkersButton}>Signup/Signin</Button>
                 </a>
             </div>
         )

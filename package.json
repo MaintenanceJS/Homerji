@@ -46,6 +46,7 @@
     "express": "^4.16.4",
     "express-partial": "^0.1.0",
     "express-session": "^1.15.6",
+    "firebase": "^5.7.0",
     "google-map-react": "^1.1.1",
     "google-maps-react": "^2.0.2",
     "ionicons": "^4.4.8",

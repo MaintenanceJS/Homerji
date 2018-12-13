@@ -1,4 +1,5 @@
 import React from 'react';
+import WorkersLogo from "./workersLogo.jsx";
 
 class Toolbar extends React.Component {
     render() {
@@ -10,8 +11,12 @@ class Toolbar extends React.Component {
                     <div className='spacer'></div>
                     <div className='toolbar-nav-items'>
                         <ul>
-                            <li><a href='/Signup'>Signup</a></li>
-                            <li><a href='/Login'>Login</a></li>
+                            <li><a href='/'>
+                                <WorkersLogo
+                                    handleWorkersButton={this.props.handleWorkersButton}
+                                />
+                            </a>
+                            </li>
                         </ul>
                     </div>
                 </nav>
