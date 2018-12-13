@@ -51,18 +51,55 @@
 //     $('#logos').hide() //categories buttons on index file
 //   }
   
-//   render() {
-//     return (
-//       <Router>
-//         <div>
-       
-          
-//                 <div>
-//                   <WorkersLogo
-//                     handleWorkersButton={this.props.handleWorkersButton}
-//                   />
-//                 </div>
-           
+  render() {
+    return (
+      <Router>
+        <div >
+          <Navbar inverse collapseOnSelect>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <a href="/" >HomerG</a>
+              </Navbar.Brand>
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav style={{ height: '5px' }}>
+                <NavItem  href="/contact">
+                  Contact Us
+                </NavItem>
+             
+              </Nav>
+            <Navbar.Form pullLeft style={{ marginRight: '50px' }}>
+              <FormGroup >
+                <FormControl onKeyUp={function(event) {
+                  event.preventDefault();
+                  if (event.keyCode === 13) {
+                  $("#myBtn").click();
+                  }
+                  }} id="textInbox" type="text" placeholder="Worker name" onChange={this.getUserName.bind(this)} />
+              </FormGroup> <Link to="/search">
+                <Button  id="myBtn" onClick={this.getWorkersByName.bind(this)}>
+                  Search
+                  </Button>
+              </Link>
+            </Navbar.Form>
+            <Nav pullRight>
+              <NavItem href="#">
+                <div>
+                
+                  <WorkersLogo
+                    handleWorkersButton={this.props.handleWorkersButton}
+                  />
+                </div>
+              </NavItem>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+        <Route
+          path="/search"
+          component={() => <SearchByName workersList={this.state.workers} />}
+        />
+        <Route path="/contact" component={ContactUs}/>
+        <Route path="/about" component={About}/>
         
 //       </div>
 //     </Router>)
