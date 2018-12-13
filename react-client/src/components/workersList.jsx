@@ -28,12 +28,14 @@ class ListWorkersName extends React.Component {
       rating: 0,
       name: 'Default',
       phonenumber: 0,
+     
       issue: 'Default',
       latitude: 0,
       longtitude: 0,
       show: false //for the Modal
     };
   }
+ 
 
   //client rating
   handleRate (e) {
@@ -123,6 +125,7 @@ class ListWorkersName extends React.Component {
   
 
   render() {
+  
     return (
       <Router history={browserHistory}>
       <div  style={{marginTop: '10px', textAlign:'center'}} >
@@ -135,6 +138,7 @@ class ListWorkersName extends React.Component {
                 Name: {this.props.item.name} <br/>
                 Major: {this.props.item.major} <br/>
                 Rating: {Math.ceil(this.props.item.rating)} <br/>
+                price: {this.props.item.price} <br/>
                 Email: {this.props.item.email} <br/>
                 Description: {this.props.item.description} <br/>
                 Phonenumber: {this.props.item.phonenumber} <br/>

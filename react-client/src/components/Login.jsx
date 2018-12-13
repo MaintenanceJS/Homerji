@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import Dropdown from 'react-drop-down' // Library from npm
+import { BrowserRouter, Route, Switch,Redirect } from 'react-router-dom'
 import ClientItems from "./clientItems.jsx";
 import {
     Navbar,
@@ -29,7 +30,8 @@ class Login extends React.Component {
       description: '',
       phonenumber: 0,
       availability: 'Choose',
-      clients: []
+      clients: [],
+      isLoggedIn:false
     };
   }
 
@@ -79,7 +81,7 @@ class Login extends React.Component {
       url: '/login',
       data: { username: this.state.username, password: this.state.password },
       success: (data, textStatus, request) => {
-        debugger;
+      
         this.setState({
           loggedin: true,
           username: data.username,
@@ -88,11 +90,14 @@ class Login extends React.Component {
           email: data.email,
           description: data.description,
           phonenumber: data.phonenumber,
-          availability: data.availability
+          availability: data.availability,
+          isLoggedIn:true
         });
         localStorage.setItem('Authorization', request.getResponseHeader('Authorization'));
+        
         $('.edit').show()
         $('.login').hide()
+        window.location.reload();
       },
       error: (err) => {
         alert('wrong password or username');
@@ -187,6 +192,11 @@ class Login extends React.Component {
   }
 
   render() {
+    if (this.state.isLoggedIn) {
+      return  <Redirect to={{
+          pathname: '/HomeLinks',
+        }} />
+    }
     return (
       <div>
         <label style={{marginTop: '10px'}} className='login'>

@@ -90,7 +90,11 @@ class Sign extends React.Component {
       email: e.target.value
     })
   }
-
+  handlePrice(e) {
+    this.setState({
+      price: e.target.value
+    })
+  }
   handleUsername(e) {
     this.setState({
       username: e.target.value
@@ -184,6 +188,7 @@ uploadTask.on('state_changed', (snapshot) => {
   }
 
   render() {
+    console.log("my price",this.state.price)
     return (
       <div>
       <div style={{fontWeight: 'bold', marginLeft: '60px', marginBottom: '15px'}}> Select User type:

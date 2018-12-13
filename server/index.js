@@ -146,6 +146,7 @@ var signupWorker = function (req, res) {
   var phonenumber = req.body.phonenumber;
   var isWorker = req.body.isWorker;
   var hash = bcrypt.hashSync(password);
+  var price=req.body.price
   var ProfilePicture = req.body.ProfilePicture;
   console.log('profilepicture',ProfilePicture)
 
@@ -170,6 +171,7 @@ var signupWorker = function (req, res) {
           ratingCount: 1, //keep it 1 for rating equation
           client: [],
           isWorker: isWorker,
+          price:price,
           ProfilePicture: ProfilePicture 
         })
         newWorker.save() //save to database
@@ -216,74 +218,6 @@ var loginUser = function (req, res) {
   })
 };
 
-// Signin User
-// app.post('/login', (req, res, next) => {
-//   const { body } = req;
-//   const {
-//     password
-//   } = body;
-//   let {
-//     username
-//   } = body;
-
-//   if (!username) {
-//     return res.send({
-//       success: false,
-//       message: 'Error: Username cannot be blank.'
-//     });
-//   }
-//   if (!password) {
-//     return res.send({
-//       success: false,
-//       message: 'Error: Password cannot be blank.'
-//     });
-//   }
-
-//   username = username.toLowerCase();
-
-//   db.worker.find({
-//     username: username
-//   }, (err, users) => {
-//     if (err) {
-//       return res.send({
-//         success: false,
-//         message: 'Error: server error.'
-//       });
-//     }
-//     if (users.length != 1) {
-//       return res.send({
-//         success: false,
-//         message: 'Error: invalid.'
-//       });
-//     }
-
-//     const worker = db.workers[0];
-//     if (!worker.comparePassword(password)) {
-//       return res.send({
-//         success: false,
-//         message: 'Error: Invalid Password.'
-//       });
-//     }
-//     // Generate random JSON Webtoken to be saved in local storage
-//     var token = db.generateJwt();
-//     // Otherwise correct user
-//     const userSession = new createSession();
-//     userSession.userId = token;
-//     userSession.save((err, doc) => {
-//       if (err) {
-//         return res.send({
-//           success: false,
-//           message: 'Error: server error.'
-//         });
-//       }
-//       return res.send({
-//         success: true,
-//         message: 'Valid sign in',
-//         token: token
-//       });
-//     })
-//   });
-// });
 
 //create a session function
 var createSession = function (req, res, newUser) {
@@ -448,7 +382,7 @@ var newClient = function (req, res) {
 
 ///////////////////
 app.post('/signup', signupWorker);
-// app.post('/login', loginUser);
+app.post('/login', loginUser);
 app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB); //(not used)
 app.post('/rating', rating);

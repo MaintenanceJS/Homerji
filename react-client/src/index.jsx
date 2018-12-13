@@ -110,14 +110,18 @@ class App extends React.Component {
 
               )}}
             
-              <Route exact path ='/' component={Home}/>
-              <Route exact path ='/HomeLinks' component={HomeLinks}/>
+              
+              <Route exact path ='/' component={Home} exact/>
+              <Route exact path ='/HomeLinks' component={HomeLinks} exact/>
               <Route path='/electric' component={Electric} exact />
               <Route path='/gardens' component={Gardener} />
               <Route path='/paintinig' component={Painting} exact />
               <Route path='/pulmbers' component={Plumb} />
               <Route path='/carpenters' component={Carpenter} exact />
               <Route path='/furniture' component={Furniture} />
+             
+             
+
             </Switch>
           </div>
         </BrowserRouter>
