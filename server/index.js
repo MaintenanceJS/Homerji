@@ -146,6 +146,7 @@ var signupWorker = function (req, res) {
   var phonenumber = req.body.phonenumber;
   var isWorker = req.body.isWorker;
   var hash = bcrypt.hashSync(password);
+  var price=req.body.price
   var ProfilePicture = req.body.ProfilePicture;
   console.log('profilepicture',ProfilePicture)
 
@@ -170,6 +171,7 @@ var signupWorker = function (req, res) {
           ratingCount: 1, //keep it 1 for rating equation
           client: [],
           isWorker: isWorker,
+          price:price,
           ProfilePicture: ProfilePicture 
         })
         newWorker.save() //save to database
@@ -448,7 +450,7 @@ var newClient = function (req, res) {
 
 ///////////////////
 app.post('/signup', signupWorker);
-// app.post('/login', loginUser);
+app.post('/login', loginUser);
 app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB); //(not used)
 app.post('/rating', rating);
