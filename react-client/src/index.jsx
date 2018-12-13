@@ -15,6 +15,7 @@ import ContactUs from "./components/contactUs.jsx";
 import { BrowserRouter, Route, Switch, Router } from 'react-router-dom'
 import { browserHistory } from "react-router";
 import HomeLinks from "./components/HomeLinks.jsx"
+
 import {
   Navbar,
   Nav,
@@ -102,7 +103,7 @@ class App extends React.Component {
 
               )}}
             />
-            
+        
               <Route exact path ='/' component={HomeLinks} />
               <Route path='/electric' component={Electric} exact />
               <Route path='/gardens' component={Gardener} />

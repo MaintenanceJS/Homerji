@@ -60,6 +60,10 @@ var itemSchema = mongoose.Schema({
     type: String,
     default: ''
   },
+  price: {
+    type: Number,
+    default: ''
+  },
   client: [],
   ProfilePicture: {
     type: String

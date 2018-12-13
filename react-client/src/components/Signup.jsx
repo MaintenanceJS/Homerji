@@ -31,6 +31,7 @@ class Sign extends React.Component {
       select: 'Choose',
       worker: '',
       location: '',
+      price:'',
       ProfilePicture:null
     };
   }
@@ -88,7 +89,11 @@ class Sign extends React.Component {
       email: e.target.value
     })
   }
-
+  handlePrice(e) {
+    this.setState({
+      price: e.target.value
+    })
+  }
   handleUsername(e) {
     this.setState({
       username: e.target.value
@@ -143,6 +148,7 @@ class Sign extends React.Component {
           phonenumber: this.state.phonenumber,
           isWorker: this.state.worker,
           location: this.state.location,
+          price:this.state.price,
           ProfilePicture: this.state.ProfilePicture
 
         },
@@ -158,6 +164,7 @@ class Sign extends React.Component {
   }
 
   render() {
+    console.log("my price",this.state.price)
     return (
       <div>
       <div style={{fontWeight: 'bold', marginLeft: '60px', marginBottom: '15px'}}> Select User type:
@@ -210,6 +217,7 @@ class Sign extends React.Component {
           <label>
             <p style={{marginLeft: '36px'}}> Location: <input type="password" onChange={this.handlePassword.bind(this)} /></p>
             <p style={{marginLeft: '10px'}}> Phonenumber: <input type="number" onChange={this.handlePhonenumber.bind(this)} /></p>
+            <p style={{marginLeft: '10px'}}> price: <input type="number" onChange={this.handlePrice.bind(this)} /></p>
             <p style={{marginLeft: '10px'}}> ProfilePicture: <input type="text" onChange={this.handleProfilePicture.bind(this)} /></p>
           </label> <br />
           <Button bsStyle="success" style={{marginLeft: '12%'}} onClick={this.handleSubmit.bind(this)}> Submit </Button>
