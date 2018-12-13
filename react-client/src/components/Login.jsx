@@ -78,7 +78,8 @@ class Login extends React.Component {
       type: 'POST',
       url: '/login',
       data: { username: this.state.username, password: this.state.password },
-      success: (data) => {
+      success: (data, textStatus, request) => {
+        debugger;
         this.setState({
           loggedin: true,
           username: data.username,
@@ -88,8 +89,8 @@ class Login extends React.Component {
           description: data.description,
           phonenumber: data.phonenumber,
           availability: data.availability
-        })
-        localStorage.setItem('token', data.token)
+        });
+        localStorage.setItem('Authorization', request.getResponseHeader('Authorization'));
         $('.edit').show()
         $('.login').hide()
       },

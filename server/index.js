@@ -201,8 +201,9 @@ var loginUser = function (req, res) {
         
         comparePassword(password, hashed, function(match) {
           if (match) {
-            
+            var token = db.generateJwt();
             res.setHeader('Content-Type', 'application/json'); //res should be json
+            res.setHeader('Authorization', token);
             createSession(req, res, found[0])
             
           } else {
@@ -447,7 +448,7 @@ var newClient = function (req, res) {
 
 ///////////////////
 app.post('/signup', signupWorker);
-// app.post('/login', loginUser);
+app.post('/login', loginUser);
 app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB); //(not used)
 app.post('/rating', rating);
