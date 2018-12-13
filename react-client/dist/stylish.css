@@ -472,6 +472,10 @@ input[type=submit]:active, input[type=submit]:focus {
   margin: 0;
   background-color: black !important;
 }
+.thumbnail{
+    width: 100%;
+}
+
 
 
 
