@@ -10,8 +10,8 @@ class Toolbar extends React.Component {
                     <div className='spacer'></div>
                     <div className='toolbar-nav-items'>
                         <ul>
-                            <li><a href='/'>Workers</a></li>
-                            <li><a href='/'>Users</a></li>
+                            <li><a href='/Signup'>Signup</a></li>
+                            <li><a href='/Login'>Login</a></li>
                         </ul>
                     </div>
                 </nav>
