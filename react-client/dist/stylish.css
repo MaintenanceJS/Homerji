@@ -1,3 +1,4 @@
+
 #back {
   opacity: 0.5;
   filter: alpha(opacity=50); /* For IE8 and earlier */
@@ -474,6 +475,250 @@ input[type=submit]:active, input[type=submit]:focus {
 
 
 
+/*==========NavBar========*/
+.toolbar {
+    position: fixed;
+    top : 0;
+    left :0;
+    width: 100%;
+    background : black; 
+    height: 56px;
+}
+
+.toolbar-nav {
+    display : flex;
+    height: 100%;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.toolbar-logo {
+    margin-left: 1rem
+}
+
+.toolbar-logo a{
+    color: white;
+    text-decoration: none;
+    font-size : 1.5rem;
+}
+
+.toolbar-nav-items ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.toolbar-nav-items li {
+    padding: 0 0.5rem;
+}
+
+
+/*=================FOR THE FOOTER================*/
+/*===============================================*/
+.context-dark, .bg-gray-dark, .bg-primary {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-classic a, .footer-classic a:focus, .footer-classic a:active {
+    color: #ffffff;
+}
+.nav-list li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.nav-list li a:hover:before {
+    margin-left: 0;
+    opacity: 1;
+    visibility: visible;
+}
+
+ul, ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.social-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 23px;
+    font: 900 13px/1 "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+.social-container .col {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.nav-list li a:before {
+    content: "\f14f";
+    font: 400 15px/1 "Material Design Icons";
+    color: #4d6de6;
+    display: inline-block;
+    vertical-align: baseline;
+    margin-left: -28px;
+    margin-right: 7px;
+    opacity: 0;
+    visibility: hidden;
+    transition: .22s ease;
+    
+}
+
+
+
+/*============THIS IS FOR THE SLIDER==============*/
+
+/* /* BOOTSTRAP 3.x GLOBAL STYLES
+-------------------------------------------------- */
+body {
+    padding-bottom: 40px;
+    color: #5a5a5a;
+  }
+  
+  
+  /* Carousel base class */
+  .carousel {
+    margin-bottom: 60px;
+  }
+  /* Since positioning the image, we need to help out the caption */
+  .carousel-caption {
+    z-index: 1;
+  
+  }
+  
+  /* Declare heights because of positioning of img element */
+  .carousel .item {
+    height: 400px;
+    background-color:#555;
+  }
+  .carousel img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 400px;
+  }
+  
+  
+  
+  /* MARKETING CONTENT
+  -------------------------------------------------- */
+  
+  /* Pad the edges of the mobile views a bit */
+  .marketing {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Center align the text within the three columns below the carousel */
+  .marketing .col-lg-4 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .marketing h2 {
+    font-weight: normal;
+  }
+  .marketing .col-lg-4 p {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  
+  /* Featurettes
+  ------------------------- */
+  
+  .featurette-divider {
+    margin: 80px 0; /* Space out the Bootstrap <hr> more */
+  }
+  .featurette {
+    padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+    overflow: hidden; /* Vertically center images part 2: clear their floats. */
+  }
+  .featurette-image {
+    margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+  }
+  
+  /* Give some space on the sides of the floated elements so text doesn't run right into it. */
+  .featurette-image.pull-left {
+    margin-right: 40px;
+  }
+  .featurette-image.pull-right {
+    margin-left: 40px;
+  }
+  
+  /* Thin out the marketing headings */
+  .featurette-heading {
+    font-size: 50px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  
+  
+  h1 {
+    font-size: 2rem;
+  }
+
+
+  /*============THIS IS FOR THE HOME TOOLBAR=======*/
+  /*===============================================*/
+  .toolbar {
+    position: fixed;
+    top : 0;
+    left :0;
+    width: 100%;
+    background : black; 
+    height: 56px;
+}
+
+.toolbar-nav {
+    display : flex;
+    height: 100%;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.toolbar-logo {
+    margin-left: 1rem
+}
+
+.toolbar-logo a{
+    color: white;
+    text-decoration: none;
+    font-size : 2rem;
+}
+
+.toolbar-nav-items ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.toolbar-nav-items li a{
+    padding: 0 0.5rem;
+    color: white;
+    font-size: 2rem
+}
+
+
+.toolbar-nav-items a{
+    color :white;
+    text-decoration: none;
+}
+
+
+.toolbar-nav-items a:hover,
+.toolbar-nav-items a:active{
+    color : pink;
+    text-decoration: none;
+}
+
+.spacer {
+    flex :1;
+}
 
 
 

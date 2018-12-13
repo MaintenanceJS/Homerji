@@ -133,7 +133,8 @@ var manualAddingToDB = function () {
 
 //signup function
 var signupWorker = function (req, res) {
-  console.log('in singups')
+  console.log('in singups', req.body)
+  console.log('Is NAME', req.body)
   var name = req.body.name;
   var major = req.body.major;
   var rating = req.body.rating;
@@ -143,7 +144,10 @@ var signupWorker = function (req, res) {
   var description = req.body.description;
   var availability = req.body.availability;
   var phonenumber = req.body.phonenumber;
+  var isWorker = req.body.isWorker;
   var hash = bcrypt.hashSync(password);
+  var ProfilePicture = req.body.ProfilePicture;
+  console.log('profilepicture',ProfilePicture)
 
   db.selectAllUsernames(username, req, res, function(err, found) {
     if (err) {res.sendStatus(500)}; //only for unpredictable errors
@@ -164,7 +168,9 @@ var signupWorker = function (req, res) {
           availability: availability,
           phonenumber: phonenumber,
           ratingCount: 1, //keep it 1 for rating equation
-          client: []
+          client: [],
+          isWorker: isWorker,
+          ProfilePicture: ProfilePicture 
         })
         newWorker.save() //save to database
         .then(function() {
@@ -192,10 +198,14 @@ var loginUser = function (req, res) {
         res.status(404).json('');
       } else {
         var hashed = found[0].password //hashed password in database
+        
         comparePassword(password, hashed, function(match) {
           if (match) {
+            var token = db.generateJwt();
             res.setHeader('Content-Type', 'application/json'); //res should be json
+            res.setHeader('Authorization', token);
             createSession(req, res, found[0])
+            
           } else {
             console.log('wrong password or username')
             res.status(404).json();
@@ -206,6 +216,74 @@ var loginUser = function (req, res) {
   })
 };
 
+// Signin User
+// app.post('/login', (req, res, next) => {
+//   const { body } = req;
+//   const {
+//     password
+//   } = body;
+//   let {
+//     username
+//   } = body;
+
+//   if (!username) {
+//     return res.send({
+//       success: false,
+//       message: 'Error: Username cannot be blank.'
+//     });
+//   }
+//   if (!password) {
+//     return res.send({
+//       success: false,
+//       message: 'Error: Password cannot be blank.'
+//     });
+//   }
+
+//   username = username.toLowerCase();
+
+//   db.worker.find({
+//     username: username
+//   }, (err, users) => {
+//     if (err) {
+//       return res.send({
+//         success: false,
+//         message: 'Error: server error.'
+//       });
+//     }
+//     if (users.length != 1) {
+//       return res.send({
+//         success: false,
+//         message: 'Error: invalid.'
+//       });
+//     }
+
+//     const worker = db.workers[0];
+//     if (!worker.comparePassword(password)) {
+//       return res.send({
+//         success: false,
+//         message: 'Error: Invalid Password.'
+//       });
+//     }
+//     // Generate random JSON Webtoken to be saved in local storage
+//     var token = db.generateJwt();
+//     // Otherwise correct user
+//     const userSession = new createSession();
+//     userSession.userId = token;
+//     userSession.save((err, doc) => {
+//       if (err) {
+//         return res.send({
+//           success: false,
+//           message: 'Error: server error.'
+//         });
+//       }
+//       return res.send({
+//         success: true,
+//         message: 'Valid sign in',
+//         token: token
+//       });
+//     })
+//   });
+// });
 
 //create a session function
 var createSession = function (req, res, newUser) {
@@ -213,6 +291,7 @@ var createSession = function (req, res, newUser) {
   var clients = []
   req.session.regenerate(function (err) {
     if (err) { return err }
+
     req.session.userID = String(newUser._id); //most important section of this function
     req.session.cookie.expires = new Date(Date.now() + 3600000) //a date for expiration
     req.session.cookie.maxAge = 3600000; //a specific time to destroys
@@ -369,7 +448,7 @@ var newClient = function (req, res) {
 
 ///////////////////
 app.post('/signup', signupWorker);
-app.post('/login', loginUser);
+// app.post('/login', loginUser);
 app.post('/logout', logoutUser);
 app.get('/add', manualAddingToDB); //(not used)
 app.post('/rating', rating);
