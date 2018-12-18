@@ -28,12 +28,14 @@ class ListWorkersName extends React.Component {
       rating: 0,
       name: 'Default',
       phonenumber: 0,
+     
       issue: 'Default',
       latitude: 0,
       longtitude: 0,
       show: false //for the Modal
     };
   }
+ 
 
   //client rating
   handleRate (e) {
@@ -123,18 +125,20 @@ class ListWorkersName extends React.Component {
   
 
   render() {
+  
     return (
       <Router history={browserHistory}>
       <div  style={{marginTop: '10px', textAlign:'center'}} >
         <div className="col">
           <div className="col-sm-5 col-md-4">
             <div className="thumbnail">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTey3twEwY6j_wjrv6BhcjKFLKx9NWZhg3kxIuNXTwEMNC5_JUOUw" alt="..." />
+              <img src={this.props.item.ProfilePicture} alt="..." />
               <div className="caption">
                 <h3>{this.props.item.username}</h3>
                 Name: {this.props.item.name} <br/>
                 Major: {this.props.item.major} <br/>
                 Rating: {Math.ceil(this.props.item.rating)} <br/>
+                price: {this.props.item.price} <br/>
                 Email: {this.props.item.email} <br/>
                 Description: {this.props.item.description} <br/>
                 Phonenumber: {this.props.item.phonenumber} <br/>

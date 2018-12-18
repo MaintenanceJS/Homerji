@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://issa:isa123@ds119374.mlab.com:19374/homerji');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
+mongoose.connect('mongodb://gele:y12345@ds125821.mlab.com:25821/bloggerdatabase');
 
 var db = mongoose.connection;
 
@@ -12,17 +14,59 @@ db.once('open', function () {
 });
 
 var itemSchema = mongoose.Schema({
-  name: String,
-  major: String,
-  rating: Number,
-  email: String,
-  username: String,
-  password: String,
-  description: String,
-  availability: String,
-  phonenumber: Number,
-  ratingCount: Number,
-  client: [{ type: mongoose.Schema.Types.ObjectId, ref: 'client' }]
+
+  isWorker: {
+    type: String,
+    default: ''
+  },
+  name: {
+    type: String,
+    default: ''
+  },
+  major: {
+    type: String,
+    default: ''
+  },
+  rating: {
+    type: Number
+  },
+  email: {
+    type: String,
+    default: ''
+  },
+  username: {
+    type: String,
+    default: ''
+  },
+  password: {
+    type: String,
+    default: ''
+  },
+  description: {
+    type: String,
+    default: ''
+  },
+  availability: {
+    type: String,
+    default: ''
+  },
+  phonenumber: {
+    type: Number
+  },
+  ratingCount: {
+    type: Number
+  },
+  location: {
+    type: String,
+    default: ''
+  },
+  ProfilePicture: {
+    type: String
+  },
+  client: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'client' 
+  }],
 });
 
 var clientSchema = mongoose.Schema({
@@ -36,6 +80,16 @@ var clientSchema = mongoose.Schema({
 
 var worker = mongoose.model('worker', itemSchema);
 var client = mongoose.model('client', clientSchema);
+
+//generate json webtoken
+var generateJwt = function() {
+  return jwt.sign({
+    id: itemSchema._id,
+    email: itemSchema.email,
+    name: itemSchema.name,
+    isWorker: itemSchema.isWorker,
+  }, config.jwtSecret);
+}
 
 //select all workers
 var selectAll = function (callback) {
@@ -76,6 +130,7 @@ var selectAllMajors = function (major, callback) {
     if (err) {
       callback(err, null);
     } else {
+      console.log('iiiitems',items)
       callback(null, items);
     }
   });
@@ -253,6 +308,7 @@ module.exports.updateClient = updateClient;
 module.exports.filterClients = filterClients;
 module.exports.updateClientsArr = updateClientsArr;
 module.exports.updateWorkerAvailability = updateWorkerAvailability;
+module.exports.generateJwt = generateJwt;
 
 
 
